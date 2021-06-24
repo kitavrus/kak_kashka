@@ -1,4 +1,4 @@
-final jsonCategoryData = [
+final jsonCategoryLocalData = [
   {
     'id': 1,
     'status': 1,
