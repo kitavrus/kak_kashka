@@ -1,4 +1,4 @@
-final jsonProductData = [
+final jsonProductLocalData = [
   {
     'id': 1,
     'status': 1,
