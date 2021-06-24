@@ -14,6 +14,10 @@
           <option name="url" value="git@github.com:kitavrus/kak_kashka.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/FlutterBaba/Flutter-Clothing-Store-App-UI" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\flutter_project" />
