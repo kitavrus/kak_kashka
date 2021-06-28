@@ -10,15 +10,12 @@ class ProductRepository {
     productData.add(jsonProductLocalData);
   }
 
-  Stream<List<ProductModel>> getAll() {
-    final result = ProductLocalDataLayer().getData().map(
-          (event) => event
-              .map(
-                (rawMap) => ProductModel.fromJson(rawMap),
-              )
-              .toList(),
-        );
-    return result;
+  Future<List<ProductModel>> getAll() async {
+    final  data = await ProductLocalDataLayer().getData();
+    print(data);
+    return data.map(
+          (row) => ProductModel.fromJson(row),).toList();
+    // return result;
   }
 
   // Stream<List<ProductModel>> getAll() { return  [ProductModel.empty()]; }

@@ -3,11 +3,22 @@ import 'package:kak_kashka/data/json/json_product_local_data.dart';
 
 class ProductLocalDataLayer {
 
-  StreamController<List<Map<String, dynamic>>> productData = StreamController();
-
-  ProductLocalDataLayer() {
-    productData.add(jsonProductLocalData);
+ Future<List<Map<String, Object>>> getData() async {
+    return Future.delayed(
+      const Duration(milliseconds: 300),
+          () => jsonProductLocalData,
+    );
   }
-
-  Stream<List<Map<String, dynamic>>> getData() => productData.stream;
 }
+
+
+// class ProductLocalDataLayer {
+//
+//   StreamController<List<Map<String, dynamic>>> productData = StreamController();
+//
+//   ProductLocalDataLayer() {
+//     productData.add(jsonProductLocalData);
+//   }
+//
+//   Stream<List<Map<String, dynamic>>> getData() => productData.stream;
+// }
