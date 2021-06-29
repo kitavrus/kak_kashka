@@ -11,11 +11,14 @@ class ProductRepository {
   }
 
   Future<List<ProductModel>> getAll() async {
-    final  data = await ProductLocalDataLayer().getData();
-    print(data);
-    return data.map(
-          (row) => ProductModel.fromJson(row),).toList();
+    // final  data = await ProductLocalDataLayer().getData();
+    // final result = data.map((row) => ProductModel.fromJson(row),).toList();
+    // // print(data);
     // return result;
+    // return Future.value(result);
+    // return result;
+
+    return  (await ProductLocalDataLayer().getData()).map((row) => ProductModel.fromJson(row),).toList();
   }
 
   // Stream<List<ProductModel>> getAll() { return  [ProductModel.empty()]; }
