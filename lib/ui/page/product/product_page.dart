@@ -11,8 +11,6 @@ class ProductPage extends StatefulWidget {
 // class _ProductPageState extends State<ProductPage>
 //     with AutomaticKeepAliveClientMixin<ProductPage> {
 class _ProductPageState extends State<ProductPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -55,7 +53,9 @@ class ProductList extends StatelessWidget {
     return ListView.separated(
       itemCount: productList.length,
       itemBuilder: (context, index) {
-        return ProductCard(productModel: productList[index],);
+        return ProductCard(
+          productModel: productList[index],
+        );
         // return ListTile(title: Text("# => ${productList[index]}"));
       },
       separatorBuilder: (context, index) => Divider(),
@@ -65,7 +65,8 @@ class ProductList extends StatelessWidget {
 
 class ProductCard extends StatelessWidget {
   final ProductModel productModel;
-  const ProductCard({Key? key,required this.productModel}) : super(key: key);
+
+  const ProductCard({Key? key, required this.productModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +74,34 @@ class ProductCard extends StatelessWidget {
       leading: Image.asset(productModel.pathToImage),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
-      trailing: Icon( Icons.chevron_right),
+      trailing: Icon(Icons.chevron_right),
       onTap: () {
-        print("onTap: "+ productModel.name);
+        print("onTap: " + productModel.name);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetail(productModel: productModel),
+          ),
+        );
       },
     );
   }
 }
 
+class ProductDetail extends StatelessWidget {
+  final ProductModel productModel;
+
+  const ProductDetail({Key? key, required this.productModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(productModel.name),),
+      body: Center(
+        child: Container(
+          child: Text(productModel.description),
+        ),
+      ),
+    );
+  }
+}
