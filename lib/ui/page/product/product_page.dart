@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kak_kashka/model/product_model.dart';
 import 'package:kak_kashka/repository/product_repository.dart';
 
 class ProductPage extends StatefulWidget {
@@ -6,22 +8,15 @@ class ProductPage extends StatefulWidget {
   _ProductPageState createState() => _ProductPageState();
 }
 
-class _ProductPageState extends State<ProductPage> with AutomaticKeepAliveClientMixin<ProductPage> {
+// class _ProductPageState extends State<ProductPage>
+//     with AutomaticKeepAliveClientMixin<ProductPage> {
+class _ProductPageState extends State<ProductPage> {
 
-   final _productRepository = ProductRepository();
-   late final _productList;
 
   @override
   void initState() {
     super.initState();
     print('initState Product');
-
-    Future.delayed(Duration.zero, ()
-    {
-      _initProductList();
-      // _productList = await _productRepository.getAll();
-      // print(_productList);
-    });
   }
 
   @override
@@ -31,35 +26,58 @@ class _ProductPageState extends State<ProductPage> with AutomaticKeepAliveClient
         appBar: AppBar(
           title: Text('Product'),
         ),
-        // body: Text("OK"),
-        body: ProductList(productList: _productList,),
-    );
+        body: FutureBuilder(
+          future: _getProductList(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return ProductList(productList: snapshot.data);
+          },
+        ));
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 
-   void _initProductList() async {
-     _productList = await _productRepository.getAll();
-     print(_productList);
-   }
-
+  Future<List<ProductModel>> _getProductList() async {
+    return ProductRepository().getAll();
+  }
 }
 
 class ProductList extends StatelessWidget {
   final productList;
-  const ProductList({Key? key,this.productList}) : super(key: key);
+
+  const ProductList({Key? key, this.productList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(title: Text("# => ${productList[index]}"));
-          // return ListTile(title: Text("# => $index"));
-        },
-        separatorBuilder: (context, index) {
-          return Divider();
-        },
-        itemCount: 3);
+      itemCount: productList.length,
+      itemBuilder: (context, index) {
+        return ProductCard(productModel: productList[index],);
+        // return ListTile(title: Text("# => ${productList[index]}"));
+      },
+      separatorBuilder: (context, index) => Divider(),
+    );
   }
 }
+
+class ProductCard extends StatelessWidget {
+  final ProductModel productModel;
+  const ProductCard({Key? key,required this.productModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Image.asset(productModel.pathToImage),
+      title: Text(productModel.name),
+      subtitle: Text(productModel.description),
+      trailing: Icon( Icons.chevron_right),
+      onTap: () {
+        print("onTap: "+ productModel.name);
+      },
+    );
+  }
+}
+
