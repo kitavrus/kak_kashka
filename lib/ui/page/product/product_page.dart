@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kak_kashka/model/product_model.dart';
 import 'package:kak_kashka/repository/product_repository.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ProductPage extends StatefulWidget {
   @override
@@ -53,10 +54,23 @@ class ProductList extends StatelessWidget {
     return ListView.separated(
       itemCount: productList.length,
       itemBuilder: (context, index) {
-        return ProductCard(
-          productModel: productList[index],
+        return Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          child:ProductCard(
+            productModel: productList[index],
+          ),
+          secondaryActions: [
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () {
+                print("onTap DELETE");
+                productList.removeAt(index);
+              },
+            ),
+          ],
         );
-        // return ListTile(title: Text("# => ${productList[index]}"));
       },
       separatorBuilder: (context, index) => Divider(),
     );
@@ -96,7 +110,9 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(productModel.name),),
+      appBar: AppBar(
+        title: Text(productModel.name),
+      ),
       body: Center(
         child: Container(
           child: Text(productModel.description),
