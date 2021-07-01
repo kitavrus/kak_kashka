@@ -18,10 +18,12 @@ class _ProductPageState extends State<ProductPage> {
     print('initState Product');
   }
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     print('build Product');
     return Scaffold(
+      key: scaffoldKey,
         appBar: AppBar(
           title: Text('Product'),
         ),
@@ -55,6 +57,7 @@ class ProductList extends StatelessWidget {
       itemCount: productList.length,
       itemBuilder: (context, index) {
         return Slidable(
+          key: Key(productList[index].id.toString()),
           actionPane: SlidableDrawerActionPane(),
           child:ProductCard(
             productModel: productList[index],
@@ -67,6 +70,8 @@ class ProductList extends StatelessWidget {
               onTap: () {
                 print("onTap DELETE");
                 productList.removeAt(index);
+                _showSnackBar(context,"DELETED");
+                _showDialog(context);
               },
             ),
           ],
@@ -75,6 +80,32 @@ class ProductList extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(),
     );
   }
+
+  void _showSnackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+  }
+  Future<void> _showDialog(BuildContext context) async {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: const Text('AlertDialog description'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
 }
 
 class ProductCard extends StatelessWidget {
