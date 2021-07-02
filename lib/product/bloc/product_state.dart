@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kak_kashka/model/product_model.dart';
+import 'package:kak_kashka/product/model/product_model.dart';
 
 abstract class ProductState extends Equatable {
   const ProductState();

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/model/product_model.dart';
-import 'package:kak_kashka/repository/product_repository.dart';
+import 'package:kak_kashka/product/model/product_model.dart';
+import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kak_kashka/product/ui/product_detail_page.dart';
 
 class ProductPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class ProductPage extends StatefulWidget {
 
 // class _ProductPageState extends State<ProductPage>
 //     with AutomaticKeepAliveClientMixin<ProductPage> {
+
 class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
@@ -18,12 +20,12 @@ class _ProductPageState extends State<ProductPage> {
     print('initState Product');
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     print('build Product');
     return Scaffold(
-      key: scaffoldKey,
+      // key: scaffoldKey,
         appBar: AppBar(
           title: Text('Product'),
         ),
@@ -103,9 +105,6 @@ class ProductList extends StatelessWidget {
       ),
     );
   }
-
-
-
 }
 
 class ProductCard extends StatelessWidget {
@@ -129,26 +128,6 @@ class ProductCard extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class ProductDetail extends StatelessWidget {
-  final ProductModel productModel;
-
-  const ProductDetail({Key? key, required this.productModel}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(productModel.name),
-      ),
-      body: Center(
-        child: Container(
-          child: Text(productModel.description),
-        ),
-      ),
     );
   }
 }

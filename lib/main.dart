@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/repository/product_repository.dart';
+import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:kak_kashka/ui/page/category/category_page.dart';
 import 'package:kak_kashka/ui/page/home/home_page.dart';
-import 'package:kak_kashka/ui/page/product/product_page.dart';
+import 'package:kak_kashka/product/ui/product_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,32 +35,30 @@ class _TabBottomContainerState extends State<TabBottomContainer> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     listPages = [
       HomePage(),
       ProductPage(),
       CategoryPage(),
-      // Container(child: Text("Home"),),
-      // Container(child: Text("Product"),),
-      // Container(child: Text("Category"),),
     ];
+    super.initState();
+  }
+
+  void _onTap(int index) {
+    setState(() {
+      _tabIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: listPages[_tabIndex],
+      body: listPages.elementAt(_tabIndex),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.green[400],
         backgroundColor: Theme.of(context).primaryColor,
         currentIndex: _tabIndex,
-        onTap: (int index) {
-          setState(() {
-            _tabIndex = index;
-          });
-        },
+        onTap:_onTap,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home),label:"Home", ),
           BottomNavigationBarItem(icon: Icon(Icons.fmd_good_sharp),label:"Product",),

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:kak_kashka/data/json/json_product_local_data.dart';
+import 'package:kak_kashka/product/data/json/json_product_local_data.dart';
 
 class ProductLocalDataLayer {
 

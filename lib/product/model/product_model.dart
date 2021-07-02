@@ -1,4 +1,4 @@
-import 'package:kak_kashka/entity/product_entity.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product_model.g.dart';

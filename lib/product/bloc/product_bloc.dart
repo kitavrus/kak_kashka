@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kak_kashka/bloc/product_state.dart';
-import 'package:kak_kashka/bloc/product_event.dart';
-import 'package:kak_kashka/entity/product_entity.dart';
-import 'package:kak_kashka/model/product_model.dart';
-import 'package:kak_kashka/repository/product_repository.dart';
+import 'package:kak_kashka/product/bloc/product_event.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
+import 'package:kak_kashka/product/model/product_model.dart';
+import 'package:kak_kashka/product/repository/product_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository _productRepository;

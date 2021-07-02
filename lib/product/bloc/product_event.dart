@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kak_kashka/entity/product_entity.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
 
 
 abstract class ProductEvent extends Equatable {
