@@ -30,11 +30,14 @@ class ProductLoadedState extends ProductState {
 
 class ProductDeleteState extends ProductState {
   final List<ProductEntity> productList;
+  final ProductEntity product;
 
-  ProductDeleteState({required this.productList});
+  // ProductDeleteState({required this.productList});
+  ProductDeleteState({required this.productList, required this.product});
 
-  // @override
-  // List<Object> get props => [productList];
+  @override
+  List<Object> get props => [productList,product];
+  // List<Object> get props => [productList,];
 }
 
 class ProductErrorState extends ProductState {

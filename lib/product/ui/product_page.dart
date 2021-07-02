@@ -33,36 +33,40 @@ class _ProductPageState extends State<ProductPage> {
       providers: [
         BlocProvider<ProductBloc>(
             create: (context) =>
-                ProductBloc(productRepository: ProductRepository())..add(ProductLoadedEvent())),
+                ProductBloc(productRepository: ProductRepository())
+                  ..add(ProductLoadedEvent())),
       ],
       child: Scaffold(
         // key: scaffoldKey,
         appBar: AppBar(
           title: Text('Product'),
         ),
-        body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
-          List<ProductEntity> productList = [];
 
-          if (state is ProductLoadingState) {
-            print('state ProductLoadingState');
-            return _loadingIndicator();
-          } else if (state is ProductErrorState) {
-            print('state ProductErrorState');
-            return  _showError(state.message);
-          }
+        body: BlocBuilder<ProductBloc, ProductState>(
+          builder: (context, state) {
+            List<ProductEntity> productList = [];
 
-         if (state is ProductLoadedState) {
-            print('state ProductLoadedState');
-            productList = state.productList;
-          } else if (state is ProductLoadingState) {
-            print('state ProductLoadingState');
-          } else  if (state is ProductDeleteState) {
-            productList = state.productList;
-            print('state ProductDeleteState');
-          }
+            if (state is ProductLoadingState) {
+              print('state ProductLoadingState');
+              return _loadingIndicator();
+            } else if (state is ProductErrorState) {
+              print('state ProductErrorState');
+              return _showError(state.message);
+            }
 
-          return ProductList(productList: productList);
-        },),
+            if (state is ProductLoadedState) {
+              print('state ProductLoadedState');
+              productList = state.productList;
+            } else if (state is ProductLoadingState) {
+              print('state ProductLoadingState');
+            } else if (state is ProductDeleteState) {
+              productList = state.productList;
+              print('state ProductDeleteState');
+            }
+
+            return ProductList(productList: productList);
+          },
+        ),
       ),
     );
   }
@@ -97,7 +101,7 @@ class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
-    final ProductBloc productBloc = context.watch<ProductBloc>();
+    // final ProductBloc productBloc = context.watch<ProductBloc>();
     print("build: ProductList ");
 
     return ListView.separated(
@@ -117,11 +121,13 @@ class ProductList extends StatelessWidget {
               icon: Icons.delete,
               onTap: () {
                 print("onTap DELETE ${product.id}");
-                productList.removeWhere((element)  {
-                  return element.id == product.id;
-                });
+                // productList.removeWhere((element) {
+                //   return element.id == product.id;
+                // });
                 print(productList);
-                productBloc.add(ProductDeleteEvent(productList: productList));
+                // productBloc.add(ProductDeleteEvent(productList: productList));
+                context.read<ProductBloc>().add(ProductDeleteEvent(productList:productList,product: product));
+                print("productBloc.add ProductDeleteEvent");
                 // _showSnackBar(context, "DELETED");
                 // _showDialog(context);
               },

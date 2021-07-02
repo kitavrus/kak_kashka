@@ -21,7 +21,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield ProductEmptyState();
 
     } else if (event is ProductDeleteEvent) {
-      yield ProductDeleteState(productList: event.productList);
+
+      event.productList.removeWhere((element) {
+        return element.id == event.product.id;
+      });
+
+      yield ProductDeleteState(productList: event.productList,product: event.product);
 
     } else if (event is ProductLoadedEvent) {
       yield ProductLoadingState();
