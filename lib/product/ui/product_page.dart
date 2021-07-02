@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/product/bloc/product_bloc.dart';
+import 'package:kak_kashka/product/bloc/product_event.dart';
+import 'package:kak_kashka/product/bloc/product_state.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:kak_kashka/product/model/product_model.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -24,28 +29,90 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     print('build Product');
-    return Scaffold(
-      // key: scaffoldKey,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProductBloc>(
+            create: (context) =>
+                ProductBloc(productRepository: ProductRepository())..add(ProductLoadedEvent())),
+      ],
+      child: Scaffold(
+        // key: scaffoldKey,
         appBar: AppBar(
           title: Text('Product'),
         ),
-        body: FutureBuilder(
-          future: _getProductList(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return ProductList(productList: snapshot.data);
-          },
-        ));
+        body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
+          List<ProductEntity> productList = [];
+
+          if (state is ProductLoadingState) {
+            print('state ProductLoadingState');
+            return _loadingIndicator();
+          } else if (state is ProductLoadingState) {
+            print('state ProductLoadingState');
+          } else if (state is ProductLoadedState) {
+            productList = state.productList;
+            print('state ProductLoadedState');
+          } else if (state is ProductErrorState) {
+            print('state ProductErrorState');
+            return  _showError(state.message);
+          }
+
+          return ProductList(productList: productList);
+        },),
+      ),
+    );
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
-
-  Future<List<ProductModel>> _getProductList() async {
-    return ProductRepository().getAll();
+  Widget _loadingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
+
+  Widget _showError(message) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          message,
+          style: TextStyle(color: Colors.black, fontSize: 25),
+        ),
+      ),
+    );
+  }
+
+// Widget build(BuildContext context) {
+//   print('build Product');
+//   return MultiBlocProvider(
+//     providers: [
+//       BlocProvider<ProductBloc>(
+//           create: (context) => ProductBloc(productRepository: ProductRepository())),
+//     ],
+//     child: Scaffold(
+//       // key: scaffoldKey,
+//         appBar: AppBar(
+//           title: Text('Product'),
+//         ),
+//         body: FutureBuilder(
+//           future: _getProductList(),
+//           builder: (BuildContext context, AsyncSnapshot snapshot) {
+//             if (!snapshot.hasData) {
+//               return Center(child: CircularProgressIndicator());
+//             }
+//             return ProductList(productList: snapshot.data);
+//           },
+//         )),
+//   );
+// }
+
+// @override
+// bool get wantKeepAlive => true;
+
+// Future<List<ProductModel>> _getProductList() async {
+//   return ProductRepository().getAll();
+// }
 }
 
 class ProductList extends StatelessWidget {
@@ -61,7 +128,7 @@ class ProductList extends StatelessWidget {
         return Slidable(
           key: Key(productList[index].id.toString()),
           actionPane: SlidableDrawerActionPane(),
-          child:ProductCard(
+          child: ProductCard(
             productModel: productList[index],
           ),
           secondaryActions: [
@@ -72,7 +139,10 @@ class ProductList extends StatelessWidget {
               onTap: () {
                 print("onTap DELETE");
                 productList.removeAt(index);
-                _showSnackBar(context,"DELETED");
+                final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
+                productBloc.add(ProductLoadingEvent());
+                // productBloc.add(ProductEmptyEvent());
+                _showSnackBar(context, "DELETED");
                 _showDialog(context);
               },
             ),
@@ -86,6 +156,7 @@ class ProductList extends StatelessWidget {
   void _showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
   }
+
   Future<void> _showDialog(BuildContext context) async {
     showDialog<String>(
       context: context,

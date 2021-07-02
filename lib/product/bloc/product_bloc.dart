@@ -1,15 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/bloc/product_state.dart';
 import 'package:kak_kashka/product/bloc/product_event.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
-import 'package:kak_kashka/product/model/product_model.dart';
+import 'package:kak_kashka/product/bloc/product_state.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository _productRepository;
-  //StreamSubscription? _foodSub;
 
   ProductBloc({
     required ProductRepository productRepository,
@@ -21,34 +18,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (event is ProductEmptyEvent) {
        yield ProductEmptyState();
     } else if (event is ProductLoadingEvent) {
-      // yield _mapFoodsUpatedToState(event);
+      yield ProductEmptyState();
 
     } else if (event is ProductLoadedEvent) {
       yield ProductLoadingState();
       try {
-        // final Stream<List<ProductModel>> _loadedProductList =   _productRepository.getAll();
-        final Stream<List<ProductModel>> _loadedProductList = _productRepository.getAll();
-        yield ProductLoadedState(productsList: (_loadedProductList).toList());
+        final  _loadedProductList = await _productRepository.getAll();
+        yield ProductLoadedState(productList: _loadedProductList);
       } catch (_) {
-        yield ProductErrorState(message: 'ProductErrorState ');
+        yield ProductErrorState(message: 'ProductErrorState 1');
       }
-      // yield* _mapFoodsUpatedToState(event);
     } else if (event is ProductErrorEvent) {
-      // yield* _mapFoodsUpatedToState(event);
+      yield ProductErrorState(message: 'ProductErrorState 2');
     }
   }
-
-  // Stream<ProductState> _mapLoadFoodsToState() async* {
-  //   _foodSub?.cancel();
-  //   _foodRepo.streamFood().listen((event) {
-  //     add(FoodsUpated(event));
-  //   });
-  // }
-  //
-  // Stream<ProductState> _mapFoodsUpatedToState(FoodsUpated event) async* {
-  //   await Future.delayed(Duration(seconds: 2));
-  //   yield FoodsLoaded(event.foods);
-  // }
 
   @override
   Future<void> close() {
