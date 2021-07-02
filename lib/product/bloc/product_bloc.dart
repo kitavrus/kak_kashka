@@ -20,8 +20,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     } else if (event is ProductLoadingEvent) {
       yield ProductEmptyState();
 
-    } else if (event is ProductSearchEvent) {
-      yield ProductSearchState(productList: event.productList);
+    } else if (event is ProductDeleteEvent) {
+      yield ProductDeleteState(productList: event.productList);
 
     } else if (event is ProductLoadedEvent) {
       yield ProductLoadingState();

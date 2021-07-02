@@ -28,13 +28,13 @@ class ProductLoadedState extends ProductState {
   List<Object> get props => [productList];
 }
 
-class ProductSearchState extends ProductState {
+class ProductDeleteState extends ProductState {
   final List<ProductEntity> productList;
 
-  ProductSearchState({required this.productList});
+  ProductDeleteState({required this.productList});
 
-  @override
-  List<Object> get props => [productList];
+  // @override
+  // List<Object> get props => [productList];
 }
 
 class ProductErrorState extends ProductState {

@@ -46,17 +46,19 @@ class _ProductPageState extends State<ProductPage> {
           if (state is ProductLoadingState) {
             print('state ProductLoadingState');
             return _loadingIndicator();
-          } else if (state is ProductLoadedState) {
+          } else if (state is ProductErrorState) {
+            print('state ProductErrorState');
+            return  _showError(state.message);
+          }
+
+         if (state is ProductLoadedState) {
             print('state ProductLoadedState');
             productList = state.productList;
           } else if (state is ProductLoadingState) {
             print('state ProductLoadingState');
-          } else  if (state is ProductSearchState) {
+          } else  if (state is ProductDeleteState) {
             productList = state.productList;
-            print('state ProductSearchState');
-          } else if (state is ProductErrorState) {
-            print('state ProductErrorState');
-            return  _showError(state.message);
+            print('state ProductDeleteState');
           }
 
           return ProductList(productList: productList);
@@ -96,7 +98,7 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
     return ListView.separated(
       itemCount: productList.length,
       itemBuilder: (context, index) {
@@ -113,17 +115,12 @@ class ProductList extends StatelessWidget {
               color: Colors.red,
               icon: Icons.delete,
               onTap: () {
-                print("onTap DELETE");
+                print("onTap DELETE ${product.id}");
                 productList.removeWhere((element)  {
                   return element.id == product.id;
                 });
                 print(productList);
-                final List<ProductEntity> productListNew = [];
-                productListNew.addAll(productList);
-
-                final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
-                productBloc.add(ProductSearchEvent(productList: productListNew));
-                // productBloc.add(ProductEmptyEvent());
+                productBloc.add(ProductDeleteEvent(productList: productList));
                 // _showSnackBar(context, "DELETED");
                 // _showDialog(context);
               },

@@ -28,13 +28,13 @@ class ProductLoadedEvent extends ProductEvent {
   List<Object> get props => [];
 }
 
-class ProductSearchEvent extends ProductEvent {
+class ProductDeleteEvent extends ProductEvent {
   final List<ProductEntity> productList;
 
-  ProductSearchEvent({required this.productList});
+  ProductDeleteEvent({required this.productList});
 
-  @override
-  List<Object> get props => [productList];
+  // @override
+  // List<Object> get props => [productList];
 }
 
 class ProductErrorEvent extends ProductEvent {
