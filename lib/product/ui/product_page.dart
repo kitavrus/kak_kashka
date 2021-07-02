@@ -46,11 +46,14 @@ class _ProductPageState extends State<ProductPage> {
           if (state is ProductLoadingState) {
             print('state ProductLoadingState');
             return _loadingIndicator();
+          } else if (state is ProductLoadedState) {
+            print('state ProductLoadedState');
+            productList = state.productList;
           } else if (state is ProductLoadingState) {
             print('state ProductLoadingState');
-          } else if (state is ProductLoadedState) {
+          } else  if (state is ProductSearchState) {
             productList = state.productList;
-            print('state ProductLoadedState');
+            print('state ProductSearchState');
           } else if (state is ProductErrorState) {
             print('state ProductErrorState');
             return  _showError(state.message);
@@ -83,53 +86,26 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-// Widget build(BuildContext context) {
-//   print('build Product');
-//   return MultiBlocProvider(
-//     providers: [
-//       BlocProvider<ProductBloc>(
-//           create: (context) => ProductBloc(productRepository: ProductRepository())),
-//     ],
-//     child: Scaffold(
-//       // key: scaffoldKey,
-//         appBar: AppBar(
-//           title: Text('Product'),
-//         ),
-//         body: FutureBuilder(
-//           future: _getProductList(),
-//           builder: (BuildContext context, AsyncSnapshot snapshot) {
-//             if (!snapshot.hasData) {
-//               return Center(child: CircularProgressIndicator());
-//             }
-//             return ProductList(productList: snapshot.data);
-//           },
-//         )),
-//   );
-// }
 
-// @override
-// bool get wantKeepAlive => true;
-
-// Future<List<ProductModel>> _getProductList() async {
-//   return ProductRepository().getAll();
-// }
 }
 
 class ProductList extends StatelessWidget {
-  final productList;
+  final List<ProductEntity> productList;
 
-  const ProductList({Key? key, this.productList}) : super(key: key);
+  const ProductList({Key? key, required this.productList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.separated(
       itemCount: productList.length,
       itemBuilder: (context, index) {
+        final product = productList[index];
         return Slidable(
-          key: Key(productList[index].id.toString()),
+          key: Key(product.id.toString()),
           actionPane: SlidableDrawerActionPane(),
           child: ProductCard(
-            productModel: productList[index],
+            productModel: product,
           ),
           secondaryActions: [
             IconSlideAction(
@@ -138,12 +114,18 @@ class ProductList extends StatelessWidget {
               icon: Icons.delete,
               onTap: () {
                 print("onTap DELETE");
-                productList.removeAt(index);
+                productList.removeWhere((element)  {
+                  return element.id == product.id;
+                });
+                print(productList);
+                final List<ProductEntity> productListNew = [];
+                productListNew.addAll(productList);
+
                 final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
-                productBloc.add(ProductLoadingEvent());
+                productBloc.add(ProductSearchEvent(productList: productListNew));
                 // productBloc.add(ProductEmptyEvent());
-                _showSnackBar(context, "DELETED");
-                _showDialog(context);
+                // _showSnackBar(context, "DELETED");
+                // _showDialog(context);
               },
             ),
           ],
@@ -179,7 +161,7 @@ class ProductList extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-  final ProductModel productModel;
+  final ProductEntity productModel;
 
   const ProductCard({Key? key, required this.productModel}) : super(key: key);
 

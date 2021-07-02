@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:kak_kashka/product/entity/product_entity.dart';
+import 'package:kak_kashka/product/model/product_model.dart';
 
 
 abstract class ProductEvent extends Equatable {
@@ -25,6 +26,15 @@ class ProductLoadedEvent extends ProductEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class ProductSearchEvent extends ProductEvent {
+  final List<ProductEntity> productList;
+
+  ProductSearchEvent({required this.productList});
+
+  @override
+  List<Object> get props => [productList];
 }
 
 class ProductErrorEvent extends ProductEvent {

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:kak_kashka/product/model/product_model.dart';
 
 abstract class ProductState extends Equatable {
@@ -22,6 +23,15 @@ class ProductLoadedState extends ProductState {
   final List<ProductModel> productList;
 
   ProductLoadedState({required this.productList});
+
+  @override
+  List<Object> get props => [productList];
+}
+
+class ProductSearchState extends ProductState {
+  final List<ProductEntity> productList;
+
+  ProductSearchState({required this.productList});
 
   @override
   List<Object> get props => [productList];
