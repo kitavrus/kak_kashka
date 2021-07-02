@@ -20,7 +20,7 @@ class ProductLoadingState extends ProductState {
 }
 
 class ProductLoadedState extends ProductState {
-  final List<ProductModel> productList;
+  final List<ProductEntity> productList;
 
   ProductLoadedState({required this.productList});
 

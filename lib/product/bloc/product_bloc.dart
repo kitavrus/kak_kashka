@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kak_kashka/product/bloc/product_event.dart';
 import 'package:kak_kashka/product/bloc/product_state.dart';
+import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
@@ -22,11 +23,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     } else if (event is ProductDeleteEvent) {
 
-      event.productList.removeWhere((element) {
-        return element.id == event.product.id;
-      });
+      // event.productList.removeWhere((element) {
+      //   return element.id == event.product.id;
+      // });
+      //
+      // yield ProductDeleteState(productList: event.productList,product: event.product);
+      // yield ProductLoadedState(productList: event.productList);
 
-      yield ProductDeleteState(productList: event.productList,product: event.product);
+      yield* _mapProductDeletedToState(event);
 
     } else if (event is ProductLoadedEvent) {
       yield ProductLoadingState();
@@ -41,9 +45,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
+  Stream<ProductState> _mapProductDeletedToState(ProductDeleteEvent event) async* {
+
+   event.productList.removeWhere((element) {
+      return element.id == event.product.id;
+    });
+
+    yield ProductDeleteState(product: event.product,productList: event.productList);
+    // yield ProductLoadedState(productList: updatedProductList);
+
+  }
+
+
   @override
   Future<void> close() {
-    //_foodSub?.cancel();
     return super.close();
   }
 }
