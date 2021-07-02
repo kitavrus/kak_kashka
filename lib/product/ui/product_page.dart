@@ -87,8 +87,6 @@ class _ProductPageState extends State<ProductPage> {
       ),
     );
   }
-
-
 }
 
 class ProductList extends StatelessWidget {
@@ -98,7 +96,10 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
+    // final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
+    final ProductBloc productBloc = context.watch<ProductBloc>();
+    print("build: ProductList ");
+
     return ListView.separated(
       itemCount: productList.length,
       itemBuilder: (context, index) {
