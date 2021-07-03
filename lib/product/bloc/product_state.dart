@@ -26,6 +26,10 @@ class ProductLoadedState extends ProductState {
 
   @override
   List<Object> get props => [productList];
+
+  // @override
+  // String toString() => 'ProductLoadedState { todos: $productList }';
+
 }
 
 class ProductDeleteState extends ProductState {

@@ -20,42 +20,43 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
        yield ProductEmptyState();
     } else if (event is ProductLoadingEvent) {
       yield ProductEmptyState();
-
     } else if (event is ProductDeleteEvent) {
-
-      // event.productList.removeWhere((element) {
-      //   return element.id == event.product.id;
-      // });
-      //
-      // yield ProductDeleteState(productList: event.productList,product: event.product);
-      // yield ProductLoadedState(productList: event.productList);
-
       yield* _mapProductDeletedToState(event);
-
     } else if (event is ProductLoadedEvent) {
-      yield ProductLoadingState();
-      try {
-        final  _loadedProductList = await _productRepository.getAll();
-        yield ProductLoadedState(productList: _loadedProductList);
-      } catch (_) {
-        yield ProductErrorState(message: 'ProductErrorState 1');
-      }
+      yield* _mapProductLoadedToState(event);
     } else if (event is ProductErrorEvent) {
       yield ProductErrorState(message: 'ProductErrorState 2');
     }
   }
 
+  Stream<ProductState> _mapProductLoadedToState(ProductLoadedEvent event) async* {
+
+    yield ProductLoadingState();
+    try {
+      final  _loadedProductList = await _productRepository.getAll();
+      yield ProductLoadedState(productList: _loadedProductList);
+    } catch (_) {
+      yield ProductErrorState(message: 'ProductErrorState 1');
+    }
+  }
+
   Stream<ProductState> _mapProductDeletedToState(ProductDeleteEvent event) async* {
 
-   event.productList.removeWhere((element) {
+    // if (state is ProductLoadedState) {
+    //   final List<ProductEntity> updatedProduct  = (state as ProductLoadedState).productList;
+    //   updatedProduct.removeWhere((element) {
+    //       return element.id == event.product.id;
+    //   });
+    //   print(updatedProduct);
+    //   yield ProductDeleteState(productList: updatedProduct,product: event.product);
+    // }
+
+    event.productList.removeWhere((element) {
       return element.id == event.product.id;
     });
 
     yield ProductDeleteState(product: event.product,productList: event.productList);
-    // yield ProductLoadedState(productList: updatedProductList);
-
   }
-
 
   @override
   Future<void> close() {
