@@ -37,7 +37,7 @@ class ProductDeleteState extends ProductState {
   final ProductEntity product;
 
   // ProductDeleteState({required this.productList});
-  ProductDeleteState({required this.productList, required this.product});
+  ProductDeleteState({this.productList = const <ProductEntity>[], required this.product});
 
   @override
   List<Object> get props => [productList,product];
