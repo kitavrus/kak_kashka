@@ -10,20 +10,21 @@ import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
 
-class ProductPage extends StatefulWidget {
-  @override
-  _ProductPageState createState() => _ProductPageState();
-}
+class ProductPage extends StatelessWidget{
+// class ProductPage extends StatefulWidget {
+  // @override
+  // _ProductPageState createState() => _ProductPageState();
+// }
 
 // class _ProductPageState extends State<ProductPage>
 //     with AutomaticKeepAliveClientMixin<ProductPage> {
 
-class _ProductPageState extends State<ProductPage> {
-  @override
-  void initState() {
-    super.initState();
-    print('initState Product');
-  }
+// class _ProductPageState extends State<ProductPage> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     print('initState Product');
+//   }
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override

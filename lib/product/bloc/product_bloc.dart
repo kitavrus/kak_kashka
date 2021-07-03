@@ -47,15 +47,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     //   updatedProduct.removeWhere((element) {
     //       return element.id == event.product.id;
     //   });
+    //   print("_mapProductDeletedToState :");
     //   print(updatedProduct);
-    //   yield ProductDeleteState(productList: updatedProduct,product: event.product);
+    //   // yield ProductDeleteState(productList: updatedProduct,product: event.product);
+    //   // yield ProductLoadedState(productList: updatedProduct);
+    // } else {
+    //   print("NONONO");
     // }
 
-    event.productList.removeWhere((element) {
-      return element.id == event.product.id;
-    });
+      event.productList.removeWhere((element) {
+        return element.id == event.product.id;
+      });
 
-    yield ProductDeleteState(product: event.product,productList: event.productList);
+      yield ProductDeleteState(product: event.product,productList: event.productList);
   }
 
   @override
