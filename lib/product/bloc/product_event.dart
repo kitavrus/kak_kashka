@@ -10,6 +10,15 @@ abstract class ProductEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ProductInitEvent extends ProductEvent {
+  final List<ProductEntity> productList = [];
+
+  ProductInitEvent();
+
+  // @override
+  // List<Object> get props => [productList];
+}
+
 class ProductEmptyEvent extends ProductEvent {
   @override
   List<Object> get props => [];
@@ -34,8 +43,8 @@ class ProductDeleteEvent extends ProductEvent {
 
   ProductDeleteEvent({required this.productList,required this.product});
 
-  @override
-  List<Object> get props => [productList,product];
+  // @override
+  // List<Object> get props => [productList,product];
 }
 
 class ProductErrorEvent extends ProductEvent {

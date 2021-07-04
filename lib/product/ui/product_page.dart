@@ -35,7 +35,7 @@ class ProductPage extends StatelessWidget{
         BlocProvider<ProductBloc>(
             create: (context) =>
                 ProductBloc(productRepository: ProductRepository())
-                  ..add(ProductLoadedEvent())),
+                  ..add(ProductInitEvent())),
       ],
       child: Scaffold(
         // key: scaffoldKey,
@@ -122,11 +122,8 @@ class ProductList extends StatelessWidget {
               icon: Icons.delete,
               onTap: () {
                 print("onTap DELETE ${product.id}");
-                // productList.removeWhere((element) {
-                //   return element.id == product.id;
-                // });
+
                 print(productList);
-                // productBloc.add(ProductDeleteEvent(productList: productList));
                 context.read<ProductBloc>().add(ProductDeleteEvent(productList:productList,product: product));
                 print("productBloc.add ProductDeleteEvent");
                 // _showSnackBar(context, "DELETED");

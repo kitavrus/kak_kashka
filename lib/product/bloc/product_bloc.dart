@@ -16,10 +16,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
-    if (event is ProductEmptyEvent) {
+    if (event is ProductInitEvent) {
+       yield* _mapProductInitToState(event);
+    } else if (event is ProductEmptyEvent) {
        yield ProductEmptyState();
     } else if (event is ProductLoadingEvent) {
-      yield ProductEmptyState();
+      yield ProductLoadingState();
     } else if (event is ProductDeleteEvent) {
       yield* _mapProductDeletedToState(event);
     } else if (event is ProductLoadedEvent) {
@@ -29,37 +31,58 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  Stream<ProductState> _mapProductLoadedToState(ProductLoadedEvent event) async* {
+  Stream<ProductState> _mapProductInitToState(ProductInitEvent event) async* {
 
     yield ProductLoadingState();
     try {
       final  _loadedProductList = await _productRepository.getAll();
       yield ProductLoadedState(productList: _loadedProductList);
     } catch (_) {
-      yield ProductErrorState(message: 'ProductErrorState 1');
+      yield ProductErrorState(message: '_mapProductInitToState ProductErrorState');
     }
+  }
+
+  Stream<ProductState> _mapProductLoadedToState(ProductLoadedEvent event) async* {
+
+    // yield ProductLoadingState();
+    // try {
+    //   final  _loadedProductList = await _productRepository.getAll();
+    //   yield ProductLoadedState(productList: _loadedProductList);
+    // } catch (_) {
+    //   yield ProductErrorState(message: 'ProductErrorState 1');
+    // }
   }
 
   Stream<ProductState> _mapProductDeletedToState(ProductDeleteEvent event) async* {
 
-    // if (state is ProductLoadedState) {
-    //   final List<ProductEntity> updatedProduct  = (state as ProductLoadedState).productList;
-    //   updatedProduct.removeWhere((element) {
-    //       return element.id == event.product.id;
-    //   });
-    //   print("_mapProductDeletedToState :");
-    //   print(updatedProduct);
-    //   // yield ProductDeleteState(productList: updatedProduct,product: event.product);
-    //   yield ProductLoadedState(productList: updatedProduct);
-    // } else {
-    //   print("NONONO");
-    // }
+    var updatedProduct  = <ProductEntity>[];
+    if (state is ProductLoadedState) {
+      updatedProduct  = (state as ProductLoadedState).productList;
+      updatedProduct.removeWhere((element) {
+          return element.id == event.product.id;
+      });
+      print("_mapProductDeletedToState : ProductLoadedState");
+      print(updatedProduct);
+      yield ProductDeleteState(productList: updatedProduct,product: event.product);
+      // yield ProductLoadedState(productList: updatedProduct);
+    } else if (state is ProductDeleteState) {
+      updatedProduct  = (state as ProductDeleteState).productList;
+      updatedProduct.removeWhere((element) {
+          return element.id == event.product.id;
+      });
+      print("_mapProductDeletedToState :ProductDeleteState ");
+      print(updatedProduct);
+      // yield ProductLoadedState(productList: updatedProduct);
+      yield ProductDeleteState(productList: updatedProduct,product: event.product);
+    } else {
+      print("NO-NO-NO");
+    }
 
-    event.productList.removeWhere((element) {
-      return element.id == event.product.id;
-    });
-
-    yield ProductDeleteState(product: event.product,productList: event.productList);
+    // event.productList.removeWhere((element) {
+    //   return element.id == event.product.id;
+    // });
+    //
+    // yield ProductDeleteState(product: event.product,productList: event.productList);
   }
 
   @override
