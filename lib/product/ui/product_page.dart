@@ -10,7 +10,7 @@ import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
 
-class ProductPage extends StatelessWidget{
+class ProductPage extends StatelessWidget {
 // class ProductPage extends StatefulWidget {
   // @override
   // _ProductPageState createState() => _ProductPageState();
@@ -120,14 +120,18 @@ class ProductList extends StatelessWidget {
               caption: 'Delete',
               color: Colors.red,
               icon: Icons.delete,
-              onTap: () {
-                print("onTap DELETE ${product.id}");
+              onTap: ()  {
+                // print("onTap DELETE ${product.id}");
+                // print(productList);
+                // print("productBloc.add ProductDeleteEvent");
 
-                print(productList);
-                context.read<ProductBloc>().add(ProductDeleteEvent(productList:productList,product: product));
-                print("productBloc.add ProductDeleteEvent");
-                // _showSnackBar(context, "DELETED");
-                // _showDialog(context);
+                 _showDialog(context, onCancel: () {
+                  Navigator.pop(context, 'Cancel');
+                }, onOk: () {
+                  context.read<ProductBloc>().add(ProductDeleteEvent(productList: productList, product: product));
+                  _showSnackBar(context, "DELETED: ${product.name}");
+                  Navigator.pop(context, 'OK');
+                });
               },
             ),
           ],
@@ -141,19 +145,19 @@ class ProductList extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
   }
 
-  Future<void> _showDialog(BuildContext context) async {
+  Future<void> _showDialog(BuildContext context,
+      {required VoidCallback? onCancel, required VoidCallback? onOk}) async {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: const Text('AlertDialog description'),
-        actions: <Widget>[
+        title: const Text('Удалить товар?'),
+        actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
+            onPressed:onCancel,
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
+            onPressed: onOk,
             child: const Text('OK'),
           ),
         ],
