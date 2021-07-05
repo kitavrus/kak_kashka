@@ -65,6 +65,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       print(updatedProduct);
       yield ProductDeleteState(productList: updatedProduct,product: event.product);
       // yield ProductLoadedState(productList: updatedProduct);
+
     } else if (state is ProductDeleteState) {
       updatedProduct  = (state as ProductDeleteState).productList;
       updatedProduct.removeWhere((element) {
@@ -72,8 +73,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       });
       print("_mapProductDeletedToState :ProductDeleteState ");
       print(updatedProduct);
-      // yield ProductLoadedState(productList: updatedProduct);
       yield ProductDeleteState(productList: updatedProduct,product: event.product);
+      // yield ProductLoadedState(productList: updatedProduct);
+
     } else {
       print("NO-NO-NO");
     }

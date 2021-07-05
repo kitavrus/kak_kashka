@@ -11,22 +11,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
 
 class ProductPage extends StatelessWidget {
-// class ProductPage extends StatefulWidget {
-  // @override
-  // _ProductPageState createState() => _ProductPageState();
-// }
-
-// class _ProductPageState extends State<ProductPage>
-//     with AutomaticKeepAliveClientMixin<ProductPage> {
-
-// class _ProductPageState extends State<ProductPage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     print('initState Product');
-//   }
-
-  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     print('build Product');
@@ -38,7 +22,6 @@ class ProductPage extends StatelessWidget {
                   ..add(ProductInitEvent())),
       ],
       child: Scaffold(
-        // key: scaffoldKey,
         appBar: AppBar(
           title: Text('Product'),
         ),
@@ -129,6 +112,7 @@ class ProductList extends StatelessWidget {
                   Navigator.pop(context, 'Cancel');
                 }, onOk: () {
                   context.read<ProductBloc>().add(ProductDeleteEvent(productList: productList, product: product));
+                   // BlocProvider.of<ProductBloc>(context)..add(ProductDeleteEvent(productList: productList, product: product));
                   _showSnackBar(context, "DELETED: ${product.name}");
                   Navigator.pop(context, 'OK');
                 });
