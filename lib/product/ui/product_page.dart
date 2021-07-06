@@ -8,6 +8,7 @@ import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:kak_kashka/product/model/product_model.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kak_kashka/product/ui/add_product_page.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
 
 class ProductPage extends StatelessWidget {
@@ -24,6 +25,16 @@ class ProductPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Product'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print(" Floating action button press");
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context)=>AddProductPage()),);
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.blue,
+
         ),
 
         body: BlocBuilder<ProductBloc, ProductState>(
