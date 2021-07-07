@@ -43,4 +43,14 @@ class ProductModel extends ProductEntity {
       pathToImage: '-EMPTY-PATH-TO-IMAGE-',
     );
   }
+  // factory ProductModel.add(id,status,name,barcode) {
+  //   return ProductModel(
+  //     id:0,
+  //     status:0,
+  //     name:'-EMPTY-NAME-',
+  //     barcode:'-EMPTY-BARCODE-',
+  //     description:'-EMPTY-DESCRIPTION-',
+  //     pathToImage: '-EMPTY-PATH-TO-IMAGE-',
+  //   );
+  // }
 }

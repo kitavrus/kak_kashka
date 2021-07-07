@@ -5,7 +5,7 @@ final jsonProductLocalData = [
     'name': 'Мыло',
     'description': 'Мыло пахучее',
     'barcode': '123456789',
-    'pathToImage': 'images/banan.jpg',
+    'pathToImage': 'assets/images/banan.jpg',
   },
   {
     'id': 2,
@@ -13,7 +13,7 @@ final jsonProductLocalData = [
     'name': 'Мыло 2',
     'description': 'Мыло пахучее 2',
     'barcode': '1234567890',
-    'pathToImage': 'images/banan.jpg',
+    'pathToImage': 'assets/images/banan.jpg',
   },
   {
     'id': 3,
@@ -21,7 +21,7 @@ final jsonProductLocalData = [
     'name': 'Мыло 3',
     'description': 'Мыло пахучее 3',
     'barcode': '1234567891',
-    'pathToImage': 'images/banan.jpg',
+    'pathToImage': 'assets/images/banan.jpg',
   },
   // {
   //   'id': 3,

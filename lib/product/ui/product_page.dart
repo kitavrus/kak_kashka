@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/product/bloc/product_bloc.dart';
-import 'package:kak_kashka/product/bloc/product_event.dart';
-import 'package:kak_kashka/product/bloc/product_state.dart';
+// import 'package:kak_kashka/product/bloc/product_bloc.dart';
+// import 'package:kak_kashka/product/bloc/product_event.dart';
+import 'package:kak_kashka/product/cubit/product_state.dart';
+import 'package:kak_kashka/product/cubit/product_cubit.dart';
 import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:kak_kashka/product/model/product_model.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
@@ -15,53 +16,69 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build Product');
+    // final _bloc  = BlocProvider.of<ProductCubit>(context);
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<ProductBloc>(
+      // return ProductPageBlocProvider(
+        providers: [
+          // BlocProvider<ProductBloc>(
+          BlocProvider<ProductCubit>(
             create: (context) =>
-                ProductBloc(productRepository: ProductRepository())
-                  ..add(ProductInitEvent())),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Product'),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print(" Floating action button press");
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context)=>AddProductPage()),);
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blue,
+            // ProductBloc(productRepository: ProductRepository())..add(ProductInitEvent())),
+            ProductCubit(ProductRepository())..getProductList(),
+          ),
+        ],
+        child: ProductPageView()
+    );
+  }
+}
 
-        ),
+class ProductPageView extends StatelessWidget {
+  const ProductPageView({Key? key}) : super(key: key);
 
-        body: BlocBuilder<ProductBloc, ProductState>(
-          builder: (context, state) {
-            List<ProductEntity> productList = [];
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      appBar: AppBar(
+        title: Text('Product'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          print(" Floating action button press");
+          final result = await Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>AddProductPage()),);
+          print("FloatingActionButton: $result");
 
-            if (state is ProductLoadingState) {
-              print('state ProductLoadingState');
-              return _loadingIndicator();
-            } else if (state is ProductErrorState) {
-              print('state ProductErrorState');
-              return _showError(state.message);
-            }
+          // BlocProvider.of<ProductCubit>(context).addProduct(result);
+          BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
+          // _bloc.addProduct(result);
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
 
-            if (state is ProductLoadedState) {
-              print('state ProductLoadedState');
-              productList = state.productList;
-            } else if (state is ProductLoadingState) {
-              print('state ProductLoadingState');
-            } else if (state is ProductDeleteState) {
-              productList = state.productList;
-              print('state ProductDeleteState');
-            }
+      ),
 
-            return ProductList(productList: productList);
-          },
-        ),
+      body: BlocBuilder<ProductCubit, ProductState>(
+        builder: (context, state) {
+          List<ProductEntity> productList = [];
+
+          if (state is ProductLoading) {
+            print('state ProductLoadingState');
+            return _loadingIndicator();
+          } else if (state is ProductError) {
+            print('state ProductErrorState');
+            return _showError(state.message);
+          }
+
+          if (state is ProductSuccess) {
+            print('state ProductSuccess');
+            productList = state.productList;
+          }  else  if (state is ProductDelete) {
+            print('state ProductDelete');
+            productList = state.productList;
+          }
+
+          return ProductList(productList: productList);
+        },
       ),
     );
   }
@@ -86,7 +103,10 @@ class ProductPage extends StatelessWidget {
       ),
     );
   }
+
 }
+
+
 
 class ProductList extends StatelessWidget {
   final List<ProductEntity> productList;
@@ -122,7 +142,8 @@ class ProductList extends StatelessWidget {
                  _showDialog(context, onCancel: () {
                   Navigator.pop(context, 'Cancel');
                 }, onOk: () {
-                  context.read<ProductBloc>().add(ProductDeleteEvent(productList: productList, product: product));
+                  context.read<ProductCubit>().deleteProduct(product);
+                  // context.read<ProductBloc>().add(ProductDeleteEvent(productList: productList, product: product));
                    // BlocProvider.of<ProductBloc>(context)..add(ProductDeleteEvent(productList: productList, product: product));
                   _showSnackBar(context, "DELETED: ${product.name}");
                   Navigator.pop(context, 'OK');
