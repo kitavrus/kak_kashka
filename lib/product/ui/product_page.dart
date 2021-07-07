@@ -75,6 +75,9 @@ class ProductPageView extends StatelessWidget {
           }  else  if (state is ProductDelete) {
             print('state ProductDelete');
             productList = state.productList;
+          }else  if (state is ProductAdd) {
+            print('state ProductAdd');
+            productList = state.productList;
           }
 
           return ProductList(productList: productList);

@@ -40,6 +40,26 @@ class ProductDelete extends ProductState {
   List<Object> get props => [productList,product];
 }
 
+class ProductAdd extends ProductState {
+  final List<ProductEntity> productList;
+  final ProductEntity product;
+
+  ProductAdd({this.productList = const <ProductEntity>[], required this.product});
+
+  @override
+  List<Object> get props => [productList,product];
+}
+
+class ProductUpdate extends ProductState {
+  final List<ProductEntity> productList;
+  final ProductEntity product;
+
+  ProductUpdate({this.productList = const <ProductEntity>[], required this.product});
+
+  @override
+  List<Object> get props => [productList,product];
+}
+
 class ProductError extends ProductState {
   final String message;
 
