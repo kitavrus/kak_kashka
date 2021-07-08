@@ -21,13 +21,13 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> deleteProduct(ProductEntity productEntity) async {
-    var updatedProduct;
+    List<ProductEntity> updatedProduct = [];
     if (state is ProductSuccess) {
-      updatedProduct = (state as ProductSuccess).productList;
+      updatedProduct.addAll((state as ProductSuccess).productList) ;
     } else if (state is ProductAdd) {
-      updatedProduct = (state as ProductAdd).productList;
+      updatedProduct.addAll((state as ProductAdd).productList);
     } else if (state is ProductDelete) {
-      updatedProduct = (state as ProductDelete).productList;
+      updatedProduct.addAll((state as ProductDelete).productList);
     }
     updatedProduct.removeWhere((element) {
       return element.id == productEntity.id;
@@ -37,13 +37,13 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> addProduct(ProductEntity productEntity) async {
-    var updatedProduct;
+    List<ProductEntity> updatedProduct = [];
     if (state is ProductSuccess) {
-      updatedProduct = (state as ProductSuccess).productList;
+      updatedProduct.addAll((state as ProductSuccess).productList);
     } else if (state is ProductAdd) {
-      updatedProduct = (state as ProductAdd).productList;
+        updatedProduct.addAll((state as ProductAdd).productList);
     } else if (state is ProductDelete) {
-      updatedProduct = (state as ProductDelete).productList;
+       updatedProduct.addAll((state as ProductDelete).productList);
     }
 
     updatedProduct.add(productEntity);
