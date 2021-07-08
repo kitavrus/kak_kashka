@@ -21,7 +21,7 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> deleteProduct(ProductEntity productEntity) async {
-    List<ProductEntity> updatedProduct = [];
+    final List<ProductEntity> updatedProduct = [];
     if (state is ProductSuccess) {
       updatedProduct.addAll((state as ProductSuccess).productList) ;
     } else if (state is ProductAdd) {
@@ -37,7 +37,7 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> addProduct(ProductEntity productEntity) async {
-    List<ProductEntity> updatedProduct = [];
+    final List<ProductEntity> updatedProduct = [];
     if (state is ProductSuccess) {
       updatedProduct.addAll((state as ProductSuccess).productList);
     } else if (state is ProductAdd) {
