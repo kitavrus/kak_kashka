@@ -23,11 +23,11 @@ class ProductSuccess extends ProductState {
 
   ProductSuccess({required this.productList});
 
-  // @override
-  // List<Object> get props => [productList];
-  //
-  // @override
-  // String toString() => 'ProductLoaded { todos: $productList }';
+  @override
+  List<Object> get props => [productList];
+
+  @override
+  String toString() => 'ProductLoaded { todos: $productList }';
 }
 
 class ProductDelete extends ProductState {
