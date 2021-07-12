@@ -16,6 +16,9 @@ class ProductCubit extends Cubit<ProductState> {
       final _loadedProductList = await _productRepository.getAll();
       print(_loadedProductList);
       emit(ProductState.success(productList: _loadedProductList));
+      emit(ProductState.success(productList: _loadedProductList));
+      emit(ProductState.success(productList: _loadedProductList));
+      emit(ProductState.success(productList: _loadedProductList));
     } catch (_) {
       emit(ProductState.failure(message: 'getProductList ProductErrorState'));
     }
@@ -26,7 +29,7 @@ class ProductCubit extends Cubit<ProductState> {
 
     switch (state.status) {
       case ProductStatus.success:
-        updatedProduct.addAll(state.productList as List<ProductEntity>);
+        updatedProduct.addAll(state.productList);
 
         updatedProduct.removeWhere((element) {
           return element.id == productEntity.id;
@@ -45,7 +48,7 @@ class ProductCubit extends Cubit<ProductState> {
 
     switch (state.status) {
       case ProductStatus.success:
-        updatedProduct.addAll(state.productList as List<ProductEntity>);
+        updatedProduct.addAll(state.productList);
 
         updatedProduct.add(productEntity);
 
