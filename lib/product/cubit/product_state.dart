@@ -26,8 +26,8 @@ class ProductState extends Equatable {
   ProductState({
     required this.status,
     required this.productList,
-    required this.product,
-    required this.message
+    this.product,
+    this.message = ''
   });
 
   factory ProductState.initial() {
@@ -36,8 +36,6 @@ class ProductState extends Equatable {
     return ProductState(
         status:ProductStatus.initial,
         productList: [],
-        product : null,
-        message: ''
     );
   }
 
@@ -46,8 +44,6 @@ class ProductState extends Equatable {
     return ProductState(
         status:ProductStatus.loading,
         productList: [],
-        product : null,
-        message: ''
     );
   }
 
@@ -59,7 +55,6 @@ class ProductState extends Equatable {
         status:ProductStatus.success,
         productList:productList,
         product : product,
-        message: ''
     );
   }
 
@@ -69,7 +64,6 @@ class ProductState extends Equatable {
     return ProductState(
         status:ProductStatus.failure,
         productList: [],
-        product : null,
         message: message
     );
   }
