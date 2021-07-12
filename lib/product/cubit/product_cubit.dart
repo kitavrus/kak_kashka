@@ -8,46 +8,110 @@ import 'package:kak_kashka/product/repository/product_repository.dart';
 class ProductCubit extends Cubit<ProductState> {
   final ProductRepository _productRepository;
 
-  ProductCubit(this._productRepository) : super(ProductInitial());
+  ProductCubit(this._productRepository) : super(ProductState.initial());
 
   Future<void> getProductList() async {
-    emit(ProductLoading());
+    emit(ProductState.loading());
     try {
       final _loadedProductList = await _productRepository.getAll();
-      emit(ProductSuccess(productList: _loadedProductList));
+      print(_loadedProductList);
+      emit(ProductState.success(productList: _loadedProductList));
     } catch (_) {
-      emit(ProductError(message: 'getProductList ProductErrorState'));
+      emit(ProductState.failure(message: 'getProductList ProductErrorState'));
     }
   }
 
   Future<void> deleteProduct(ProductEntity productEntity) async {
     final List<ProductEntity> updatedProduct = [];
-    if (state is ProductSuccess) {
-      updatedProduct.addAll((state as ProductSuccess).productList) ;
-    } else if (state is ProductAdd) {
-      updatedProduct.addAll((state as ProductAdd).productList);
-    } else if (state is ProductDelete) {
-      updatedProduct.addAll((state as ProductDelete).productList);
+
+    switch (state.status) {
+      case ProductStatus.success:
+        updatedProduct.addAll(state.productList as List<ProductEntity>);
+
+        updatedProduct.removeWhere((element) {
+          return element.id == productEntity.id;
+        });
+
+        emit(ProductState.success(productList: updatedProduct));
+
+        break;
+      default:
+        emit(ProductState.failure(message: "Problem deleteProduct "));
     }
-    updatedProduct.removeWhere((element) {
-      return element.id == productEntity.id;
-    });
-    print("deleteProduct : ProductUpdate 1");
-    emit(ProductDelete(productList: updatedProduct, product: productEntity));
   }
 
   Future<void> addProduct(ProductEntity productEntity) async {
     final List<ProductEntity> updatedProduct = [];
-    if (state is ProductSuccess) {
-      updatedProduct.addAll((state as ProductSuccess).productList);
-    } else if (state is ProductAdd) {
-        updatedProduct.addAll((state as ProductAdd).productList);
-    } else if (state is ProductDelete) {
-       updatedProduct.addAll((state as ProductDelete).productList);
-    }
 
-    updatedProduct.add(productEntity);
-    print("addProduct : ProductSuccess 1");
-    emit(ProductAdd(productList: updatedProduct, product: productEntity));
+    switch (state.status) {
+      case ProductStatus.success:
+        updatedProduct.addAll(state.productList as List<ProductEntity>);
+
+        updatedProduct.add(productEntity);
+
+        emit(ProductState.success(productList: updatedProduct));
+
+        break;
+      default:
+        emit(ProductState.failure(message: "Problem addProduct "));
+    }
   }
 }
+
+  // if (state is ProductSuccess) {
+  //   updatedProduct.addAll((state as ProductSuccess).productList) ;
+  // } else if (state is ProductAdd) {
+  //   updatedProduct.addAll((state as ProductAdd).productList);
+  // } else if (state is ProductDelete) {
+  //   updatedProduct.addAll((state as ProductDelete).productList);
+  // }
+  // updatedProduct.removeWhere((element) {
+  //   return element.id == productEntity.id;
+  // });
+  // print("deleteProduct : ProductUpdate 1");
+  // emit(ProductDelete(productList: updatedProduct, product: productEntity));
+// }
+
+  // ProductCubit(this._productRepository) : super(ProductInitial());
+
+  // Future<void> getProductList() async {
+  //   emit(ProductLoading());
+  //   try {
+  //     final _loadedProductList = await _productRepository.getAll();
+  //     emit(ProductSuccess(productList: _loadedProductList));
+  //   } catch (_) {
+  //     emit(ProductError(message: 'getProductList ProductErrorState'));
+  //   }
+  // }
+  //
+  // Future<void> deleteProduct(ProductEntity productEntity) async {
+  //   final List<ProductEntity> updatedProduct = [];
+  //   if (state is ProductSuccess) {
+  //     updatedProduct.addAll((state as ProductSuccess).productList) ;
+  //   } else if (state is ProductAdd) {
+  //     updatedProduct.addAll((state as ProductAdd).productList);
+  //   } else if (state is ProductDelete) {
+  //     updatedProduct.addAll((state as ProductDelete).productList);
+  //   }
+  //   updatedProduct.removeWhere((element) {
+  //     return element.id == productEntity.id;
+  //   });
+  //   print("deleteProduct : ProductUpdate 1");
+  //   emit(ProductDelete(productList: updatedProduct, product: productEntity));
+  // }
+  //
+  // Future<void> addProduct(ProductEntity productEntity) async {
+  //   final List<ProductEntity> updatedProduct = [];
+  //   if (state is ProductSuccess) {
+  //     updatedProduct.addAll((state as ProductSuccess).productList);
+  //   } else if (state is ProductAdd) {
+  //       updatedProduct.addAll((state as ProductAdd).productList);
+  //   } else if (state is ProductDelete) {
+  //      updatedProduct.addAll((state as ProductDelete).productList);
+  //   }
+  //
+  //   updatedProduct.add(productEntity);
+  //   print("addProduct : ProductSuccess 1");
+  //   emit(ProductAdd(productList: updatedProduct, product: productEntity));
+  // }
+// }

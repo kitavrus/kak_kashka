@@ -48,8 +48,8 @@ class ProductPageView extends StatelessWidget {
             MaterialPageRoute(builder: (context)=>AddProductPage()),);
           print("FloatingActionButton: $result");
 
-          // BlocProvider.of<ProductCubit>(context).addProduct(result);
-          BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
+          BlocProvider.of<ProductCubit>(context).addProduct(result);
+          // BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
           // _bloc.addProduct(result);
         },
         child: Icon(Icons.add),
@@ -61,24 +61,42 @@ class ProductPageView extends StatelessWidget {
         builder: (context, state) {
           List<ProductEntity> productList = [];
 
-          if (state is ProductLoading) {
-            print('state ProductLoadingState');
-            return _loadingIndicator();
-          } else if (state is ProductError) {
-            print('state ProductErrorState');
-            return _showError(state.message);
+          print("BlocBuilder: ");
+          print(state.status);
+          switch (state.status) {
+            case ProductStatus.initial:
+              return _loadingIndicator();
+            case ProductStatus.loading:
+              return _loadingIndicator();
+            case ProductStatus.failure:
+              return _showError(state.message);
+
+            case ProductStatus.success:
+              productList = state.productList as List<ProductEntity>;
+              return ProductList(productList: productList);
+            default:
+              return _showEmpty("NO data");
           }
 
-          if (state is ProductSuccess) {
-            print('state ProductSuccess');
-            productList = state.productList;
-          }  else  if (state is ProductDelete) {
-            print('state ProductDelete');
-            productList = state.productList;
-          }else  if (state is ProductAdd) {
-            print('state ProductAdd');
-            productList = state.productList;
-          }
+
+          // if (state is ProductLoading) {
+          //   print('state ProductLoadingState');
+          //   return _loadingIndicator();
+          // } else if (state is ProductError) {
+          //   print('state ProductErrorState');
+          //   return _showError(state.message);
+          // }
+
+          // if (state is ProductSuccess) {
+          //   print('state ProductSuccess');
+          //   productList = state.productList;
+          // }  else  if (state is ProductDelete) {
+          //   print('state ProductDelete');
+          //   productList = state.productList;
+          // }else  if (state is ProductAdd) {
+          //   print('state ProductAdd');
+          //   productList = state.productList;
+          // }
 
           return ProductList(productList: productList);
         },
@@ -96,6 +114,18 @@ class ProductPageView extends StatelessWidget {
   }
 
   Widget _showError(message) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Text(
+          message,
+          style: TextStyle(color: Colors.black, fontSize: 25),
+        ),
+      ),
+    );
+  }
+
+  Widget _showEmpty(message) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
