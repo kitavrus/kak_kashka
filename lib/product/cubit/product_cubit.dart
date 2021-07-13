@@ -16,9 +16,6 @@ class ProductCubit extends Cubit<ProductState> {
       final _loadedProductList = await _productRepository.getAll();
       print(_loadedProductList);
       emit(ProductState.success(productList: _loadedProductList));
-      emit(ProductState.success(productList: _loadedProductList));
-      emit(ProductState.success(productList: _loadedProductList));
-      emit(ProductState.success(productList: _loadedProductList));
     } catch (_) {
       emit(ProductState.failure(message: 'getProductList ProductErrorState'));
     }
@@ -57,6 +54,44 @@ class ProductCubit extends Cubit<ProductState> {
         break;
       default:
         emit(ProductState.failure(message: "Problem addProduct "));
+    }
+  }
+
+  Future<void> searchProduct(String query) async {
+    final List<ProductEntity> updatedProduct;
+    query = query.toLowerCase();
+
+    print("searchProduct init");
+    print(query);
+    // print(state);
+    // print(state.status);
+    switch (state.status) {
+      case ProductStatus.success:
+
+        if(query.isNotEmpty) {
+          final _loadedProductList = await _productRepository.getAll();
+          updatedProduct = _loadedProductList.where((product) {
+            var productName = product.name.toLowerCase();
+
+            print(productName);
+
+            return productName.contains(query);
+          }).toList();
+
+          print(updatedProduct);
+          print("searchProduct filter");
+          emit(ProductState.success(productList: updatedProduct));
+        } else {
+          final _loadedProductList = await _productRepository.getAll();
+          emit(ProductState.success(productList: _loadedProductList));
+          print("searchProduct empty search");
+          //getProductList();
+        }
+        // updatedProduct.addAll(state.productList);
+        // emit(ProductState.loading());
+        break;
+      default:
+        emit(ProductState.failure(message: "Problem searchProduct "));
     }
   }
 }

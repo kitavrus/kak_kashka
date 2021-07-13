@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // import 'package:kak_kashka/product/bloc/product_bloc.dart';
 // import 'package:kak_kashka/product/bloc/product_event.dart';
 import 'package:kak_kashka/product/cubit/product_state.dart';
@@ -18,17 +19,15 @@ class ProductPage extends StatelessWidget {
     print('build Product');
     // final _bloc  = BlocProvider.of<ProductCubit>(context);
     return MultiBlocProvider(
-      // return ProductPageBlocProvider(
+        // return ProductPageBlocProvider(
         providers: [
           // BlocProvider<ProductBloc>(
           BlocProvider<ProductCubit>(
             create: (context) =>
-            // ProductBloc(productRepository: ProductRepository())..add(ProductInitEvent())),
-            ProductCubit(ProductRepository())..getProductList(),
+                // ProductBloc(productRepository: ProductRepository())..add(ProductInitEvent())),
+                ProductCubit(ProductRepository())..getProductList(),
           ),
-        ],
-        child: ProductPageView()
-    );
+        ], child: ProductPageView());
   }
 }
 
@@ -37,15 +36,17 @@ class ProductPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Product'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           print(" Floating action button press");
-          final result = await Navigator.push(context,
-            MaterialPageRoute(builder: (context)=>AddProductPage()),);
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProductPage()),
+          );
           print("FloatingActionButton: $result");
 
           BlocProvider.of<ProductCubit>(context).addProduct(result);
@@ -54,9 +55,7 @@ class ProductPageView extends StatelessWidget {
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
-
       ),
-
       body: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           List<ProductEntity> productList = [];
@@ -72,12 +71,20 @@ class ProductPageView extends StatelessWidget {
               return _showError(state.message);
 
             case ProductStatus.success:
-              productList = state.productList as List<ProductEntity>;
-              return ProductList(productList: productList);
+              productList = state.productList;
+
+              return Stack(
+                children: [
+                  _showSearchBar(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60),
+                    child: ProductList(productList: productList),
+                  ),
+                ],
+              );
             default:
               return _showEmpty("NO data");
           }
-
 
           // if (state is ProductLoading) {
           //   print('state ProductLoadingState');
@@ -99,6 +106,19 @@ class ProductPageView extends StatelessWidget {
           // }
 
           return ProductList(productList: productList);
+        },
+      ),
+    );
+  }
+
+  Widget _showSearchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: InputDecoration(hintText: "Search ..."),
+        onChanged: (text) {
+          print(text);
+          context.read<ProductCubit>().searchProduct(text);
         },
       ),
     );
@@ -136,10 +156,7 @@ class ProductPageView extends StatelessWidget {
       ),
     );
   }
-
 }
-
-
 
 class ProductList extends StatelessWidget {
   final List<ProductEntity> productList;
@@ -148,8 +165,6 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final ProductBloc productBloc = BlocProvider.of<ProductBloc>(context);
-    // final ProductBloc productBloc = context.watch<ProductBloc>();
     print("build: ProductList ");
 
     return ListView.separated(
@@ -167,17 +182,11 @@ class ProductList extends StatelessWidget {
               caption: 'Delete',
               color: Colors.red,
               icon: Icons.delete,
-              onTap: ()  {
-                // print("onTap DELETE ${product.id}");
-                // print(productList);
-                // print("productBloc.add ProductDeleteEvent");
-
-                 _showDialog(context, onCancel: () {
+              onTap: () {
+                _showDialog(context, onCancel: () {
                   Navigator.pop(context, 'Cancel');
                 }, onOk: () {
                   context.read<ProductCubit>().deleteProduct(product);
-                  // context.read<ProductBloc>().add(ProductDeleteEvent(productList: productList, product: product));
-                   // BlocProvider.of<ProductBloc>(context)..add(ProductDeleteEvent(productList: productList, product: product));
                   _showSnackBar(context, "DELETED: ${product.name}");
                   Navigator.pop(context, 'OK');
                 });
@@ -202,7 +211,7 @@ class ProductList extends StatelessWidget {
         title: const Text('Удалить товар?'),
         actions: [
           TextButton(
-            onPressed:onCancel,
+            onPressed: onCancel,
             child: const Text('Cancel'),
           ),
           TextButton(
