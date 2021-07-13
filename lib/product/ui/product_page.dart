@@ -115,9 +115,11 @@ class ProductPageView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        decoration: InputDecoration(hintText: "Search ..."),
+        decoration: InputDecoration(
+            labelText: "Поиск ...",
+          // filled: true,
+        ),
         onChanged: (text) {
-          print(text);
           context.read<ProductCubit>().searchProduct(text);
         },
       ),
@@ -167,7 +169,27 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     print("build: ProductList ");
 
+    // Widget build(BuildContext context) {
+    //   return GestureDetector(
+    //     onTap: () {
+    //       FocusScopeNode currentFocus = FocusScope.of(context);
+    //
+    //       if (!currentFocus.hasPrimaryFocus) {
+    //         currentFocus.unfocus();
+    //       }
+    //     },
+    //     child: MaterialApp(
+    //       title: 'Flutter Demo',
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.blue,
+    //       ),
+    //       home: MyHomePage(),
+    //     ),
+    //   );
+    // }
+
     return ListView.separated(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag, // не работает как я хочу (
       itemCount: productList.length,
       itemBuilder: (context, index) {
         final product = productList[index];
