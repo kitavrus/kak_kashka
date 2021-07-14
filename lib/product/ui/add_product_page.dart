@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kak_kashka/product/model/product_model.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class AddProductPage extends StatefulWidget {
   // final ProductModel product;
@@ -25,17 +26,18 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _barcodeEditingController =
       TextEditingController();
 
-  Future<File> moveFile(File sourceFile, String newPath) async {
-    try {
-      /// prefer using rename as it is probably faster
-      /// if same directory path
-      return await sourceFile.rename(newPath);
-    } catch (e) {
-      /// if rename fails, copy the source file
-      final newFile = await sourceFile.copy(newPath);
-      return newFile;
-    }
-  }
+  // Future<File> moveFile(File sourceFile, String newPath) async {
+  //   try {
+  //     var basNameWithExtension = path.basename(sourceFile.path);
+  //     final newFile = await sourceFile.copy("$newPath/$basNameWithExtension");
+  //     return newFile;
+  //   } catch (e) {
+  //     throw Exception("PIPEC");
+  //     /// if rename fails, copy the source file
+  //     final newFile = await sourceFile.copy(newPath);
+  //     return newFile;
+  //   }
+  // }
 
 
   String appDocPath = '';
@@ -213,20 +215,34 @@ class _AddProductPageState extends State<AddProductPage> {
 
                     // final newImage = await _image.copy(appDocPath+"/");
                     // final newImage =  await _image.copy(appDocPath+"/4491.jpg");
+                    //  Future.delayed(Duration(seconds: 1),() async {
+                     _image.copy(appDocPath+"/4491.jpg").then((newImage) {
+                     //   final newImage =  await _image.copy(appDocPath+"/4491.jpg");
+                     //   final newImage =  await _image.copy(appDocPath);
+                     //   final newImage =  await _image.copy(appDocPath+"/");
 
-                    final ProductModel productModel = ProductModel(
-                      id: 4,
-                      status: 4,
-                      name: _nameEditingController.text.toString(),
-                      description: _descriptionEditingController.text.toString(),
-                      barcode: _barcodeEditingController.text.toString(),
-                      // pathToImage: newImage == null ?  'assets/images/banan.jpg' : newImage.path,
-                      pathToImage: _image == null ?  'assets/images/banan.jpg' : _image.path,
-                      // pathToImage: ,
-                    );
+                       // moveFile(_image,appDocPath+"/4491.jpg").then((newImage) {
 
-                    print(productModel);
-                    Navigator.pop(context, productModel);
+                         final ProductModel productModel = ProductModel(
+                           id: 4,
+                           status: 4,
+                           name: _nameEditingController.text.toString(),
+                           description: _descriptionEditingController.text.toString(),
+                           barcode: _barcodeEditingController.text.toString(),
+                           pathToImage: newImage == null ?  'assets/images/banan.jpg' : newImage.path,
+                           // pathToImage: _image == null ?  'assets/images/banan.jpg' : _image.path,
+                           // pathToImage: ,
+                         );
+
+                         print(productModel);
+                         Navigator.pop(context, productModel);
+                       }
+                       );
+
+
+
+                     // });
+
                     // Navigator.pushReplacementNamed(context,FlyerPage.routeName,arguments: _textEditingController.text);
                     // Navigator.pop(
                     //   context,

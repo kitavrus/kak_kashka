@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -254,6 +256,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      // leading: SizedBox(child: Image.file(File(productModel.pathToImage)),width: 50,height: 50,),
       leading: SizedBox(child: Image.asset(productModel.pathToImage),width: 50,height: 50,),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
