@@ -77,7 +77,7 @@ class ProductPageView extends StatelessWidget {
                 children: [
                   _showSearchBar(context),
                   Padding(
-                    padding: const EdgeInsets.only(top: 60),
+                    padding: const EdgeInsets.only(top: 70),
                     child: ProductList(productList: productList),
                   ),
                 ],
@@ -254,7 +254,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.asset(productModel.pathToImage),
+      leading: SizedBox(child: Image.asset(productModel.pathToImage),width: 50,height: 50,),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
       trailing: Icon(Icons.chevron_right),
