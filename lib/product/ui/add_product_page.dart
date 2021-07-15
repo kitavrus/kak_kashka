@@ -82,7 +82,7 @@ class _AddProductPageState extends State<AddProductPage> {
             child: Wrap(
               children: [
                 ListTile(
-                  leading: Icon(Icons.photo_library),
+                  leading: Icon(Icons.folder),
                   title: Text("Gallery "),
                   onTap: () {
                     _imageFromGallery();
@@ -90,7 +90,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.photo_library),
+                  leading: Icon(Icons.camera_alt),
                   title: Text("Camera "),
                   onTap: () {
                     _imageFromCamera();
@@ -138,10 +138,11 @@ class _AddProductPageState extends State<AddProductPage> {
                   // label: Text("label"),
                 ),
                 Container(
-                  width: 160,
-                  height: 160,
+                  width: 300,
+                  height: 250,
                   child: _image == null ?  SizedBox() : Image.file(_image),
                 ),
+                SizedBox(height: 10,),
                 Container(
                   // width:250,
                   child: TextField(

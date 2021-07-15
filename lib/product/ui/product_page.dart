@@ -9,11 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kak_kashka/product/cubit/product_state.dart';
 import 'package:kak_kashka/product/cubit/product_cubit.dart';
 import 'package:kak_kashka/product/entity/product_entity.dart';
-import 'package:kak_kashka/product/model/product_model.dart';
+// import 'package:kak_kashka/product/model/product_model.dart';
 import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kak_kashka/product/ui/add_product_page.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
+import 'package:path/path.dart' as path;
 
 class ProductPage extends StatelessWidget {
   @override
@@ -257,7 +258,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       // leading: SizedBox(child: Image.file(File(productModel.pathToImage)),width: 50,height: 50,),
-      leading: SizedBox(child: Image.asset(productModel.pathToImage),width: 50,height: 50,),
+      leading: _getImage(productModel),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
       trailing: Icon(Icons.chevron_right),
@@ -271,5 +272,22 @@ class ProductCard extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _getImage(ProductEntity productModel) {
+    return SizedBox(
+      child: _imagePathType(productModel.pathToImage) == "assets" ? Image.asset(productModel.pathToImage) : Image.file(File(productModel.pathToImage)),
+      width: 50,
+      height: 50,
+    );
+  }
+
+  String _imagePathType(String pathToImage) {
+    String pathToImage = productModel.pathToImage;
+    List<String> splitPath = path.split(pathToImage);
+    if(splitPath.first == "assets") {
+      return 'assets';
+    }
+    return 'file';
   }
 }
