@@ -39,77 +39,80 @@ class ProductPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Product'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          print(" Floating action button press");
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddProductPage()),
-          );
-          print("FloatingActionButton: $result");
+    return GestureDetector(
+      onTap: ()=> FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Product'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            print(" Floating action button press");
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddProductPage()),
+            );
+            print("FloatingActionButton: $result");
 
-          BlocProvider.of<ProductCubit>(context).addProduct(result);
-          // BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
-          // _bloc.addProduct(result);
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-      ),
-      body: BlocBuilder<ProductCubit, ProductState>(
-        builder: (context, state) {
-          List<ProductEntity> productList = [];
+            BlocProvider.of<ProductCubit>(context).addProduct(result);
+            // BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
+            // _bloc.addProduct(result);
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.blue,
+        ),
+        body: BlocBuilder<ProductCubit, ProductState>(
+          builder: (context, state) {
+            List<ProductEntity> productList = [];
 
-          print("BlocBuilder: ");
-          print(state.status);
-          switch (state.status) {
-            case ProductStatus.initial:
-              return _loadingIndicator();
-            case ProductStatus.loading:
-              return _loadingIndicator();
-            case ProductStatus.failure:
-              return _showError(state.message);
+            print("BlocBuilder: ");
+            print(state.status);
+            switch (state.status) {
+              case ProductStatus.initial:
+                return _loadingIndicator();
+              case ProductStatus.loading:
+                return _loadingIndicator();
+              case ProductStatus.failure:
+                return _showError(state.message);
 
-            case ProductStatus.success:
-              productList = state.productList;
+              case ProductStatus.success:
+                productList = state.productList;
 
-              return Stack(
-                children: [
-                  _showSearchBar(context),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 70),
-                    child: ProductList(productList: productList),
-                  ),
-                ],
-              );
-            default:
-              return _showEmpty("NO data");
-          }
+                return Stack(
+                  children: [
+                    _showSearchBar(context),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 70),
+                      child: ProductList(productList: productList),
+                    ),
+                  ],
+                );
+              default:
+                return _showEmpty("NO data");
+            }
 
-          // if (state is ProductLoading) {
-          //   print('state ProductLoadingState');
-          //   return _loadingIndicator();
-          // } else if (state is ProductError) {
-          //   print('state ProductErrorState');
-          //   return _showError(state.message);
-          // }
+            // if (state is ProductLoading) {
+            //   print('state ProductLoadingState');
+            //   return _loadingIndicator();
+            // } else if (state is ProductError) {
+            //   print('state ProductErrorState');
+            //   return _showError(state.message);
+            // }
 
-          // if (state is ProductSuccess) {
-          //   print('state ProductSuccess');
-          //   productList = state.productList;
-          // }  else  if (state is ProductDelete) {
-          //   print('state ProductDelete');
-          //   productList = state.productList;
-          // }else  if (state is ProductAdd) {
-          //   print('state ProductAdd');
-          //   productList = state.productList;
-          // }
+            // if (state is ProductSuccess) {
+            //   print('state ProductSuccess');
+            //   productList = state.productList;
+            // }  else  if (state is ProductDelete) {
+            //   print('state ProductDelete');
+            //   productList = state.productList;
+            // }else  if (state is ProductAdd) {
+            //   print('state ProductAdd');
+            //   productList = state.productList;
+            // }
 
-          return ProductList(productList: productList);
-        },
+            return ProductList(productList: productList);
+          },
+        ),
       ),
     );
   }
@@ -257,11 +260,14 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // leading: SizedBox(child: Image.file(File(productModel.pathToImage)),width: 50,height: 50,),
-      leading: _getImage(productModel),
+      leading: Hero(
+          tag: 'prod-image'+productModel.id.toString(),
+          child: _getImage(productModel),
+      ),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
       trailing: Icon(Icons.chevron_right),
+      tileColor: _colorByStatus(productModel),
       onTap: () {
         print("onTap: " + productModel.name);
         Navigator.push(
@@ -272,6 +278,28 @@ class ProductCard extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color _colorByStatus(ProductEntity productModel) {
+    final _color;
+
+    switch(productModel.status) {
+      case 0:
+        _color = Colors.white;
+        break;
+      case 1:
+        _color = Colors.red[200];
+        break;
+      case 2:
+        _color = Colors.yellow[200];
+        break;
+      case 3:
+        _color = Colors.green[200];
+        break;
+      default:
+        _color = Colors.white;
+    }
+    return _color;
   }
 
   Widget _getImage(ProductEntity productModel) {

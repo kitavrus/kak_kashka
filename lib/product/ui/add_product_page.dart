@@ -26,6 +26,26 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _barcodeEditingController =
       TextEditingController();
 
+  int _radioValue = 0;
+
+  void _handleRadioValueChange(int? value) {
+    setState(() {
+      _radioValue = value!;
+      print(_radioValue);
+      // switch (value) {
+      //   case 0:
+      //     // _result = ...
+      // break;
+      // case 1:
+      // // _result = ...
+      // break;
+      // case 2:
+      // // _result = ...
+      // break;
+      // }
+    });
+  }
+
   // Future<File> moveFile(File sourceFile, String newPath) async {
   //   try {
   //     var basNameWithExtension = path.basename(sourceFile.path);
@@ -39,8 +59,8 @@ class _AddProductPageState extends State<AddProductPage> {
   //   }
   // }
 
-
   String appDocPath = '';
+
   void initPath() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     appDocPath = appDocDir.path;
@@ -48,18 +68,16 @@ class _AddProductPageState extends State<AddProductPage> {
 
   var _image;
 
-
   _imageFromCamera() async {
     final image = await ImagePicker()
         .getImage(source: ImageSource.camera, imageQuality: 50);
 
     if (image != null) {
       setState(() {
-
         _image = File(image.path);
 
-         // File tmp = File(image.path);
-         // _image = await tmp.copy(appDocPath+"/_x.jpg");
+        // File tmp = File(image.path);
+        // _image = await tmp.copy(appDocPath+"/_x.jpg");
       });
     }
   }
@@ -109,7 +127,6 @@ class _AddProductPageState extends State<AddProductPage> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     print(_image);
@@ -122,127 +139,125 @@ class _AddProductPageState extends State<AddProductPage> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(10),
-            // color: DefaultCustomTheme.kWelcomePageBackground,
-            // width: double.infinity,
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () {
-                    _showPicker(context);
-                    // _imageFromCamera();
-                    // _imageFromGallery();
-                  },
-                  icon: Icon(Icons.camera_alt),
-                  // label: Text("label"),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _showPicker(context);
+                      },
+                      icon: Icon(Icons.camera_alt),
+                    ),
+                    Text("Добавить фото товара")
+                  ],
                 ),
                 Container(
                   width: 300,
                   height: 250,
-                  child: _image == null ?  SizedBox() : Image.file(_image),
+                  child: _image == null ? SizedBox() : Image.file(_image),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
                   // width:250,
                   child: TextField(
                     controller: _nameEditingController,
-                    // maxLength: 10,
-                    // autofocus: true,
                     textAlign: TextAlign.start,
-                    // keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      // prefix: Text("+7 "),
-                      // labelText: "Номер телефона",
                       hintText: "Название ",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       counterText: '',
                     ),
-                    // inputFormatters:[ PhoneNumberTextInputFormatter()],
                     onChanged: (value) {},
                   ),
                 ),
                 SizedBox(height: 5),
                 Container(
-                  // width:250,
                   child: TextField(
                     controller: _descriptionEditingController,
-                    // maxLength: 10,
-                    // autofocus: true,
                     maxLines: 5,
                     textAlign: TextAlign.start,
-                    // keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      // prefix: Text("+7 "),
-                      // labelText: "Номер телефона",
                       hintText: "Описание",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       // counterText: '',
                     ),
-                    // inputFormatters:[ PhoneNumberTextInputFormatter()],
                     onChanged: (value) {},
                   ),
                 ),
                 SizedBox(height: 5),
                 Container(
-                  // width:250,
                   child: TextField(
                     controller: _barcodeEditingController,
                     maxLength: 14,
-                    // autofocus: true,
                     textAlign: TextAlign.start,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      // prefix: Text("+7 "),
-                      // labelText: "Номер телефона",
                       hintText: "Штрих-код товара",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       counterText: '',
                     ),
-                    // inputFormatters:[ PhoneNumberTextInputFormatter()],
                     onChanged: (value) {},
                   ),
                 ),
+
+                Row(children: [
+                  Radio(
+                    value: 3,
+                    groupValue: _radioValue,
+                    onChanged: _handleRadioValueChange,
+                  ),
+                  Text("покупать"),
+                  Radio(
+                    value: 2,
+                    groupValue: _radioValue,
+                    onChanged: _handleRadioValueChange,
+                  ),
+                  Text("иногда"),
+                  Radio(
+                    value: 1,
+                    groupValue: _radioValue,
+                    onChanged: _handleRadioValueChange,
+                  ),
+                  Text("не покупать"),
+                ]),
+
                 ElevatedButton(
-                  // style: ButtonStyle(
-                  //   backgroundColor: MaterialStateProperty.all(
-                  //       DefaultCustomTheme.kGiftCapColor),
-                  // ),
-
                   onPressed: () async {
-
                     // final newImage = await _image.copy(appDocPath+"/");
                     // final newImage =  await _image.copy(appDocPath+"/4491.jpg");
                     //  Future.delayed(Duration(seconds: 1),() async {
-                     _image.copy(appDocPath+"/4491.jpg").then((newImage) {
-                     //   final newImage =  await _image.copy(appDocPath+"/4491.jpg");
-                     //   final newImage =  await _image.copy(appDocPath);
-                     //   final newImage =  await _image.copy(appDocPath+"/");
+                    _image.copy(appDocPath + "/4491.jpg").then((newImage) {
+                      //   final newImage =  await _image.copy(appDocPath+"/4491.jpg");
+                      //   final newImage =  await _image.copy(appDocPath);
+                      //   final newImage =  await _image.copy(appDocPath+"/");
 
-                       // moveFile(_image,appDocPath+"/4491.jpg").then((newImage) {
+                      // moveFile(_image,appDocPath+"/4491.jpg").then((newImage) {
 
-                         final ProductModel productModel = ProductModel(
-                           id: 4,
-                           status: 4,
-                           name: _nameEditingController.text.toString(),
-                           description: _descriptionEditingController.text.toString(),
-                           barcode: _barcodeEditingController.text.toString(),
-                           pathToImage: newImage == null ?  'assets/images/banan.jpg' : newImage.path,
-                           // pathToImage: _image == null ?  'assets/images/banan.jpg' : _image.path,
-                           // pathToImage: ,
-                         );
+                      final ProductModel productModel = ProductModel(
+                        id: 4,
+                        status: _radioValue,
+                        name: _nameEditingController.text.toString(),
+                        description:
+                            _descriptionEditingController.text.toString(),
+                        barcode: _barcodeEditingController.text.toString(),
+                        pathToImage: newImage == null
+                            ? 'assets/images/banan.jpg'
+                            : newImage.path,
+                        // pathToImage: _image == null ?  'assets/images/banan.jpg' : _image.path,
+                        // pathToImage: ,
+                      );
 
-                         print(productModel);
-                         Navigator.pop(context, productModel);
-                       }
-                       );
+                      print(productModel);
+                      Navigator.pop(context, productModel);
+                    });
 
-
-
-                     // });
+                    // });
 
                     // Navigator.pushReplacementNamed(context,FlyerPage.routeName,arguments: _textEditingController.text);
                     // Navigator.pop(
