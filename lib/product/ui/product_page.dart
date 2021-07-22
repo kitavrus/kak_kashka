@@ -4,12 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:kak_kashka/product/bloc/product_bloc.dart';
-// import 'package:kak_kashka/product/bloc/product_event.dart';
 import 'package:kak_kashka/product/cubit/product_state.dart';
 import 'package:kak_kashka/product/cubit/product_cubit.dart';
 import 'package:kak_kashka/product/entity/product_entity.dart';
-// import 'package:kak_kashka/product/model/product_model.dart';
+
 import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kak_kashka/product/ui/add_product_page.dart';
@@ -20,17 +18,12 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build Product');
-    // final _bloc  = BlocProvider.of<ProductCubit>(context);
-    return MultiBlocProvider(
-        // return ProductPageBlocProvider(
-        providers: [
-          // BlocProvider<ProductBloc>(
-          BlocProvider<ProductCubit>(
-            create: (context) =>
-                // ProductBloc(productRepository: ProductRepository())..add(ProductInitEvent())),
-                ProductCubit(ProductRepository())..getProductList(),
-          ),
-        ], child: ProductPageView());
+    return MultiBlocProvider(providers: [
+      BlocProvider<ProductCubit>(
+        create: (context) =>
+            ProductCubit(ProductRepository())..getProductList(),
+      ),
+    ], child: ProductPageView());
   }
 }
 
@@ -40,7 +33,7 @@ class ProductPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Product'),
@@ -55,8 +48,6 @@ class ProductPageView extends StatelessWidget {
             print("FloatingActionButton: $result");
 
             BlocProvider.of<ProductCubit>(context).addProduct(result);
-            // BlocProvider.of<ProductCubit>(context, listen: false).addProduct(result);
-            // _bloc.addProduct(result);
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.blue,
@@ -90,27 +81,6 @@ class ProductPageView extends StatelessWidget {
               default:
                 return _showEmpty("NO data");
             }
-
-            // if (state is ProductLoading) {
-            //   print('state ProductLoadingState');
-            //   return _loadingIndicator();
-            // } else if (state is ProductError) {
-            //   print('state ProductErrorState');
-            //   return _showError(state.message);
-            // }
-
-            // if (state is ProductSuccess) {
-            //   print('state ProductSuccess');
-            //   productList = state.productList;
-            // }  else  if (state is ProductDelete) {
-            //   print('state ProductDelete');
-            //   productList = state.productList;
-            // }else  if (state is ProductAdd) {
-            //   print('state ProductAdd');
-            //   productList = state.productList;
-            // }
-
-            return ProductList(productList: productList);
           },
         ),
       ),
@@ -122,7 +92,7 @@ class ProductPageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-            labelText: "Поиск ...",
+          labelText: "Поиск ...",
           // filled: true,
         ),
         onChanged: (text) {
@@ -175,27 +145,9 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     print("build: ProductList ");
 
-    // Widget build(BuildContext context) {
-    //   return GestureDetector(
-    //     onTap: () {
-    //       FocusScopeNode currentFocus = FocusScope.of(context);
-    //
-    //       if (!currentFocus.hasPrimaryFocus) {
-    //         currentFocus.unfocus();
-    //       }
-    //     },
-    //     child: MaterialApp(
-    //       title: 'Flutter Demo',
-    //       theme: ThemeData(
-    //         primarySwatch: Colors.blue,
-    //       ),
-    //       home: MyHomePage(),
-    //     ),
-    //   );
-    // }
-
     return ListView.separated(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag, // не работает как я хочу (
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      // не работает как я хочу (
       itemCount: productList.length,
       itemBuilder: (context, index) {
         final product = productList[index];
@@ -261,8 +213,8 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Hero(
-          tag: 'prod-image'+productModel.id.toString(),
-          child: _getImage(productModel),
+        tag: 'prod-image' + productModel.id.toString(),
+        child: _getImage(productModel),
       ),
       title: Text(productModel.name),
       subtitle: Text(productModel.description),
@@ -283,7 +235,7 @@ class ProductCard extends StatelessWidget {
   Color _colorByStatus(ProductEntity productModel) {
     final _color;
 
-    switch(productModel.status) {
+    switch (productModel.status) {
       case 0:
         _color = Colors.white;
         break;
@@ -304,7 +256,9 @@ class ProductCard extends StatelessWidget {
 
   Widget _getImage(ProductEntity productModel) {
     return SizedBox(
-      child: _imagePathType(productModel.pathToImage) == "assets" ? Image.asset(productModel.pathToImage) : Image.file(File(productModel.pathToImage)),
+      child: _imagePathType(productModel.pathToImage) == "assets"
+          ? Image.asset(productModel.pathToImage)
+          : Image.file(File(productModel.pathToImage)),
       width: 50,
       height: 50,
     );
@@ -313,7 +267,7 @@ class ProductCard extends StatelessWidget {
   String _imagePathType(String pathToImage) {
     String pathToImage = productModel.pathToImage;
     List<String> splitPath = path.split(pathToImage);
-    if(splitPath.first == "assets") {
+    if (splitPath.first == "assets") {
       return 'assets';
     }
     return 'file';
