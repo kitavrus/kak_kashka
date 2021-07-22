@@ -211,24 +211,31 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Hero(
-        tag: 'prod-image' + productModel.id.toString(),
-        child: _getImage(productModel),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white,_colorByStatus(productModel)],
+        )
       ),
-      title: Text(productModel.name),
-      subtitle: Text(productModel.description),
-      trailing: Icon(Icons.chevron_right),
-      tileColor: _colorByStatus(productModel),
-      onTap: () {
-        print("onTap: " + productModel.name);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetail(productModel: productModel),
-          ),
-        );
-      },
+      child: ListTile(
+        leading: Hero(
+          tag: 'prod-image' + productModel.id.toString(),
+          child: _getImage(productModel),
+        ),
+        title: Text(productModel.name),
+        subtitle: Text(productModel.description),
+        trailing: Icon(Icons.chevron_right),
+        // tileColor: _colorByStatus(productModel),
+        onTap: () {
+          print("onTap: " + productModel.name);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetail(productModel: productModel),
+            ),
+          );
+        },
+      ),
     );
   }
 

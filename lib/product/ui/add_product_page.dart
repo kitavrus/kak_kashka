@@ -91,7 +91,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     controller: _nameEditingController,
                     textAlign: TextAlign.start,
                     decoration: InputDecoration(
-                      hintText: "Название ",
+                      labelText: "Название ",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       counterText: '',
@@ -106,7 +106,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     maxLines: 5,
                     textAlign: TextAlign.start,
                     decoration: InputDecoration(
-                      hintText: "Описание",
+                      labelText: "Описание",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       // counterText: '',
@@ -122,7 +122,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     textAlign: TextAlign.start,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      hintText: "Штрих-код товара",
+                      labelText: "Штрих-код товара",
                       border: OutlineInputBorder(),
                       contentPadding: const EdgeInsets.all(5),
                       counterText: '',
@@ -130,7 +130,10 @@ class _AddProductPageState extends State<AddProductPage> {
                     onChanged: (value) {},
                   ),
                 ),
-                Row(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
                   Radio(
                     value: 3,
                     groupValue: _radioValue,
