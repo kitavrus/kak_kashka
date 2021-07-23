@@ -46,8 +46,9 @@ class ProductPageView extends StatelessWidget {
               MaterialPageRoute(builder: (context) => AddProductPage()),
             );
             print("FloatingActionButton: $result");
-
-            BlocProvider.of<ProductCubit>(context).addProduct(result);
+            if(result != null) {
+              BlocProvider.of<ProductCubit>(context).addProduct(result);
+            }
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.blue,
@@ -225,7 +226,6 @@ class ProductCard extends StatelessWidget {
         title: Text(productModel.name),
         subtitle: Text(productModel.description),
         trailing: Icon(Icons.chevron_right),
-        // tileColor: _colorByStatus(productModel),
         onTap: () {
           print("onTap: " + productModel.name);
           Navigator.push(

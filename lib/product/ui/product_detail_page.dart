@@ -6,7 +6,8 @@ class ProductDetail extends StatelessWidget {
 
   const ProductDetail({Key? key, required this.productModel}) : super(key: key);
 
- Future<void> _displayDialog(BuildContext context, ProductEntity productModel) {
+  Future<void> _displayDialog(
+      BuildContext context, ProductEntity productModel) {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
@@ -35,7 +36,10 @@ class ProductDetail extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                child: Icon(Icons.close,color: Colors.white,),
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
@@ -107,15 +111,23 @@ class ProductDetail extends StatelessWidget {
                           height: 500,
                           width: double.infinity,
                           padding: EdgeInsets.symmetric(vertical: 30),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(40),
-                                topRight: Radius.circular(40),
-                              ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(40),
+                                    topRight: Radius.circular(40),
                             ),
+                            color: Colors.white,
                           ),
+
+                          // decoration: ShapeDecoration(
+                          //   color: Colors.white,
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.only(
+                          //       topLeft: Radius.circular(40),
+                          //       topRight: Radius.circular(40),
+                          //     ),
+                          //   ),
+                          // ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

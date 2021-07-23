@@ -48,118 +48,14 @@ class _AddProductPageState extends State<AddProductPage> {
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 250,
-                  decoration: ShapeDecoration(
-                    color: Colors.grey[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              _showPicker(context);
-                            },
-                            icon: Icon(Icons.camera_alt),
-                          ),
-                          Text("Добавить фото товара")
-                        ],
-                      ),
-                      _image == null ? SizedBox() : SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          child: Image.file(_image)
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  // width:250,
-                  child: TextField(
-                    controller: _nameEditingController,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                      labelText: "Название ",
-                      border: OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.all(5),
-                      counterText: '',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  child: TextField(
-                    controller: _descriptionEditingController,
-                    maxLines: 5,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                      labelText: "Описание",
-                      border: OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.all(5),
-                      // counterText: '',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  child: TextField(
-                    controller: _barcodeEditingController,
-                    maxLength: 14,
-                    textAlign: TextAlign.start,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: "Штрих-код товара",
-                      border: OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.all(5),
-                      counterText: '',
-                    ),
-                    onChanged: (value) {},
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                  Radio(
-                    value: 3,
-                    groupValue: _radioValue,
-                    onChanged: _handleRadioValueChange,
-                  ),
-                  Text("покупать"),
-                  Radio(
-                    value: 2,
-                    groupValue: _radioValue,
-                    onChanged: _handleRadioValueChange,
-                  ),
-                  Text("иногда"),
-                  Radio(
-                    value: 1,
-                    groupValue: _radioValue,
-                    onChanged: _handleRadioValueChange,
-                  ),
-                  Text("не покупать"),
-                ]),
+                _selectPhoto(context),
+                _textFields(context),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width:double.infinity),
+                  constraints: BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
                     child: Text(
                       "Добавить",
                     ),
-                    // style: ButtonStyle(),
                     onPressed: () async {
                       // final newImage = await _image.copy(appDocPath+"/");
                       // final newImage =  await _image.copy(appDocPath+"/4491.jpg");
@@ -186,14 +82,135 @@ class _AddProductPageState extends State<AddProductPage> {
                         print(productModel);
                         Navigator.pop(context, productModel);
                       });
-
                     },
-
                   ),
                 ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Container _textFields(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            // width:250,
+            child: TextField(
+              controller: _nameEditingController,
+              textAlign: TextAlign.start,
+              decoration: InputDecoration(
+                labelText: "Название ",
+                border: OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(5),
+                counterText: '',
+              ),
+              onChanged: (value) {},
+            ),
+          ),
+          SizedBox(height: 5),
+          Container(
+            child: TextField(
+              controller: _descriptionEditingController,
+              maxLines: 5,
+              textAlign: TextAlign.start,
+              decoration: InputDecoration(
+                labelText: "Описание",
+                border: OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(5),
+                // counterText: '',
+              ),
+              onChanged: (value) {},
+            ),
+          ),
+          SizedBox(height: 5),
+          Container(
+            child: TextField(
+              controller: _barcodeEditingController,
+              maxLength: 14,
+              textAlign: TextAlign.start,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: "Штрих-код товара",
+                border: OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(5),
+                counterText: '',
+              ),
+              onChanged: (value) {},
+            ),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Radio(
+                  value: 3,
+                  groupValue: _radioValue,
+                  onChanged: _handleRadioValueChange,
+                ),
+                Text("покупать"),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Radio(
+                value: 2,
+                groupValue: _radioValue,
+                onChanged: _handleRadioValueChange,
+              ),
+              Text("иногда"),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Radio(
+                value: 1,
+                groupValue: _radioValue,
+                onChanged: _handleRadioValueChange,
+              ),
+              Text("не покупать"),
+            ]),
+          ]),
+        ],
+      ),
+    );
+  }
+
+  Widget _selectPhoto(BuildContext context) {
+    return GestureDetector(
+      onTap: () {_showPicker(context); },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 250,
+        decoration: ShapeDecoration(
+          color: Colors.grey[200],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.camera_alt),
+                SizedBox(width: 5,),
+                Text("Добавить фото товара")
+              ],
+            ),
+            _image == null
+                ? SizedBox()
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    child: Image.file(_image))
+          ],
         ),
       ),
     );
@@ -250,31 +267,31 @@ class _AddProductPageState extends State<AddProductPage> {
 
   void _showPicker(context) {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: Wrap(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.folder),
-                  title: Text("Gallery "),
-                  onTap: () {
-                    _imageFromGallery();
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.camera_alt),
-                  title: Text("Camera "),
-                  onTap: () {
-                    _imageFromCamera();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          );
-        },
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.folder),
+                title: Text("Gallery "),
+                onTap: () {
+                  _imageFromGallery();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text("Camera "),
+                onTap: () {
+                  _imageFromCamera();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
