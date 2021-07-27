@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:kak_kashka/data/json/json_category_local_data.dart';
-import 'package:kak_kashka/model/category_model.dart';
+import 'package:kak_kashka/category/data/json/json_category_local_data.dart';
+import 'package:kak_kashka/category/model/category_model.dart';
 
 class CategoryRepository {
 

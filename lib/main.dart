@@ -15,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Как кашка?',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+        theme: ThemeData.light().copyWith(
+          // primarySwatch: Colors.blue,
+        ),
+      darkTheme: ThemeData.dark(),
       home: TabBottomContainer(),
     );
   }
