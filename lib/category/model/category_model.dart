@@ -1,4 +1,4 @@
-import 'package:kak_kashka/entity/category_entity.dart';
+import 'package:kak_kashka/category/entity/category_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_model.g.dart';
