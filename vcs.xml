@@ -74,6 +74,10 @@
           <option name="url" value="https://github.com/muhammadtalhasultan/task_management_app" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/themaaz32/wallet_app" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\flutter_project" />
