@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/product/repository/product_repository.dart';
-import 'package:kak_kashka/ui/page/category/category_page.dart';
 import 'package:kak_kashka/ui/page/home/home_page.dart';
 import 'package:kak_kashka/product/ui/product_page.dart';
+import 'package:kak_kashka/category/ui/category_page.dart';
 
 void main() {
   runApp(MyApp());
