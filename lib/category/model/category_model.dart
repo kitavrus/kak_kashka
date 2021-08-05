@@ -41,6 +41,4 @@ class CategoryModel extends CategoryEntity {
       pathToImage: '-EMPTY-PATH-TO-IMAGE-',
     );
   }
-
 }
-

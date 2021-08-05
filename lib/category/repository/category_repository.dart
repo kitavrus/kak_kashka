@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:kak_kashka/category/data/category_local_data_layer.dart';
 import 'package:kak_kashka/category/model/category_model.dart';
 
@@ -7,6 +6,10 @@ class CategoryRepository {
 
   Future<List<CategoryModel>> getAll() async {
     // throw Exception("Error on server");
+
+    // print((await CategoryLocalDataLayer().getData()));
+    print((await CategoryLocalDataLayer().getData()).map((row) => CategoryModel.fromJson(row),).toList());
+    // return <CategoryModel>[];
     return  (await CategoryLocalDataLayer().getData()).map((row) => CategoryModel.fromJson(row),).toList();
   }
 
