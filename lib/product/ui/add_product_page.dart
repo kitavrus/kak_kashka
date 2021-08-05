@@ -29,6 +29,8 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _barcodeEditingController =
       TextEditingController();
 
+  final TextEditingController _selectCategoryEditingController = TextEditingController();
+
   int _radioValue = 0;
   String appDocPath = '';
   var _image;
@@ -179,27 +181,47 @@ class _AddProductPageState extends State<AddProductPage> {
               Text("не покупать"),
             ]),
           ]),
-          GestureDetector(
-            onTap: () {
+          Container(
+            child: TextField(
+              onTap: () {
                 _showSelectCategory(context);
                 print(" Выбрать категории ");
               },
-            child: Container(
-              padding: EdgeInsets.only(left: 5),
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              decoration: ShapeDecoration(
-                color: Colors.grey[200],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
+              readOnly: true,
+              controller: _selectCategoryEditingController,
+              // maxLength: 14,
+              textAlign: TextAlign.start,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: "Выбрать категории",
+                border: OutlineInputBorder(),
+                contentPadding: const EdgeInsets.all(5),
+                counterText: '',
               ),
-              child: Align(
-                  alignment:Alignment.centerLeft,
-                  child: Text("Выбрать категории"),
-              ),
+              onChanged: (value) {},
             ),
           ),
+          // GestureDetector(
+          //   onTap: () {
+          //       _showSelectCategory(context);
+          //       print(" Выбрать категории ");
+          //     },
+          //   child: Container(
+          //     padding: EdgeInsets.only(left: 5),
+          //     width: MediaQuery.of(context).size.width,
+          //     height: 50,
+          //     decoration: ShapeDecoration(
+          //       color: Colors.grey[200],
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.all(Radius.circular(10)),
+          //       ),
+          //     ),
+          //     child: Align(
+          //         alignment:Alignment.centerLeft,
+          //         child: Text("Выбрать категории"),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -328,14 +350,18 @@ class _AddProductPageState extends State<AddProductPage> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       backgroundColor: Colors.white,
-
       builder: (BuildContext context) {
         return SafeArea(
           child: ProductCategoryPage(),
         );
       },
     );
-   answer.then((value) => print(value));
+   answer.then((value) {
+     // print(value);
+     if(value != null) {
+       _selectCategoryEditingController.text = value;
+     }
+   } );
   }
 }
 
@@ -481,7 +507,7 @@ class ProductCard extends StatelessWidget {
         trailing: Icon(Icons.chevron_right),
         onTap: () {
           print("onTap: " + productModel.name);
-          Navigator.pop(context,productModel);
+          Navigator.pop(context,productModel.name);
           // Navigator.pop(context,productModel.id);
           // Navigator.push(
           //   context,
