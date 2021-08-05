@@ -344,7 +344,8 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void _showSelectCategory(context)  {
-   Future answer = showModalBottomSheet(
+   // Future answer = showModalBottomSheet(
+   showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -355,14 +356,23 @@ class _AddProductPageState extends State<AddProductPage> {
           child: ProductCategoryPage(),
         );
       },
-    );
-   answer.then((value) {
-     // print(value);
-     if(value != null) {
-       _selectCategoryEditingController.text = value;
-     }
-   } );
-  }
+    ).then((value) {
+        print(value);
+       if(value != null) {
+         _selectCategoryEditingController.text = value;
+       }
+     });
+     // answer.then((value) {
+     //   // print(value);
+     //   if(value != null) {
+     //     _selectCategoryEditingController.text = value;
+     //   }
+     // },
+     // );
+
+
+   }
+
 }
 
 class ProductCategoryPage extends StatelessWidget {
