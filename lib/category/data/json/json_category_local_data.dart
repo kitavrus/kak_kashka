@@ -20,4 +20,11 @@ final jsonCategoryLocalData = [
     'description': 'Мыло пахучее 3',
     'pathToImage': 'assets/images/plate_of_fruit.png',
   },
+  {
+    'id': 4,
+    'status': 4,
+    'name': 'milo',
+    'description': 'shampun 3',
+    'pathToImage': 'assets/images/plate_of_fruit.png',
+  },
 ];

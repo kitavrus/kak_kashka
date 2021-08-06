@@ -46,7 +46,7 @@ class CategoryPageView extends StatelessWidget {
               MaterialPageRoute(builder: (context) => AddCategoryPage()),
             );
             print("FloatingActionButton: $result");
-            if(result != null) {
+            if (result != null) {
               BlocProvider.of<CategoryCubit>(context).addCategory(result);
             }
           },
@@ -231,7 +231,8 @@ class CategoryCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CategoryDetail(categoryModel: categoryModel),
+              builder: (context) =>
+                  CategoryDetail(categoryModel: categoryModel),
             ),
           );
         },
@@ -239,22 +240,22 @@ class CategoryCard extends StatelessWidget {
     );
   }
 
-  // Widget _getImage(CategoryEntity categoryModel) {
-  //   return SizedBox(
-  //     child: _imagePathType(categoryModel.pathToImage) == "assets"
-  //         ? Image.asset(categoryModel.pathToImage)
-  //         : Image.file(File(categoryModel.pathToImage)),
-  //     width: 50,
-  //     height: 50,
-  //   );
-  // }
+// Widget _getImage(CategoryEntity categoryModel) {
+//   return SizedBox(
+//     child: _imagePathType(categoryModel.pathToImage) == "assets"
+//         ? Image.asset(categoryModel.pathToImage)
+//         : Image.file(File(categoryModel.pathToImage)),
+//     width: 50,
+//     height: 50,
+//   );
+// }
 
-  // String _imagePathType(String pathToImage) {
-  //   String pathToImage = categoryModel.pathToImage;
-  //   List<String> splitPath = path.split(pathToImage);
-  //   if (splitPath.first == "assets") {
-  //     return 'assets';
-  //   }
-  //   return 'file';
-  // }
+// String _imagePathType(String pathToImage) {
+//   String pathToImage = categoryModel.pathToImage;
+//   List<String> splitPath = path.split(pathToImage);
+//   if (splitPath.first == "assets") {
+//     return 'assets';
+//   }
+//   return 'file';
+// }
 }

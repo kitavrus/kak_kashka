@@ -33,7 +33,7 @@ final jsonProductLocalData = [
   },
 
   {
-    'id': 4,
+    'id': 5,
     'status': 1,
     'name': 'Мыло',
     'description': 'Мыло пахучее',
@@ -41,7 +41,7 @@ final jsonProductLocalData = [
     'pathToImage': 'assets/images/banan.jpg',
   },
   {
-    'id': 5,
+    'id': 6,
     'status': 2,
     'name': 'Мыло 2',
     'description': 'Мыло пахучее 2',
@@ -49,7 +49,7 @@ final jsonProductLocalData = [
     'pathToImage': 'assets/images/banan.jpg',
   },
   {
-    'id': 6,
+    'id': 7,
     'status': 3,
     'name': 'Мыло 3',
     'description': 'Мыло пахучее 3',
@@ -57,7 +57,7 @@ final jsonProductLocalData = [
     'pathToImage': 'assets/images/banan.jpg',
   },
   {
-    'id': 7,
+    'id': 8,
     'status': 0,
     'name': 'Банан ',
     'description': 'Банан пахучий',

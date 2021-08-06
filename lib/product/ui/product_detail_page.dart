@@ -113,8 +113,8 @@ class ProductDetail extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 30),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(40),
-                                    topRight: Radius.circular(40),
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
                             ),
                             color: Colors.white,
                           ),

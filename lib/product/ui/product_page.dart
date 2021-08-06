@@ -46,7 +46,7 @@ class ProductPageView extends StatelessWidget {
               MaterialPageRoute(builder: (context) => AddProductPage()),
             );
             print("FloatingActionButton: $result");
-            if(result != null) {
+            if (result != null) {
               BlocProvider.of<ProductCubit>(context).addProduct(result);
             }
           },
@@ -214,10 +214,9 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.white,_colorByStatus(productModel)],
-        )
-      ),
+          gradient: LinearGradient(
+        colors: [Colors.white, _colorByStatus(productModel)],
+      )),
       child: ListTile(
         leading: Hero(
           tag: 'prod-image' + productModel.id.toString(),

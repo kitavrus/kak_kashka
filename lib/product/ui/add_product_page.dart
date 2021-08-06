@@ -4,6 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kak_kashka/category/cubit/category_cubit.dart';
+import 'package:kak_kashka/category/cubit/category_state.dart';
+import 'package:kak_kashka/category/entity/category_entity.dart';
+import 'package:kak_kashka/category/repository/category_repository.dart';
 import 'package:kak_kashka/product/cubit/product_cubit.dart';
 import 'package:kak_kashka/product/cubit/product_state.dart';
 import 'package:kak_kashka/product/entity/product_entity.dart';
@@ -29,7 +33,8 @@ class _AddProductPageState extends State<AddProductPage> {
   final TextEditingController _barcodeEditingController =
       TextEditingController();
 
-  final TextEditingController _selectCategoryEditingController = TextEditingController();
+  final TextEditingController _selectCategoryEditingController =
+      TextEditingController();
 
   int _radioValue = 0;
   String appDocPath = '';
@@ -229,7 +234,9 @@ class _AddProductPageState extends State<AddProductPage> {
 
   Widget _selectPhoto(BuildContext context) {
     return GestureDetector(
-      onTap: () {_showPicker(context); },
+      onTap: () {
+        _showPicker(context);
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 250,
@@ -248,7 +255,9 @@ class _AddProductPageState extends State<AddProductPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.camera_alt),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("Добавить фото товара")
               ],
             ),
@@ -343,9 +352,8 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  void _showSelectCategory(context)  {
-   // Future answer = showModalBottomSheet(
-   showModalBottomSheet(
+  void _showSelectCategory(context) {
+    showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -353,76 +361,69 @@ class _AddProductPageState extends State<AddProductPage> {
       backgroundColor: Colors.white,
       builder: (BuildContext context) {
         return SafeArea(
-          child: ProductCategoryPage(),
+          child: CategoryPage(),
         );
       },
     ).then((value) {
-        print(value);
-       if(value != null) {
-         _selectCategoryEditingController.text = value;
-       }
-     });
-     // answer.then((value) {
-     //   // print(value);
-     //   if(value != null) {
-     //     _selectCategoryEditingController.text = value;
-     //   }
-     // },
-     // );
-
-
-   }
-
-}
-
-class ProductCategoryPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    print('build Product');
-    return MultiBlocProvider(providers: [
-      BlocProvider<ProductCubit>(
-        create: (context) =>
-        ProductCubit(ProductRepository())..getProductList(),
-      ),
-    ], child: ProductPageView());
+      print(value);
+      if (value != null) {
+        _selectCategoryEditingController.text = value;
+      }
+    });
   }
 }
 
-class ProductPageView extends StatelessWidget {
-  const ProductPageView({Key? key}) : super(key: key);
+class CategoryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('build Category');
+    return MultiBlocProvider(providers: [
+      BlocProvider<CategoryCubit>(
+        create: (context) =>
+            CategoryCubit(CategoryRepository())..getCategoryList(),
+      ),
+    ], child: CategoryPageView());
+  }
+}
+
+class CategoryPageView extends StatelessWidget {
+  const CategoryPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductCubit, ProductState>(
-      builder: (context, state) {
-        List<ProductEntity> productList = [];
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: BlocBuilder<CategoryCubit, CategoryState>(
+        builder: (context, state) {
+          List<CategoryEntity> categoryList = [];
 
-        print("BlocBuilder: ");
-        print(state.status);
-        switch (state.status) {
-          case ProductStatus.initial:
-            return _loadingIndicator();
-          case ProductStatus.loading:
-            return _loadingIndicator();
-          case ProductStatus.failure:
-            return _showError(state.message);
+          print("BlocBuilder: ");
+          print(state.status);
+          switch (state.status) {
+            case CategoryStatus.initial:
+              return _loadingIndicator();
+            case CategoryStatus.loading:
+              return _loadingIndicator();
+            case CategoryStatus.failure:
+              return _showError(state.message);
 
-          case ProductStatus.success:
-            productList = state.productList;
+            case CategoryStatus.success:
+              categoryList = state.categoryList;
 
-            return Stack(
-              children: [
-                _showSearchBar(context),
-                Padding(
-                  padding: const EdgeInsets.only(top: 70),
-                  child: ProductList(productList: productList),
-                ),
-              ],
-            );
-          default:
-            return _showEmpty("NO data");
-        }
-      },
+              return Stack(
+                children: [
+                  _showSearchBar(context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 70),
+                    child: CategoryList(categoryList: categoryList),
+                  ),
+                ],
+              );
+            default:
+              return _showEmpty("NO data");
+          }
+        },
+      ),
     );
   }
 
@@ -435,7 +436,7 @@ class ProductPageView extends StatelessWidget {
           // filled: true,
         ),
         onChanged: (text) {
-          context.read<ProductCubit>().searchProduct(text);
+          context.read<CategoryCubit>().searchCategory(text);
         },
       ),
     );
@@ -475,22 +476,22 @@ class ProductPageView extends StatelessWidget {
   }
 }
 
-class ProductList extends StatelessWidget {
-  final List<ProductEntity> productList;
+class CategoryList extends StatelessWidget {
+  final List<CategoryEntity> categoryList;
 
-  const ProductList({Key? key, required this.productList}) : super(key: key);
+  const CategoryList({Key? key, required this.categoryList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("build: ProductList ");
+    print("build: CategoryList ");
 
     return ListView.separated(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      itemCount: productList.length,
+      itemCount: categoryList.length,
       itemBuilder: (context, index) {
-        final product = productList[index];
-        return ProductCard(
-          productModel: product,
+        final category = categoryList[index];
+        return CategoryCard(
+          categoryModel: category,
         );
       },
       separatorBuilder: (context, index) => Divider(),
@@ -498,76 +499,22 @@ class ProductList extends StatelessWidget {
   }
 }
 
-class ProductCard extends StatelessWidget {
-  final ProductEntity productModel;
+class CategoryCard extends StatelessWidget {
+  final CategoryEntity categoryModel;
 
-  const ProductCard({Key? key, required this.productModel}) : super(key: key);
+  const CategoryCard({Key? key, required this.categoryModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, _colorByStatus(productModel)],
-          )),
       child: ListTile(
-        leading: _getImage(productModel),
-        title: Text(productModel.name),
-        subtitle: Text(productModel.description),
-        trailing: Icon(Icons.chevron_right),
+        title: Text(categoryModel.name),
+        subtitle: Text(categoryModel.description),
         onTap: () {
-          print("onTap: " + productModel.name);
-          Navigator.pop(context,productModel.name);
-          // Navigator.pop(context,productModel.id);
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => ProductDetail(productModel: productModel),
-          //   ),
-          // );
+          print("onTap: " + categoryModel.name);
+          Navigator.pop(context, categoryModel.name);
         },
       ),
     );
-  }
-
-  Color _colorByStatus(ProductEntity productModel) {
-    final _color;
-
-    switch (productModel.status) {
-      case 0:
-        _color = Colors.white;
-        break;
-      case 1:
-        _color = Colors.red[200];
-        break;
-      case 2:
-        _color = Colors.yellow[200];
-        break;
-      case 3:
-        _color = Colors.green[200];
-        break;
-      default:
-        _color = Colors.white;
-    }
-    return _color;
-  }
-
-  Widget _getImage(ProductEntity productModel) {
-    return SizedBox(
-      child: _imagePathType(productModel.pathToImage) == "assets"
-          ? Image.asset(productModel.pathToImage)
-          : Image.file(File(productModel.pathToImage)),
-      width: 50,
-      height: 50,
-    );
-  }
-
-  String _imagePathType(String pathToImage) {
-    String pathToImage = productModel.pathToImage;
-    List<String> splitPath = path.split(pathToImage);
-    if (splitPath.first == "assets") {
-      return 'assets';
-    }
-    return 'file';
   }
 }
