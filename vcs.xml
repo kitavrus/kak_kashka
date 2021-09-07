@@ -90,6 +90,10 @@
           <option name="url" value="https://github.com/mkobuolys/flutter-design-patterns" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/JAICHANGPARK/flutter_notebook_15th_story" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\flutter_project" />
