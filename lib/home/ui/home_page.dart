@@ -25,11 +25,14 @@ class _HomePageState extends State<HomePage>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Category',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Category',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           CategoryList(),
@@ -64,12 +67,10 @@ class _CategoryListState extends State<CategoryList> {
             return SizedBox(
               height: 25,
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: category.length,
-                itemBuilder: (context, index) {
-                  return _buildItem(category[index], index);
-                },
-              ),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: category.length,
+                  itemBuilder: (context, index) =>
+                      _buildItem(category[index], index)),
             );
           }
           // if (snapshot.hasError) {
