@@ -15,10 +15,6 @@ class _HomePageState extends State<HomePage>
     print('initState Home');
   }
 
-  Future _loadCategory() async {
-    return await CategoryRepository().getAll();
-  }
-
   @override
   Widget build(BuildContext context) {
     print('build Home');
@@ -31,9 +27,12 @@ class _HomePageState extends State<HomePage>
         children: [
           Text(
             'Category',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          CategoryList(_loadCategory()),
+          CategoryList(),
         ],
       ),
     );
@@ -44,14 +43,14 @@ class _HomePageState extends State<HomePage>
 }
 
 class CategoryList extends StatelessWidget {
-  final categoryModelList;
-
-  CategoryList(this.categoryModelList);
+  Future _loadCategory() async {
+    return await CategoryRepository().getAll();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: categoryModelList,
+        future: _loadCategory(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return SizedBox(
@@ -60,16 +59,7 @@ class CategoryList extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      snapshot.data[index].name,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
+                  return _buildItem(snapshot.data[index]);
                 },
               ),
             );
@@ -78,5 +68,18 @@ class CategoryList extends StatelessWidget {
           return SizedBox.shrink();
           // }
         });
+  }
+
+  Widget _buildItem(category) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Text(
+        category.name,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }
