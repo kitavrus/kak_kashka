@@ -42,10 +42,17 @@ class _HomePageState extends State<HomePage>
   bool get wantKeepAlive => true;
 }
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends StatefulWidget {
+  @override
+  _CategoryListState createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
   Future _loadCategory() async {
     return await CategoryRepository().getAll();
   }
+
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +60,14 @@ class CategoryList extends StatelessWidget {
         future: _loadCategory(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
+            final category = snapshot.data;
             return SizedBox(
               height: 25,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data.length,
+                itemCount: category.length,
                 itemBuilder: (context, index) {
-                  return _buildItem(snapshot.data[index]);
+                  return _buildItem(category[index], index);
                 },
               ),
             );
@@ -70,14 +78,22 @@ class CategoryList extends StatelessWidget {
         });
   }
 
-  Widget _buildItem(category) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Text(
-        category.name,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+  Widget _buildItem(category, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Text(
+          category.name,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight:
+                selectedIndex == index ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );
