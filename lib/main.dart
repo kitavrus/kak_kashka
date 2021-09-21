@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/ui/page/home/home_page.dart';
-import 'package:kak_kashka/product/ui/product_page.dart';
 import 'package:kak_kashka/category/ui/category_page.dart';
+import 'package:kak_kashka/home/ui/home_page.dart';
+import 'package:kak_kashka/product/ui/product_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,14 +14,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Как кашка?',
-        theme: ThemeData.light().copyWith(
+      theme: ThemeData.light().copyWith(
           // primarySwatch: Colors.blue,
-        ),
+          ),
       darkTheme: ThemeData.dark(),
       home: TabBottomContainer(),
     );
   }
 }
+
 class TabBottomContainer extends StatefulWidget {
   const TabBottomContainer({Key? key}) : super(key: key);
 
@@ -58,11 +59,20 @@ class _TabBottomContainerState extends State<TabBottomContainer> {
         unselectedItemColor: Colors.green[400],
         backgroundColor: Theme.of(context).primaryColor,
         currentIndex: _tabIndex,
-        onTap:_onTap,
+        onTap: _onTap,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label:"Home", ),
-          BottomNavigationBarItem(icon: Icon(Icons.fmd_good_sharp),label:"Product",),
-          BottomNavigationBarItem(icon: Icon(Icons.category),label:"Category",),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fmd_good_sharp),
+            label: "Product",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: "Category",
+          ),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:kak_kashka/entity/shopping_list_entity.dart';
+import 'package:kak_kashka/shoppingList/entity/shopping_list_entity.dart';
 
 part 'shopping_list_model.g.dart';
 
@@ -31,10 +31,10 @@ class ShoppingListModel extends ShoppingListEntity {
 
   factory ShoppingListModel.empty() {
     return ShoppingListModel(
-      id:0,
-      status:0,
-      name:'-EMPTY-NAME-',
-      description:'-EMPTY-DESCRIPTION-',
+      id: 0,
+      status: 0,
+      name: '-EMPTY-NAME-',
+      description: '-EMPTY-DESCRIPTION-',
       pathToImage: '-EMPTY-PATH-TO-IMAGE-',
     );
   }

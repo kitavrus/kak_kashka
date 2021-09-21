@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kak_kashka">
+<!--    android:installLocation="auto"-->
+    <!-- make sure added this was missing for me -->
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
    <application
@@ -14,6 +17,13 @@
             android:hardwareAccelerated="true"
             android:requestLegacyExternalStorage="true"
             android:windowSoftInputMode="adjustResize">
+<!--            <meta-data-->
+<!--                android:name="com.google.android.gms.version"-->
+<!--                android:value="@integer/google_play_services_version" /> &lt;!&ndash;version&ndash;&gt;-->
+<!--            <meta-data-->
+<!--                android:name="com.google.android.gms.vision.DEPENDENCIES"-->
+<!--                android:value="barcode" /> -->
+            <!--barcode,face,ocr-->
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -41,6 +51,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+<!--       <meta-data-->
+<!--           android:name="com.google.android.gms.version"-->
+<!--           android:value="@integer/google_play_services_version" /> &lt;!&ndash;version&ndash;&gt;-->
+<!--       <meta-data-->
+<!--           android:name="com.google.android.gms.vision.DEPENDENCIES"-->
+<!--           android:value="barcode" />-->
 
     </application>
 </manifest>
