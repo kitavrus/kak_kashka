@@ -1,11 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:kak_kashka/entity/shopping_list_item_entity.dart';
+import 'package:kak_kashka/shoppingList/entity/shopping_list_item_entity.dart';
 
 part 'shopping_list_item_model.g.dart';
 
 @JsonSerializable()
-
- class ShoppingListItemModel extends ShoppingListItemEntity {
+class ShoppingListItemModel extends ShoppingListItemEntity {
   final int id;
   final int shoppingListId;
   final int status;
@@ -20,14 +19,14 @@ part 'shopping_list_item_model.g.dart';
     required this.name,
     required this.description,
     required this.pathToImage,
-  }): super(
-    id: id,
-    status: status,
-    shoppingListId: shoppingListId,
-    name: name,
-    description: description,
-    pathToImage: pathToImage,
-  );
+  }) : super(
+          id: id,
+          status: status,
+          shoppingListId: shoppingListId,
+          name: name,
+          description: description,
+          pathToImage: pathToImage,
+        );
 
   factory ShoppingListItemModel.fromJson(Map<String, dynamic> json) =>
       _$ShoppingListItemModelFromJson(json);
@@ -36,13 +35,12 @@ part 'shopping_list_item_model.g.dart';
 
   factory ShoppingListItemModel.empty() {
     return ShoppingListItemModel(
-      id:0,
-      status:0,
-      shoppingListId:0,
-      name:'-EMPTY-NAME-',
-      description:'-EMPTY-DESCRIPTION-',
+      id: 0,
+      status: 0,
+      shoppingListId: 0,
+      name: '-EMPTY-NAME-',
+      description: '-EMPTY-DESCRIPTION-',
       pathToImage: '-EMPTY-PATH-TO-IMAGE-',
     );
   }
-
 }
