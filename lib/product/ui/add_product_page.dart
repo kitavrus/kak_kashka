@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kak_kashka/category/cubit/category_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:kak_kashka/product/ui/product_detail_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class AddProductPage extends StatefulWidget {
   AddProductPage({Key? key}) : super(key: key);
@@ -144,8 +146,13 @@ class _AddProductPageState extends State<AddProductPage> {
           SizedBox(height: 5),
           Container(
             child: TextField(
+              onTap: () {
+                _showScanBarcode();
+                print(" Штрих-код товара ");
+              },
+              readOnly: true,
               controller: _barcodeEditingController,
-              maxLength: 14,
+              // maxLength: 14,
               textAlign: TextAlign.start,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
@@ -157,6 +164,21 @@ class _AddProductPageState extends State<AddProductPage> {
               onChanged: (value) {},
             ),
           ),
+          // Container(
+          //   child: TextField(
+          //     controller: _barcodeEditingController,
+          //     maxLength: 14,
+          //     textAlign: TextAlign.start,
+          //     keyboardType: TextInputType.phone,
+          //     decoration: InputDecoration(
+          //       labelText: "Штрих-код товара",
+          //       border: OutlineInputBorder(),
+          //       contentPadding: const EdgeInsets.all(5),
+          //       counterText: '',
+          //     ),
+          //     onChanged: (value) {},
+          //   ),
+          // ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -350,6 +372,26 @@ class _AddProductPageState extends State<AddProductPage> {
         );
       },
     );
+  }
+
+  void _showScanBarcode() async  {
+    // FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", false, ScanMode.DEFAULT)?.listen((barcode) {
+    // final String scanResult = await FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.DEFAULT);
+    // _barcodeEditingController.text = scanResult;
+
+    String scanResult;
+
+    try {
+      scanResult = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", false, ScanMode.BARCODE);
+      print(_barcodeEditingController.text);
+    } on PlatformException {
+      scanResult = "нет возможности отсканировать";
+    }
+
+    if(!mounted) return;
+
+    _barcodeEditingController.text = scanResult;
   }
 
   void _showSelectCategory(context) {
