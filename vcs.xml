@@ -110,6 +110,10 @@
           <option name="url" value="https://github.com/pinkeshdarji/flutter_bloc_demo" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/nonybrighto/crate-and-barrel" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\flutter_project" />
