@@ -1,55 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
+
+import '../../product/entity/product_entity.dart';
 
 class ProductDetail extends StatelessWidget {
   final ProductEntity productModel;
 
   const ProductDetail({Key? key, required this.productModel}) : super(key: key);
-
-  Future<void> _displayDialog(
-      BuildContext context, ProductEntity productModel) {
-    return showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      transitionDuration: Duration(milliseconds: 300),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
-        );
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return SafeArea(
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(5),
-                color: Colors.black45,
-                child: Image.asset(
-                  productModel.pathToImage,
-                  // fit: BoxFit.cover,
-                ),
-              ),
-              GestureDetector(
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +115,51 @@ class ProductDetail extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _displayDialog(
+      BuildContext context, ProductEntity productModel) {
+    return showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      transitionDuration: Duration(milliseconds: 300),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+        );
+      },
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return SafeArea(
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.all(5),
+                color: Colors.black45,
+                child: Image.asset(
+                  productModel.pathToImage,
+                  // fit: BoxFit.cover,
+                ),
+              ),
+              GestureDetector(
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

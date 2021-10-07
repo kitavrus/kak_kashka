@@ -3,21 +3,19 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kak_kashka/category/cubit/category_cubit.dart';
-import 'package:kak_kashka/category/cubit/category_state.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-import 'package:kak_kashka/category/repository/category_repository.dart';
-import 'package:kak_kashka/product/cubit/product_cubit.dart';
-import 'package:kak_kashka/product/cubit/product_state.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
-import 'package:kak_kashka/product/model/product_model.dart';
-import 'package:kak_kashka/product/repository/product_repository.dart';
-import 'package:kak_kashka/product/ui/product_detail_page.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+import '../../category/cubit/category_cubit.dart';
+import '../../category/cubit/category_state.dart';
+import '../../category/entity/category_entity.dart';
+import '../../category/repository/category_repository.dart';
+import '../../common/widgets/show_empty_widget.dart';
+import '../../common/widgets/show_error_message_widget.dart';
+import '../../common/widgets/show_loading_indicator_widget.dart';
+import '../../product/model/product_model.dart';
 
 class AddProductPage extends StatefulWidget {
   AddProductPage({Key? key}) : super(key: key);
@@ -320,7 +318,7 @@ class _AddProductPageState extends State<AddProductPage> {
     appDocPath = appDocDir.path;
   }
 
-  _imageFromCamera() async {
+  void _imageFromCamera() async {
     final image = await ImagePicker()
         .getImage(source: ImageSource.camera, imageQuality: 50);
 
@@ -334,7 +332,7 @@ class _AddProductPageState extends State<AddProductPage> {
     }
   }
 
-  _imageFromGallery() async {
+  void _imageFromGallery() async {
     final image = await ImagePicker()
         .getImage(source: ImageSource.gallery, imageQuality: 50);
     if (image != null) {
@@ -374,7 +372,7 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  void _showScanBarcode() async  {
+  void _showScanBarcode() async {
     // FlutterBarcodeScanner.getBarcodeStreamReceiver("#ff6666", "Cancel", false, ScanMode.DEFAULT)?.listen((barcode) {
     // final String scanResult = await FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.DEFAULT);
     // _barcodeEditingController.text = scanResult;
@@ -389,7 +387,7 @@ class _AddProductPageState extends State<AddProductPage> {
       scanResult = "нет возможности отсканировать";
     }
 
-    if(!mounted) return;
+    if (!mounted) return;
 
     _barcodeEditingController.text = scanResult;
   }
@@ -443,11 +441,11 @@ class CategoryPageView extends StatelessWidget {
           print(state.status);
           switch (state.status) {
             case CategoryStatus.initial:
-              return _loadingIndicator();
+              return const ShowLoadingIndicatorWidget();
             case CategoryStatus.loading:
-              return _loadingIndicator();
+              return const ShowLoadingIndicatorWidget();
             case CategoryStatus.failure:
-              return _showError(state.message);
+              return ShowErrorMessageWidget(message: state.message);
 
             case CategoryStatus.success:
               categoryList = state.categoryList;
@@ -462,7 +460,8 @@ class CategoryPageView extends StatelessWidget {
                 ],
               );
             default:
-              return _showEmpty("NO data");
+              return ShowEmptyWidget(message: "NO data");
+            // return _showEmpty("NO data");
           }
         },
       ),
@@ -480,39 +479,6 @@ class CategoryPageView extends StatelessWidget {
         onChanged: (text) {
           context.read<CategoryCubit>().searchCategory(text);
         },
-      ),
-    );
-  }
-
-  Widget _loadingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
-
-  Widget _showError(message) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Text(
-          message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
-        ),
-      ),
-    );
-  }
-
-  Widget _showEmpty(message) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: Text(
-          message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
-        ),
       ),
     );
   }
