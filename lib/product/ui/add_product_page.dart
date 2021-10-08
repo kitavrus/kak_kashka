@@ -66,20 +66,20 @@ class _AddProductPageState extends State<AddProductPage> {
                   constraints: BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
                     child: Text(
-                      "Добавить",
+                      'Добавить',
                     ),
                     onPressed: () async {
                       // final newImage = await _image.copy(appDocPath+"/");
                       // final newImage =  await _image.copy(appDocPath+"/4491.jpg");
                       //  Future.delayed(Duration(seconds: 1),() async {
-                      _image.copy(appDocPath + "/4491.jpg").then((newImage) {
+                      _image.copy(appDocPath + '/4491.jpg').then((newImage) {
                         //   final newImage =  await _image.copy(appDocPath+"/4491.jpg");
                         //   final newImage =  await _image.copy(appDocPath);
                         //   final newImage =  await _image.copy(appDocPath+"/");
 
                         // moveFile(_image,appDocPath+"/4491.jpg").then((newImage) {
 
-                        final ProductModel productModel = ProductModel(
+                        final productModel = ProductModel(
                           id: 4,
                           status: _radioValue,
                           name: _nameEditingController.text.toString(),
@@ -118,7 +118,7 @@ class _AddProductPageState extends State<AddProductPage> {
               controller: _nameEditingController,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                labelText: "Название ",
+                labelText: 'Название ',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 counterText: '',
@@ -133,7 +133,7 @@ class _AddProductPageState extends State<AddProductPage> {
               maxLines: 5,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                labelText: "Описание",
+                labelText: 'Описание',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 // counterText: '',
@@ -146,7 +146,7 @@ class _AddProductPageState extends State<AddProductPage> {
             child: TextField(
               onTap: () {
                 _showScanBarcode();
-                print(" Штрих-код товара ");
+                print(' Штрих-код товара ');
               },
               readOnly: true,
               controller: _barcodeEditingController,
@@ -154,7 +154,7 @@ class _AddProductPageState extends State<AddProductPage> {
               textAlign: TextAlign.start,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                labelText: "Штрих-код товара",
+                labelText: 'Штрих-код товара',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 counterText: '',
@@ -186,7 +186,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   groupValue: _radioValue,
                   onChanged: _handleRadioValueChange,
                 ),
-                Text("покупать"),
+                Text('покупать'),
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -195,7 +195,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 groupValue: _radioValue,
                 onChanged: _handleRadioValueChange,
               ),
-              Text("иногда"),
+              Text('иногда'),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Radio(
@@ -203,22 +203,22 @@ class _AddProductPageState extends State<AddProductPage> {
                 groupValue: _radioValue,
                 onChanged: _handleRadioValueChange,
               ),
-              Text("не покупать"),
+              Text('не покупать'),
             ]),
           ]),
           Container(
             child: TextField(
               onTap: () {
                 _showSelectCategory(context);
-                print(" Выбрать категории ");
+                print(' Выбрать категории ');
               },
               readOnly: true,
               controller: _selectCategoryEditingController,
               // maxLength: 14,
               textAlign: TextAlign.start,
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                labelText: "Выбрать категории",
+              decoration: const InputDecoration(
+                labelText: 'Выбрать категории',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 counterText: '',
@@ -262,7 +262,7 @@ class _AddProductPageState extends State<AddProductPage> {
         height: 250,
         decoration: ShapeDecoration(
           color: Colors.grey[200],
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
@@ -275,14 +275,14 @@ class _AddProductPageState extends State<AddProductPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.camera_alt),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
-                Text("Добавить фото товара")
+                Text('Добавить фото товара')
               ],
             ),
             _image == null
-                ? SizedBox()
+                ? const SizedBox()
                 : SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 200,
@@ -314,7 +314,7 @@ class _AddProductPageState extends State<AddProductPage> {
   // }
 
   void initPath() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
+    final appDocDir = await getApplicationDocumentsDirectory();
     appDocPath = appDocDir.path;
   }
 
@@ -351,7 +351,7 @@ class _AddProductPageState extends State<AddProductPage> {
             children: [
               ListTile(
                 leading: Icon(Icons.folder),
-                title: Text("Gallery "),
+                title: Text('Gallery '),
                 onTap: () {
                   _imageFromGallery();
                   Navigator.of(context).pop();
@@ -359,7 +359,7 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               ListTile(
                 leading: Icon(Icons.camera_alt),
-                title: Text("Camera "),
+                title: Text('Camera '),
                 onTap: () {
                   _imageFromCamera();
                   Navigator.of(context).pop();
@@ -381,10 +381,10 @@ class _AddProductPageState extends State<AddProductPage> {
 
     try {
       scanResult = await FlutterBarcodeScanner.scanBarcode(
-          "#ff6666", "Cancel", false, ScanMode.BARCODE);
+          '#ff6666', 'Cancel', false, ScanMode.BARCODE);
       print(_barcodeEditingController.text);
     } on PlatformException {
-      scanResult = "нет возможности отсканировать";
+      scanResult = 'нет возможности отсканировать';
     }
 
     if (!mounted) return;
@@ -437,7 +437,7 @@ class CategoryPageView extends StatelessWidget {
         builder: (context, state) {
           List<CategoryEntity> categoryList = [];
 
-          print("BlocBuilder: ");
+          print('BlocBuilder: ');
           print(state.status);
           switch (state.status) {
             case CategoryStatus.initial:
@@ -460,7 +460,7 @@ class CategoryPageView extends StatelessWidget {
                 ],
               );
             default:
-              return ShowEmptyWidget(message: "NO data");
+              return ShowEmptyWidget(message: 'NO data');
             // return _showEmpty("NO data");
           }
         },
@@ -473,7 +473,7 @@ class CategoryPageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-          labelText: "Поиск ...",
+          labelText: 'Поиск ...',
           // filled: true,
         ),
         onChanged: (text) {
@@ -491,7 +491,7 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("build: CategoryList ");
+    print('build: CategoryList ');
 
     return ListView.separated(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -519,7 +519,7 @@ class CategoryCard extends StatelessWidget {
         title: Text(categoryModel.name),
         subtitle: Text(categoryModel.description),
         onTap: () {
-          print("onTap: " + categoryModel.name);
+          print('onTap: ' + categoryModel.name);
           Navigator.pop(context, categoryModel.name);
         },
       ),

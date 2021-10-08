@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
         subtitle: Text(productModel.description),
         trailing: Icon(Icons.chevron_right),
         onTap: () {
-          print("onTap: " + productModel.name);
+          print('onTap: ' + productModel.name);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
 
   Widget _getImage(ProductEntity productModel) {
     return SizedBox(
-      child: _imagePathType(productModel.pathToImage) == "assets"
+      child: _imagePathType(productModel.pathToImage) == 'assets'
           ? Image.asset(productModel.pathToImage)
           : Image.file(File(productModel.pathToImage)),
       width: 50,
@@ -74,7 +74,7 @@ class ProductCard extends StatelessWidget {
   String _imagePathType(String pathToImage) {
     String pathToImage = productModel.pathToImage;
     List<String> splitPath = path.split(pathToImage);
-    if (splitPath.first == "assets") {
+    if (splitPath.first == 'assets') {
       return 'assets';
     }
     return 'file';

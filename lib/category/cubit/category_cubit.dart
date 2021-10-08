@@ -18,7 +18,8 @@ class CategoryCubit extends Cubit<CategoryState> {
       emit(CategoryState.success(categoryList: _loadedCategoryList));
     } catch (e) {
       print(e);
-      emit(CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
+      emit(
+          CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
     }
   }
 
@@ -37,7 +38,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
         break;
       default:
-        emit(CategoryState.failure(message: "Problem deleteCategory "));
+        emit(CategoryState.failure(message: 'Problem deleteCategory '));
     }
   }
 
@@ -54,7 +55,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
         break;
       default:
-        emit(CategoryState.failure(message: "Problem addCategory "));
+        emit(CategoryState.failure(message: 'Problem addCategory '));
     }
   }
 
@@ -62,14 +63,13 @@ class CategoryCubit extends Cubit<CategoryState> {
     final List<CategoryEntity> updatedCategory;
     query = query.toLowerCase();
 
-    print("searchCategory init");
+    print('searchCategory init');
     print(query);
     // print(state);
     // print(state.status);
     switch (state.status) {
       case CategoryStatus.success:
-
-        if(query.isNotEmpty) {
+        if (query.isNotEmpty) {
           final _loadedCategoryList = await _categoryRepository.getAll();
           updatedCategory = _loadedCategoryList.where((category) {
             var categoryName = category.name.toLowerCase();
@@ -80,17 +80,17 @@ class CategoryCubit extends Cubit<CategoryState> {
           }).toList();
 
           print(updatedCategory);
-          print("searchCategory filter");
+          print('searchCategory filter');
           emit(CategoryState.success(categoryList: updatedCategory));
         } else {
           final _loadedCategoryList = await _categoryRepository.getAll();
           emit(CategoryState.success(categoryList: _loadedCategoryList));
-          print("searchCategory empty search");
+          print('searchCategory empty search');
           //getCategoryList();
         }
         break;
       default:
-        emit(CategoryState.failure(message: "Problem searchCategory "));
+        emit(CategoryState.failure(message: 'Problem searchCategory '));
     }
   }
 }

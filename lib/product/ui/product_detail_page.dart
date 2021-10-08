@@ -32,7 +32,7 @@ class ProductDetail extends StatelessWidget {
                         tag: 'prod-image' + productModel.id.toString(),
                         child: GestureDetector(
                           onTap: () {
-                            print("GestureDetector onTap");
+                            print('GestureDetector onTap');
                             _displayDialog(context, productModel);
                           },
                           child: Image.asset(

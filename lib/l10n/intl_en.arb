@@ -1,0 +1,9 @@
+{
+    "button_add":"Add",
+    "main_app_bar_title":"Want is eat?",
+    "categories":"Categories",
+    "goods":"Goods",
+    "bottom_navigation_bar_item_label_home":"Home",
+    "bottom_navigation_bar_item_label_goods":"Goods",
+    "bottom_navigation_bar_item_label_categories":"Categories"
+}

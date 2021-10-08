@@ -13,7 +13,7 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("build: ProductList ");
+    print('build: ProductList ');
 
     return ListView.separated(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -37,7 +37,7 @@ class ProductList extends StatelessWidget {
                   Navigator.pop(context, 'Cancel');
                 }, onOk: () {
                   context.read<ProductCubit>().deleteProduct(product);
-                  _showSnackBar(context, "DELETED: ${product.name}");
+                  _showSnackBar(context, 'DELETED: ${product.name}');
                   Navigator.pop(context, 'OK');
                 });
               },

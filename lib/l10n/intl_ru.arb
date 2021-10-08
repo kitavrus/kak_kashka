@@ -1,0 +1,9 @@
+{
+    "button_add":"Добавить",
+    "main_app_bar_title":"Как кашка?",
+    "categories":"Категории",
+    "goods":"Товары",
+    "bottom_navigation_bar_item_label_home":"Главная",
+    "bottom_navigation_bar_item_label_goods":"Товары",
+    "bottom_navigation_bar_item_label_categories":"Категории"
+}

@@ -36,24 +36,24 @@ class ProductPageView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            print(" Floating action button press");
+            print(' Floating action button press');
             final result = await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddProductPage()),
             );
-            print("FloatingActionButton: $result");
+            print('FloatingActionButton: $result');
             if (result != null) {
               BlocProvider.of<ProductCubit>(context).addProduct(result);
             }
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),
         body: BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
-            List<ProductEntity> productList = [];
+            var productList = <ProductEntity>[];
 
-            print("BlocBuilder: ");
+            print('BlocBuilder: ');
             print(state.status);
             switch (state.status) {
               case ProductStatus.initial:
@@ -76,7 +76,7 @@ class ProductPageView extends StatelessWidget {
                   ],
                 );
               default:
-                return ShowErrorMessageWidget(message: "NO data");
+                return ShowErrorMessageWidget(message: 'NO data');
               // return _showEmpty("NO data");
             }
           },
@@ -90,7 +90,7 @@ class ProductPageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-          labelText: "Поиск ...",
+          labelText: 'Поиск ...',
           // filled: true,
         ),
         onChanged: (text) {
