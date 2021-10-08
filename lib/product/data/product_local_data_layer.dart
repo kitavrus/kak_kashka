@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'package:kak_kashka/product/data/json/json_product_local_data.dart';
+
+import '../../product/data/json/json_product_local_data.dart';
 
 class ProductLocalDataLayer {
-
- Future<List<Map<String, Object>>> getData() async {
+  Future<List<Map<String, Object>>> getData() async {
     return Future.delayed(
       const Duration(milliseconds: 300),
-          () => jsonProductLocalData,
+      () => jsonProductLocalData,
     );
   }
 }
-
 
 // class ProductLocalDataLayer {
 //

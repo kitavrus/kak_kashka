@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/category/cubit/category_state.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-import 'package:kak_kashka/category/repository/category_repository.dart';
+
+import '/category/cubit/category_state.dart';
+import '/category/entity/category_entity.dart';
+import '/category/repository/category_repository.dart';
+import '/common/i10n/crutch_intl_message.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepository _categoryRepository;
@@ -11,19 +13,21 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit(this._categoryRepository) : super(CategoryState.initial());
 
   Future<void> getCategoryList() async {
-    emit(CategoryState.loading());
+    // emit(CategoryState.loading());
     try {
       final _loadedCategoryList = await _categoryRepository.getAll();
       print(_loadedCategoryList);
       emit(CategoryState.success(categoryList: _loadedCategoryList));
     } catch (e) {
       print(e);
-      emit(CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
+      emit(CategoryState.failure(
+          message: CrutchIntlMessage.getMessage('category_state_failure')));
+      // CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
     }
   }
 
   Future<void> deleteCategory(CategoryEntity categoryEntity) async {
-    final List<CategoryEntity> updatedCategory = [];
+    final updatedCategory = <CategoryEntity>[];
 
     switch (state.status) {
       case CategoryStatus.success:
@@ -37,12 +41,12 @@ class CategoryCubit extends Cubit<CategoryState> {
 
         break;
       default:
-        emit(CategoryState.failure(message: "Problem deleteCategory "));
+        emit(CategoryState.failure(message: 'Problem deleteCategory '));
     }
   }
 
   Future<void> addCategory(CategoryEntity categoryEntity) async {
-    final List<CategoryEntity> updatedCategory = [];
+    final updatedCategory = <CategoryEntity>[];
 
     switch (state.status) {
       case CategoryStatus.success:
@@ -54,7 +58,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
         break;
       default:
-        emit(CategoryState.failure(message: "Problem addCategory "));
+        emit(CategoryState.failure(message: 'Problem addCategory '));
     }
   }
 
@@ -62,17 +66,16 @@ class CategoryCubit extends Cubit<CategoryState> {
     final List<CategoryEntity> updatedCategory;
     query = query.toLowerCase();
 
-    print("searchCategory init");
+    print('searchCategory init');
     print(query);
     // print(state);
     // print(state.status);
     switch (state.status) {
       case CategoryStatus.success:
-
-        if(query.isNotEmpty) {
+        if (query.isNotEmpty) {
           final _loadedCategoryList = await _categoryRepository.getAll();
           updatedCategory = _loadedCategoryList.where((category) {
-            var categoryName = category.name.toLowerCase();
+            final categoryName = category.name.toLowerCase();
 
             print(categoryName);
 
@@ -80,17 +83,23 @@ class CategoryCubit extends Cubit<CategoryState> {
           }).toList();
 
           print(updatedCategory);
-          print("searchCategory filter");
+          print('searchCategory filter');
           emit(CategoryState.success(categoryList: updatedCategory));
         } else {
           final _loadedCategoryList = await _categoryRepository.getAll();
           emit(CategoryState.success(categoryList: _loadedCategoryList));
-          print("searchCategory empty search");
+          print('searchCategory empty search');
           //getCategoryList();
         }
         break;
       default:
-        emit(CategoryState.failure(message: "Problem searchCategory "));
+        emit(
+          CategoryState.failure(
+            message:
+                CrutchIntlMessage.getMessage('category_search_state_failure'),
+          ),
+        );
+      // emit(CategoryState.failure(message: 'Problem searchCategory '));
     }
   }
 }

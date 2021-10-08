@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kak_kashka/category/ui/category_page.dart';
-import 'package:kak_kashka/home/ui/home_page.dart';
-import 'package:kak_kashka/product/ui/product_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import '../../category/ui/category_page.dart';
+import '../../home/ui/home_page.dart';
+import '../../product/ui/product_page.dart';
+import 'generated/l10n.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,12 +16,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Как кашка?',
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      // title: 'Want is eat?', //S.of(context).main_app_bar_title, (так не работает не может найти S)
+      onGenerateTitle: (context) => S.of(context).main_app_bar_title,
       theme: ThemeData.light().copyWith(
           // primarySwatch: Colors.blue,
           ),
       darkTheme: ThemeData.dark(),
-      home: TabBottomContainer(),
+      home: const TabBottomContainer(),
     );
   }
 }
@@ -62,17 +73,16 @@ class _TabBottomContainerState extends State<TabBottomContainer> {
         onTap: _onTap,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+            icon: const Icon(Icons.home),
+            label: S.of(context).bottom_navigation_bar_item_label_home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.fmd_good_sharp),
-            label: "Product",
+            icon: const Icon(Icons.fmd_good_sharp),
+            label: S.of(context).bottom_navigation_bar_item_label_goods,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: "Category",
-          ),
+              icon: const Icon(Icons.category),
+              label: S.of(context).bottom_navigation_bar_item_label_categories),
         ],
       ),
     );

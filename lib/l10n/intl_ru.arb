@@ -1,0 +1,12 @@
+{
+    "no_data":"Нет данных",
+    "category_search_state_failure":"Поиск категории прошес с ошибкой",
+    "category_state_failure":"Категория загружена с ошибкой",
+    "button_add":"Добавить",
+    "main_app_bar_title":"Как кашка?",
+    "categories":"Категории",
+    "goods":"Товары",
+    "bottom_navigation_bar_item_label_home":"Главная",
+    "bottom_navigation_bar_item_label_goods":"Товары",
+    "bottom_navigation_bar_item_label_categories":"Категории"
+}

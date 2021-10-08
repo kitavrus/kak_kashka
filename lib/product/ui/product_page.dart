@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/generated/l10n.dart';
 
 import '../../common/widgets/show_error_message_widget.dart';
 import '../../common/widgets/show_loading_indicator_widget.dart';
@@ -11,6 +12,8 @@ import '../../product/ui/add_product_page.dart';
 import '../../product/ui/widgets/product_list.dart';
 
 class ProductPage extends StatelessWidget {
+  const ProductPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     print('build Product');
@@ -19,7 +22,7 @@ class ProductPage extends StatelessWidget {
         create: (context) =>
             ProductCubit(ProductRepository())..getProductList(),
       ),
-    ], child: ProductPageView());
+    ], child: const ProductPageView());
   }
 }
 
@@ -36,29 +39,27 @@ class ProductPageView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            print(" Floating action button press");
+            print(' Floating action button press');
             final result = await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddProductPage()),
             );
-            print("FloatingActionButton: $result");
+            print('FloatingActionButton: $result');
             if (result != null) {
               BlocProvider.of<ProductCubit>(context).addProduct(result);
             }
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),
         body: BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
-            List<ProductEntity> productList = [];
+            var productList = <ProductEntity>[];
 
-            print("BlocBuilder: ");
+            print('BlocBuilder: ');
             print(state.status);
             switch (state.status) {
               case ProductStatus.initial:
-                return const ShowLoadingIndicatorWidget();
-              case ProductStatus.loading:
                 return const ShowLoadingIndicatorWidget();
               case ProductStatus.failure:
                 return ShowErrorMessageWidget(message: state.message);
@@ -76,8 +77,7 @@ class ProductPageView extends StatelessWidget {
                   ],
                 );
               default:
-                return ShowErrorMessageWidget(message: "NO data");
-              // return _showEmpty("NO data");
+                return ShowErrorMessageWidget(message: S.of(context).no_data);
             }
           },
         ),
@@ -90,7 +90,7 @@ class ProductPageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-          labelText: "Поиск ...",
+          labelText: 'Поиск ...',
           // filled: true,
         ),
         onChanged: (text) {

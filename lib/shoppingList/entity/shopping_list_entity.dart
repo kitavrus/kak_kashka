@@ -7,23 +7,21 @@ class ShoppingListEntity extends Equatable {
   final String description;
   final String pathToImage;
 
-  ShoppingListEntity(
-      {
-        required this.id,
-        required this.status,
-      required this.name,
-      required this.description,
-      required this.pathToImage,
-      });
+  const ShoppingListEntity({
+    required this.id,
+    required this.status,
+    required this.name,
+    required this.description,
+    required this.pathToImage,
+  });
 
   @override
   // TODO: implement props
   List<Object?> get props => [
-    id,
-    status,
-    name,
-    description,
-    pathToImage,
-
-  ];
+        id,
+        status,
+        name,
+        description,
+        pathToImage,
+      ];
 }

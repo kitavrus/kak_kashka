@@ -1,20 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:kak_kashka/category/cubit/category_state.dart';
-import 'package:kak_kashka/category/cubit/category_cubit.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-
-import 'package:kak_kashka/category/repository/category_repository.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kak_kashka/category/ui/add_category_page.dart';
-import 'package:kak_kashka/category/ui/category_detail_page.dart';
-import 'package:path/path.dart' as path;
+import 'package:kak_kashka/common/widgets/show_error_message_widget.dart';
+import 'package:kak_kashka/generated/l10n.dart';
+
+import '../../category/cubit/category_cubit.dart';
+import '../../category/cubit/category_state.dart';
+import '../../category/entity/category_entity.dart';
+import '../../category/repository/category_repository.dart';
+import '../../category/ui/add_category_page.dart';
+import '../../category/ui/category_detail_page.dart';
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     print('build Category');
@@ -23,7 +22,7 @@ class CategoryPage extends StatelessWidget {
         create: (context) =>
             CategoryCubit(CategoryRepository())..getCategoryList(),
       ),
-    ], child: CategoryPageView());
+    ], child: const CategoryPageView());
   }
 }
 
@@ -40,30 +39,30 @@ class CategoryPageView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            print(" Floating action button press");
+            print(' Floating action button press');
             final result = await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddCategoryPage()),
             );
-            print("FloatingActionButton: $result");
+            print('FloatingActionButton: $result');
             if (result != null) {
               BlocProvider.of<CategoryCubit>(context).addCategory(result);
             }
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           backgroundColor: Colors.blue,
         ),
         body: BlocBuilder<CategoryCubit, CategoryState>(
           builder: (context, state) {
-            List<CategoryEntity> categoryList = [];
+            var categoryList = <CategoryEntity>[];
 
-            print("BlocBuilder: ");
+            print('BlocBuilder: ');
             print(state.status);
             switch (state.status) {
               case CategoryStatus.initial:
                 return _loadingIndicator();
-              case CategoryStatus.loading:
-                return _loadingIndicator();
+              // case CategoryStatus.loading:
+              //   return _loadingIndicator();
               case CategoryStatus.failure:
                 return _showError(state.message);
 
@@ -80,7 +79,7 @@ class CategoryPageView extends StatelessWidget {
                   ],
                 );
               default:
-                return _showEmpty("NO data");
+                return ShowErrorMessageWidget(message: S.of(context).no_data);
             }
           },
         ),
@@ -93,7 +92,7 @@ class CategoryPageView extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         decoration: InputDecoration(
-          labelText: "Поиск ...",
+          labelText: 'Поиск ...',
           // filled: true,
         ),
         onChanged: (text) {
@@ -144,7 +143,7 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("build: CategoryList ");
+    print('build: CategoryList ');
 
     return ListView.separated(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -154,7 +153,7 @@ class CategoryList extends StatelessWidget {
         final category = categoryList[index];
         return Slidable(
           key: Key(category.id.toString()),
-          actionPane: SlidableDrawerActionPane(),
+          actionPane: const SlidableDrawerActionPane(),
           child: CategoryCard(
             categoryModel: category,
           ),
@@ -168,7 +167,7 @@ class CategoryList extends StatelessWidget {
                   Navigator.pop(context, 'Cancel');
                 }, onOk: () {
                   context.read<CategoryCubit>().deleteCategory(category);
-                  _showSnackBar(context, "DELETED: ${category.name}");
+                  _showSnackBar(context, 'DELETED: ${category.name}');
                   Navigator.pop(context, 'OK');
                 });
               },
@@ -176,7 +175,7 @@ class CategoryList extends StatelessWidget {
           ],
         );
       },
-      separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => const Divider(),
     );
   }
 
@@ -212,31 +211,23 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // decoration: BoxDecoration(
-      //   gradient: LinearGradient(
-      //     colors: [Colors.white,_colorByStatus(categoryModel)],
-      //   )
+    return ListTile(
+      // leading: Hero(
+      //   tag: 'prod-image' + categoryModel.id.toString(),
+      //   child: _getImage(categoryModel),
       // ),
-      child: ListTile(
-        // leading: Hero(
-        //   tag: 'prod-image' + categoryModel.id.toString(),
-        //   child: _getImage(categoryModel),
-        // ),
-        title: Text(categoryModel.name),
-        subtitle: Text(categoryModel.description),
-        trailing: Icon(Icons.chevron_right),
-        onTap: () {
-          print("onTap: " + categoryModel.name);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  CategoryDetail(categoryModel: categoryModel),
-            ),
-          );
-        },
-      ),
+      title: Text(categoryModel.name),
+      subtitle: Text(categoryModel.description),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        print('onTap: ' + categoryModel.name);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryDetail(categoryModel: categoryModel),
+          ),
+        );
+      },
     );
   }
 

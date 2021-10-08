@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:kak_kashka/shoppingList/data/json/json_shopping_list_local_data.dart';
-import 'package:kak_kashka/shoppingList/model/shopping_list_model.dart';
+import '../../shoppingList/data/json/json_shopping_list_local_data.dart';
+import '../../shoppingList/model/shopping_list_model.dart';
 
 class ShoppingListRepository {
   StreamController<List<Map<String, dynamic>>> shoppingListData =

@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:image_picker/image_picker.dart';
-import 'package:kak_kashka/category/model/category_model.dart';
+import '../../category/model/category_model.dart';
+import '../../generated/l10n.dart';
 
 // import 'package:path_provider/path_provider.dart';
 // import 'package:path/path.dart' as path;
@@ -55,7 +54,8 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                   constraints: BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
                     child: Text(
-                      "Добавить",
+                      S.of(context).button_add,
+                      // 'Добавить',
                     ),
                     onPressed: () async {
                       // final newImage = await _image.copy(appDocPath+"/");
@@ -104,7 +104,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               controller: _nameEditingController,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                labelText: "Название ",
+                labelText: 'Название ',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 counterText: '',
@@ -119,7 +119,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               maxLines: 5,
               textAlign: TextAlign.start,
               decoration: InputDecoration(
-                labelText: "Описание",
+                labelText: 'Описание',
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.all(5),
                 // counterText: '',
