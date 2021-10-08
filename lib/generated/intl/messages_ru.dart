@@ -29,7 +29,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Главная"),
         "button_add": MessageLookupByLibrary.simpleMessage("Добавить"),
         "categories": MessageLookupByLibrary.simpleMessage("Категории"),
+        "category_search_state_failure": MessageLookupByLibrary.simpleMessage(
+            "Поиск категории прошес с ошибкой"),
+        "category_state_failure": MessageLookupByLibrary.simpleMessage(
+            "Категория загружена с ошибкой"),
         "goods": MessageLookupByLibrary.simpleMessage("Товары"),
-        "main_app_bar_title": MessageLookupByLibrary.simpleMessage("Как кашка?")
+        "main_app_bar_title":
+            MessageLookupByLibrary.simpleMessage("Как кашка?"),
+        "no_data": MessageLookupByLibrary.simpleMessage("Нет данных")
       };
 }

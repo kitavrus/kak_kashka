@@ -29,8 +29,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Home"),
         "button_add": MessageLookupByLibrary.simpleMessage("Add"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "category_search_state_failure": MessageLookupByLibrary.simpleMessage(
+            "Category search with mistake"),
+        "category_state_failure": MessageLookupByLibrary.simpleMessage(
+            "Category loaded with mistake"),
         "goods": MessageLookupByLibrary.simpleMessage("Goods"),
         "main_app_bar_title":
-            MessageLookupByLibrary.simpleMessage("Want is eat?")
+            MessageLookupByLibrary.simpleMessage("Want is eat?"),
+        "no_data": MessageLookupByLibrary.simpleMessage("No data")
       };
 }

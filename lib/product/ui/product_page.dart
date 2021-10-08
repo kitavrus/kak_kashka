@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/generated/l10n.dart';
 
 import '../../common/widgets/show_error_message_widget.dart';
 import '../../common/widgets/show_loading_indicator_widget.dart';
@@ -11,6 +12,8 @@ import '../../product/ui/add_product_page.dart';
 import '../../product/ui/widgets/product_list.dart';
 
 class ProductPage extends StatelessWidget {
+  const ProductPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     print('build Product');
@@ -19,7 +22,7 @@ class ProductPage extends StatelessWidget {
         create: (context) =>
             ProductCubit(ProductRepository())..getProductList(),
       ),
-    ], child: ProductPageView());
+    ], child: const ProductPageView());
   }
 }
 
@@ -58,8 +61,6 @@ class ProductPageView extends StatelessWidget {
             switch (state.status) {
               case ProductStatus.initial:
                 return const ShowLoadingIndicatorWidget();
-              case ProductStatus.loading:
-                return const ShowLoadingIndicatorWidget();
               case ProductStatus.failure:
                 return ShowErrorMessageWidget(message: state.message);
 
@@ -76,8 +77,7 @@ class ProductPageView extends StatelessWidget {
                   ],
                 );
               default:
-                return ShowErrorMessageWidget(message: 'NO data');
-              // return _showEmpty("NO data");
+                return ShowErrorMessageWidget(message: S.of(context).no_data);
             }
           },
         ),

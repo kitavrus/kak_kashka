@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kak_kashka/common/widgets/show_error_message_widget.dart';
+import 'package:kak_kashka/generated/l10n.dart';
 
 import '../../category/cubit/category_cubit.dart';
 import '../../category/cubit/category_state.dart';
@@ -11,6 +13,7 @@ import '../../category/ui/add_category_page.dart';
 import '../../category/ui/category_detail_page.dart';
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     print('build Category');
@@ -19,7 +22,7 @@ class CategoryPage extends StatelessWidget {
         create: (context) =>
             CategoryCubit(CategoryRepository())..getCategoryList(),
       ),
-    ], child: CategoryPageView());
+    ], child: const CategoryPageView());
   }
 }
 
@@ -58,8 +61,8 @@ class CategoryPageView extends StatelessWidget {
             switch (state.status) {
               case CategoryStatus.initial:
                 return _loadingIndicator();
-              case CategoryStatus.loading:
-                return _loadingIndicator();
+              // case CategoryStatus.loading:
+              //   return _loadingIndicator();
               case CategoryStatus.failure:
                 return _showError(state.message);
 
@@ -76,7 +79,7 @@ class CategoryPageView extends StatelessWidget {
                   ],
                 );
               default:
-                return _showEmpty('NO data');
+                return ShowErrorMessageWidget(message: S.of(context).no_data);
             }
           },
         ),

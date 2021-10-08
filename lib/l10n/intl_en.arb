@@ -1,4 +1,7 @@
 {
+    "no_data":"No data",
+    "category_search_state_failure":"Category search with mistake",
+    "category_state_failure":"Category loaded with mistake",
     "button_add":"Add",
     "main_app_bar_title":"Want is eat?",
     "categories":"Categories",

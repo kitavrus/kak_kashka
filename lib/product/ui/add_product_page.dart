@@ -414,6 +414,8 @@ class _AddProductPageState extends State<AddProductPage> {
 }
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     print('build Category');
@@ -422,7 +424,7 @@ class CategoryPage extends StatelessWidget {
         create: (context) =>
             CategoryCubit(CategoryRepository())..getCategoryList(),
       ),
-    ], child: CategoryPageView());
+    ], child: const CategoryPageView());
   }
 }
 
@@ -435,15 +437,15 @@ class CategoryPageView extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: BlocBuilder<CategoryCubit, CategoryState>(
         builder: (context, state) {
-          List<CategoryEntity> categoryList = [];
+          var categoryList = <CategoryEntity>[];
 
           print('BlocBuilder: ');
           print(state.status);
           switch (state.status) {
             case CategoryStatus.initial:
               return const ShowLoadingIndicatorWidget();
-            case CategoryStatus.loading:
-              return const ShowLoadingIndicatorWidget();
+            // case CategoryStatus.loading:
+            //   return const ShowLoadingIndicatorWidget();
             case CategoryStatus.failure:
               return ShowErrorMessageWidget(message: state.message);
 
@@ -460,7 +462,7 @@ class CategoryPageView extends StatelessWidget {
                 ],
               );
             default:
-              return ShowEmptyWidget(message: 'NO data');
+              return const ShowEmptyWidget(message: 'NO data');
             // return _showEmpty("NO data");
           }
         },
@@ -502,7 +504,7 @@ class CategoryList extends StatelessWidget {
           categoryModel: category,
         );
       },
-      separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => const Divider(),
     );
   }
 }
@@ -514,15 +516,13 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        title: Text(categoryModel.name),
-        subtitle: Text(categoryModel.description),
-        onTap: () {
-          print('onTap: ' + categoryModel.name);
-          Navigator.pop(context, categoryModel.name);
-        },
-      ),
+    return ListTile(
+      title: Text(categoryModel.name),
+      subtitle: Text(categoryModel.description),
+      onTap: () {
+        print('onTap: ' + categoryModel.name);
+        Navigator.pop(context, categoryModel.name);
+      },
     );
   }
 }

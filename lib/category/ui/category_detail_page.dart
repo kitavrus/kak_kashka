@@ -98,8 +98,6 @@ class ProductPageView extends StatelessWidget {
         switch (state.status) {
           case ProductStatus.initial:
             return _loadingIndicator();
-          case ProductStatus.loading:
-            return _loadingIndicator();
           case ProductStatus.failure:
             return _showError(state.message);
 

@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../category/cubit/category_state.dart';
-import '../../category/entity/category_entity.dart';
-import '../../category/repository/category_repository.dart';
+import '/category/cubit/category_state.dart';
+import '/category/entity/category_entity.dart';
+import '/category/repository/category_repository.dart';
+import '/common/i10n/crutch_intl_message.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepository _categoryRepository;
@@ -12,15 +13,16 @@ class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit(this._categoryRepository) : super(CategoryState.initial());
 
   Future<void> getCategoryList() async {
-    emit(CategoryState.loading());
+    // emit(CategoryState.loading());
     try {
       final _loadedCategoryList = await _categoryRepository.getAll();
       print(_loadedCategoryList);
       emit(CategoryState.success(categoryList: _loadedCategoryList));
     } catch (e) {
       print(e);
-      emit(
-          CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
+      emit(CategoryState.failure(
+          message: CrutchIntlMessage.getMessage('category_state_failure')));
+      // CategoryState.failure(message: 'getCategoryList CategoryErrorState'));
     }
   }
 
@@ -91,7 +93,13 @@ class CategoryCubit extends Cubit<CategoryState> {
         }
         break;
       default:
-        emit(CategoryState.failure(message: 'Problem searchCategory '));
+        emit(
+          CategoryState.failure(
+            message:
+                CrutchIntlMessage.getMessage('category_search_state_failure'),
+          ),
+        );
+      // emit(CategoryState.failure(message: 'Problem searchCategory '));
     }
   }
 }

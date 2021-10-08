@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -49,6 +48,36 @@ class S {
 
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
+  }
+
+  /// `No data`
+  String get no_data {
+    return Intl.message(
+      'No data',
+      name: 'no_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category search with mistake`
+  String get category_search_state_failure {
+    return Intl.message(
+      'Category search with mistake',
+      name: 'category_search_state_failure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category loaded with mistake`
+  String get category_state_failure {
+    return Intl.message(
+      'Category loaded with mistake',
+      name: 'category_state_failure',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Add`

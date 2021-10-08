@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 
 import '../../category/entity/category_entity.dart';
 
-enum CategoryStatus { initial, loading, success, failure }
+// enum CategoryStatus { initial, loading, success, failure }
+enum CategoryStatus { initial, success, failure }
 
 class CategoryState extends Equatable {
   final CategoryStatus status;
@@ -10,7 +11,7 @@ class CategoryState extends Equatable {
   final CategoryEntity? category;
   final String message;
 
-  CategoryState(
+  const CategoryState(
       {required this.status,
       required this.categoryList,
       this.category,
@@ -18,9 +19,9 @@ class CategoryState extends Equatable {
 
   CategoryState.initial()
       : this(status: CategoryStatus.initial, categoryList: []);
-  CategoryState.loading()
-      : this(status: CategoryStatus.loading, categoryList: []);
-  CategoryState.success({categoryList, category})
+  // CategoryState.loading()
+  //     : this(status: CategoryStatus.loading, categoryList: []);
+  const CategoryState.success({categoryList, category})
       : this(status: CategoryStatus.success, categoryList: categoryList);
   CategoryState.failure({message})
       : this(

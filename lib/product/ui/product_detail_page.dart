@@ -140,7 +140,7 @@ class ProductDetail extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 color: Colors.black45,
                 child: Image.asset(
                   productModel.pathToImage,
