@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kak_kashka/category/cubit/category_cubit.dart';
-import 'package:kak_kashka/category/cubit/category_state.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-import 'package:kak_kashka/category/repository/category_repository.dart';
-import 'package:kak_kashka/category/ui/add_category_page.dart';
-import 'package:kak_kashka/category/ui/category_detail_page.dart';
+
+import '../../category/cubit/category_cubit.dart';
+import '../../category/cubit/category_state.dart';
+import '../../category/entity/category_entity.dart';
+import '../../category/repository/category_repository.dart';
+import '../../category/ui/add_category_page.dart';
+import '../../category/ui/category_detail_page.dart';
 
 class CategoryPage extends StatelessWidget {
   @override

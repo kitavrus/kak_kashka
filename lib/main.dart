@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      // title: 'Want is eat?', //S.of(context).main_app_bar_title,
+      // title: 'Want is eat?', //S.of(context).main_app_bar_title, (так не работает не может найти S)
       onGenerateTitle: (context) => S.of(context).main_app_bar_title,
       theme: ThemeData.light().copyWith(
           // primarySwatch: Colors.blue,

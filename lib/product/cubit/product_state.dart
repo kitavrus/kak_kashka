@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
+
+import '../../product/entity/product_entity.dart';
 
 enum ProductStatus { initial, loading, success, failure }
 

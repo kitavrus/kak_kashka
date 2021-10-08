@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:image_picker/image_picker.dart';
-import 'package:kak_kashka/category/model/category_model.dart';
-import 'package:kak_kashka/generated/l10n.dart';
+import '../../category/model/category_model.dart';
+import '../../generated/l10n.dart';
 
 // import 'package:path_provider/path_provider.dart';
 // import 'package:path/path.dart' as path;

@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-import 'package:kak_kashka/product/cubit/product_cubit.dart';
-import 'package:kak_kashka/product/cubit/product_state.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
-import 'package:kak_kashka/product/repository/product_repository.dart';
-import 'package:kak_kashka/product/ui/product_detail_page.dart';
 import 'package:path/path.dart' as path;
+
+import '../../category/entity/category_entity.dart';
+import '../../product/cubit/product_cubit.dart';
+import '../../product/cubit/product_state.dart';
+import '../../product/entity/product_entity.dart';
+import '../../product/repository/product_repository.dart';
+import '../../product/ui/product_detail_page.dart';
 
 class CategoryDetail extends StatelessWidget {
   final CategoryEntity categoryModel;

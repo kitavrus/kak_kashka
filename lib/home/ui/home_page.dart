@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:kak_kashka/category/repository/category_repository.dart';
+
+import '../../category/repository/category_repository.dart';
 
 class HomePage extends StatefulWidget {
   @override

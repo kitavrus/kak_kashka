@@ -1,5 +1,6 @@
-import 'package:kak_kashka/product/entity/product_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../product/entity/product_entity.dart';
 
 part 'product_model.g.dart';
 
@@ -12,7 +13,7 @@ class ProductModel extends ProductEntity {
   final String barcode;
   final String pathToImage;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.status,
     required this.name,
@@ -34,12 +35,12 @@ class ProductModel extends ProductEntity {
   Map<String, dynamic> toJson() => _$ProductModelToJson(this);
 
   factory ProductModel.empty() {
-    return ProductModel(
-      id:0,
-      status:0,
-      name:'-EMPTY-NAME-',
-      barcode:'-EMPTY-BARCODE-',
-      description:'-EMPTY-DESCRIPTION-',
+    return const ProductModel(
+      id: 0,
+      status: 0,
+      name: '-EMPTY-NAME-',
+      barcode: '-EMPTY-BARCODE-',
+      description: '-EMPTY-DESCRIPTION-',
       pathToImage: '-EMPTY-PATH-TO-IMAGE-',
     );
   }

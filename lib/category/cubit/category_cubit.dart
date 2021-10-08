@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/category/cubit/category_state.dart';
-import 'package:kak_kashka/category/entity/category_entity.dart';
-import 'package:kak_kashka/category/repository/category_repository.dart';
+
+import '../../category/cubit/category_state.dart';
+import '../../category/entity/category_entity.dart';
+import '../../category/repository/category_repository.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
   final CategoryRepository _categoryRepository;
@@ -24,7 +25,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   }
 
   Future<void> deleteCategory(CategoryEntity categoryEntity) async {
-    final List<CategoryEntity> updatedCategory = [];
+    final updatedCategory = <CategoryEntity>[];
 
     switch (state.status) {
       case CategoryStatus.success:
@@ -43,7 +44,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   }
 
   Future<void> addCategory(CategoryEntity categoryEntity) async {
-    final List<CategoryEntity> updatedCategory = [];
+    final updatedCategory = <CategoryEntity>[];
 
     switch (state.status) {
       case CategoryStatus.success:
@@ -72,7 +73,7 @@ class CategoryCubit extends Cubit<CategoryState> {
         if (query.isNotEmpty) {
           final _loadedCategoryList = await _categoryRepository.getAll();
           updatedCategory = _loadedCategoryList.where((category) {
-            var categoryName = category.name.toLowerCase();
+            final categoryName = category.name.toLowerCase();
 
             print(categoryName);
 

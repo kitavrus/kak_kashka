@@ -7,7 +7,7 @@ class CategoryEntity extends Equatable {
   final String description;
   final String pathToImage;
 
-  CategoryEntity({
+  const CategoryEntity({
     required this.id,
     required this.status,
     required this.name,
@@ -18,10 +18,10 @@ class CategoryEntity extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [
-    id,
-    status,
-    name,
-    description,
-    pathToImage,
-  ];
+        id,
+        status,
+        name,
+        description,
+        pathToImage,
+      ];
 }

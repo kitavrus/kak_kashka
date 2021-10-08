@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:kak_kashka/shoppingList/entity/shopping_list_entity.dart';
+
+import '../../shoppingList/entity/shopping_list_entity.dart';
 
 part 'shopping_list_model.g.dart';
 
@@ -11,7 +12,7 @@ class ShoppingListModel extends ShoppingListEntity {
   final String description;
   final String pathToImage;
 
-  ShoppingListModel({
+  const ShoppingListModel({
     required this.id,
     required this.status,
     required this.name,
@@ -30,7 +31,7 @@ class ShoppingListModel extends ShoppingListEntity {
   Map<String, dynamic> toJson() => _$ShoppingListModelToJson(this);
 
   factory ShoppingListModel.empty() {
-    return ShoppingListModel(
+    return const ShoppingListModel(
       id: 0,
       status: 0,
       name: '-EMPTY-NAME-',

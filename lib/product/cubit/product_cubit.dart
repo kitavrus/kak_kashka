@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/product/cubit/product_state.dart';
-import 'package:kak_kashka/product/entity/product_entity.dart';
-import 'package:kak_kashka/product/repository/product_repository.dart';
+
+import '../../product/cubit/product_state.dart';
+import '../../product/entity/product_entity.dart';
+import '../../product/repository/product_repository.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   final ProductRepository _productRepository;
@@ -22,7 +23,7 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> deleteProduct(ProductEntity productEntity) async {
-    final List<ProductEntity> updatedProduct = [];
+    final updatedProduct = <ProductEntity>[];
 
     switch (state.status) {
       case ProductStatus.success:
@@ -41,7 +42,7 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> addProduct(ProductEntity productEntity) async {
-    final List<ProductEntity> updatedProduct = [];
+    final updatedProduct = <ProductEntity>[];
 
     switch (state.status) {
       case ProductStatus.success:
@@ -70,7 +71,7 @@ class ProductCubit extends Cubit<ProductState> {
         if (query.isNotEmpty) {
           final _loadedProductList = await _productRepository.getAll();
           updatedProduct = _loadedProductList.where((product) {
-            var productName = product.name.toLowerCase();
+            final productName = product.name.toLowerCase();
 
             print(productName);
 
