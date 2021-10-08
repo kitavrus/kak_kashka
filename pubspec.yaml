@@ -42,12 +42,17 @@ dependencies:
   path_provider: ^2.0.2
   #Plugin for Flutter apps that adds barcode scanning support on both Android and iOS.
   flutter_barcode_scanner: ^2.0.0
+  # Provides internationalization and localization facilities, including message translation, plurals and genders, date/number formatting and parsing, and bidirectional text.
+  intl: ^0.17.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # A build system for Dart code generation and modular compilation.
   build_runner:
+  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -90,3 +95,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true
