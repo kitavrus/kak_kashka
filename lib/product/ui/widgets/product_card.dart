@@ -62,20 +62,38 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _getImage(ProductEntity productModel) {
+    Widget child;
+    switch (_imagePathType(productModel.pathToImage)) {
+      case 'assets':
+        child = Image.asset(productModel.pathToImage);
+        break;
+      case 'file':
+        child = Image.file(File(productModel.pathToImage));
+        break;
+      case 'http':
+        child = Image.network(productModel.pathToImage);
+        break;
+      default:
+        child = const SizedBox.shrink();
+    }
+
     return SizedBox(
-      child: _imagePathType(productModel.pathToImage) == 'assets'
-          ? Image.asset(productModel.pathToImage)
-          : Image.file(File(productModel.pathToImage)),
+      child: child,
       width: 50,
       height: 50,
     );
   }
 
   String _imagePathType(String pathToImage) {
-    String pathToImage = productModel.pathToImage;
-    List<String> splitPath = path.split(pathToImage);
+    final pathToImage = productModel.pathToImage;
+    final splitPath = path.split(pathToImage);
+    // print(splitPath);
     if (splitPath.first == 'assets') {
       return 'assets';
+    }
+
+    if (splitPath.first == 'http:') {
+      return 'http';
     }
     return 'file';
   }

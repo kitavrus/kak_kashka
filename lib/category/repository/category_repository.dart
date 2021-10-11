@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import '../../category/data/category_local_data_layer.dart';
-import '../../category/model/category_model.dart';
+import '/category/data/category_local_data_layer.dart';
+import '/category/model/category_model.dart';
+import '/common/interfaces/repository/repository.dart';
 
-class CategoryRepository {
+class CategoryRepository implements RepositoryBase {
   Future<List<CategoryModel>> getAll() async {
     // throw Exception('Error on server');
     print((await CategoryLocalDataLayer().getData())

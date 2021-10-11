@@ -16,8 +16,9 @@ class ProductCubit extends Cubit<ProductState> {
       final _loadedProductList = await _productRepository.getAll();
       print(_loadedProductList);
       emit(ProductState.success(productList: _loadedProductList));
-    } catch (_) {
-      emit(ProductState.failure(message: 'getProductList ProductErrorState'));
+    } catch (e, stackTrace) {
+      emit(ProductState.failure(
+          message: 'getProductList ProductErrorState' + e.toString()));
     }
   }
 
