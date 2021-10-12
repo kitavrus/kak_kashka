@@ -13,9 +13,9 @@ class ProductRepository implements RepositoryBase {
         .map((row) => ProductModel.fromJson(row))
         .toList();
     // final response2 = await getById('1');
-    final response2 = await getProductsByCategoryId('1');
-    print('response2:');
-    print(response2);
+    // final response2 = await getProductsByCategoryId('1');
+    // print('response2:');
+    // print(response2);
     // print('response1:');
     // print(response);
     return response;
@@ -34,6 +34,21 @@ class ProductRepository implements RepositoryBase {
     return response;
   }
 
+  Future<ProductModel> add(ProductModel productModel) async {
+    final api = Api();
+    return ProductModel.fromJson(await api.addProduct(productModel));
+  }
+
+  Future<ProductModel> edit(ProductModel productModel) async {
+    final api = Api();
+    return ProductModel.fromJson(await api.editProduct(productModel));
+  }
+
+  Future<ProductModel> delete(id) async {
+    final api = Api();
+    return ProductModel.fromJson(await api.deleteProduct(id));
+  }
+
   // Stream<List<ProductModel>> getAll() { return  [ProductModel.empty()]; }
 
   // List<ProductModel> getAllInCategory() {
@@ -44,9 +59,9 @@ class ProductRepository implements RepositoryBase {
   //   return ProductModel.empty();
   // }
 
-  void add(ProductModel productModel) {}
+  // void add(ProductModel productModel) {}
 
-  void delete(int productId) {}
+  // void delete(int productId) {}
 
 // return Future.value(response);
 // print(response);

@@ -4,11 +4,16 @@ import 'package:http/http.dart' as http;
 
 import '/api/api_config.dart';
 import '/api/errors/exception.dart';
+import '/product/mapper/product_mapper.dart';
+import '/product/model/product_model.dart';
 
 class Api {
   final http.Client _client;
+  final ProductMapper productMapper;
 
-  Api() : _client = http.Client();
+  Api()
+      : _client = http.Client(),
+        productMapper = ProductMapper();
 
   Future<List<dynamic>> getProducts() async {
     final response = await _client.get(
@@ -43,36 +48,36 @@ class Api {
     throw ServerException('ServerException: API getProductsByCategoryId');
   }
 
-  Future<List<dynamic>> addProduct(String id) async {
+  Future<dynamic> addProduct(ProductModel productModel) async {
     final response = await _client.post(
       Uri.parse(ApiConfig.addProductUrl()),
-      body: {'Content-Type': 'application/json'},
+      body: productMapper.addProductForApi(productModel),
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body) as List;
+      return json.decode(response.body);
     }
     throw ServerException('ServerException: API addProduct');
   }
 
-  Future<List<dynamic>> editProductUrl(String id) async {
+  Future<dynamic> editProduct(ProductModel productModel) async {
     final response = await _client.post(
       Uri.parse(ApiConfig.editProductUrl()),
-      body: {'Content-Type': 'application/json'},
+      body: productMapper.editProductForApi(productModel),
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body) as List;
+      return json.decode(response.body);
     }
     throw ServerException('ServerException: API editProductUrl');
   }
 
-  Future<List<dynamic>> deleteProductUrl(String id) async {
+  Future<dynamic> deleteProduct(String id) async {
     final response = await _client.post(
       Uri.parse(ApiConfig.deleteProductUrl()),
-      body: {'Content-Type': 'application/json'},
+      body: productMapper.deleteProductForApi(id),
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body) as List;
+      return json.decode(response.body);
     }
-    throw ServerException('ServerException: API editProductUrl');
+    throw ServerException('ServerException: API deleteProductUrl');
   }
 }
