@@ -1,21 +1,21 @@
 import '/product/model/product_model.dart';
 
 class ProductMapper {
-  Map<String, dynamic> editProductForApi(ProductModel productModel) {
-    return toJson(productModel);
+  Map<String, dynamic> editProductRequestForApi(ProductModel productModel) {
+    return _toJson(productModel);
   }
 
-  Map<String, dynamic> addProductForApi(ProductModel productModel) {
-    return toJson(productModel);
+  Map<String, dynamic> addProductRequestForApi(ProductModel productModel) {
+    return _toJson(productModel);
   }
 
-  Map<String, dynamic> deleteProductForApi(String productId) {
+  Map<String, dynamic> deleteProductRequestForApi(String productId) {
     return <String, dynamic>{
       'id': productId,
     };
   }
 
-  Map<String, dynamic> toJson(ProductModel productModel) => <String, dynamic>{
+  Map<String, dynamic> _toJson(ProductModel productModel) => <String, dynamic>{
         'id': productModel.id,
         'status': productModel.status,
         'name': productModel.name,
