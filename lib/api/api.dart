@@ -9,15 +9,17 @@ import '/product/model/product_model.dart';
 
 class Api {
   final http.Client _client;
-  final ProductMapper productMapper;
+  final ProductMapper _productMapper;
+  final ApiConfig _apiConfig;
 
   Api()
       : _client = http.Client(),
-        productMapper = ProductMapper();
+        _apiConfig = ApiConfig(),
+        _productMapper = ProductMapper();
 
   Future<List<dynamic>> getProducts() async {
     final response = await _client.get(
-      Uri.parse(ApiConfig.getProductsUrl()),
+      Uri.parse(_apiConfig.getProductsUrl()),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
@@ -28,7 +30,7 @@ class Api {
 
   Future<dynamic> getById(String id) async {
     final response = await _client.get(
-      Uri.parse(ApiConfig.getByIdUrl(id)),
+      Uri.parse(_apiConfig.getByIdUrl(id)),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
@@ -39,7 +41,7 @@ class Api {
 
   Future<List<dynamic>> getProductsByCategoryId(String id) async {
     final response = await _client.get(
-      Uri.parse(ApiConfig.getProductsByCategoryIdUrl(id)),
+      Uri.parse(_apiConfig.getProductsByCategoryIdUrl(id)),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
@@ -50,8 +52,8 @@ class Api {
 
   Future<dynamic> addProduct(ProductModel productModel) async {
     final response = await _client.post(
-      Uri.parse(ApiConfig.addProductUrl()),
-      body: productMapper.addProductForApi(productModel),
+      Uri.parse(_apiConfig.addProductUrl()),
+      body: _productMapper.addProductRequestForApi(productModel),
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -61,8 +63,8 @@ class Api {
 
   Future<dynamic> editProduct(ProductModel productModel) async {
     final response = await _client.post(
-      Uri.parse(ApiConfig.editProductUrl()),
-      body: productMapper.editProductForApi(productModel),
+      Uri.parse(_apiConfig.editProductUrl()),
+      body: _productMapper.editProductRequestForApi(productModel),
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -72,8 +74,8 @@ class Api {
 
   Future<dynamic> deleteProduct(String id) async {
     final response = await _client.post(
-      Uri.parse(ApiConfig.deleteProductUrl()),
-      body: productMapper.deleteProductForApi(id),
+      Uri.parse(_apiConfig.deleteProductUrl()),
+      body: _productMapper.deleteProductRequestForApi(id),
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
