@@ -8,17 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../category/cubit/category_cubit.dart';
-import '../../category/cubit/category_state.dart';
-import '../../category/entity/category_entity.dart';
-import '../../category/repository/category_repository.dart';
-import '../../common/widgets/show_empty_widget.dart';
-import '../../common/widgets/show_error_message_widget.dart';
-import '../../common/widgets/show_loading_indicator_widget.dart';
-import '../../product/model/product_model.dart';
+import '/category/cubit/category_cubit.dart';
+import '/category/cubit/category_state.dart';
+import '/category/entity/category_entity.dart';
+import '/category/repository/category_repository.dart';
+import '/common/widgets/show_empty_widget.dart';
+import '/common/widgets/show_error_message_widget.dart';
+import '/common/widgets/show_loading_indicator_widget.dart';
+import '/product/model/product_model.dart';
 
 class AddProductPage extends StatefulWidget {
-  AddProductPage({Key? key}) : super(key: key);
+  const AddProductPage({Key? key}) : super(key: key);
 
   @override
   _AddProductPageState createState() => _AddProductPageState();

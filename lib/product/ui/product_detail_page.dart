@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../product/entity/product_entity.dart';
+import '/product/entity/product_entity.dart';
 
 class ProductDetail extends StatelessWidget {
   final ProductEntity productModel;
@@ -11,7 +11,7 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black54,
         ),
         backgroundColor: Colors.transparent,

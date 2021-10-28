@@ -8,7 +8,6 @@ import '../../category/entity/category_entity.dart';
 import '../../product/cubit/product_cubit.dart';
 import '../../product/cubit/product_state.dart';
 import '../../product/entity/product_entity.dart';
-import '../../product/repository/product_repository.dart';
 import '../../product/ui/product_detail_page.dart';
 
 class CategoryDetail extends StatelessWidget {
@@ -77,8 +76,7 @@ class ProductCategoryPage extends StatelessWidget {
     print('build Product');
     return MultiBlocProvider(providers: [
       BlocProvider<ProductCubit>(
-        create: (context) =>
-            ProductCubit(ProductRepository())..getProductList(),
+        create: (context) => ProductCubit()..getProductList(),
       ),
     ], child: ProductPageView());
   }

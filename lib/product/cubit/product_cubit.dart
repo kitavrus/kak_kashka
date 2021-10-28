@@ -1,25 +1,37 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/product/usecase/get_products.dart';
 
 import '../../product/cubit/product_state.dart';
 import '../../product/entity/product_entity.dart';
-import '../../product/repository/product_repository.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  final ProductRepository _productRepository;
+  // final ProductRepository _productRepository;
 
-  ProductCubit(this._productRepository) : super(ProductState.initial());
+  ProductCubit() : super(ProductState.initial());
+  // ProductCubit(this._productRepository) :  super(ProductState.initial());
 
   Future<void> getProductList() async {
     try {
-      final _loadedProductList = await _productRepository.getAll();
+      final _loadedProductList = await GetProducts().call();
       print(_loadedProductList);
       emit(ProductState.success(productList: _loadedProductList));
     } catch (e, stackTrace) {
       emit(ProductState.failure(
           message: 'getProductList ProductErrorState' + e.toString()));
     }
+  }
+
+  Future<void> getProductList_OLD() async {
+    // try {
+    //   final _loadedProductList = await _productRepository.getAll();
+    //   print(_loadedProductList);
+    //   emit(ProductState.success(productList: _loadedProductList));
+    // } catch (e, stackTrace) {
+    //   emit(ProductState.failure(
+    //       message: 'getProductList ProductErrorState' + e.toString()));
+    // }
   }
 
   Future<void> deleteProduct(ProductEntity productEntity) async {
@@ -59,7 +71,7 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> searchProduct(String query) async {
-    final List<ProductEntity> updatedProduct;
+/*    final List<ProductEntity> updatedProduct;
     query = query.toLowerCase();
 
     print('searchProduct init');
@@ -92,7 +104,7 @@ class ProductCubit extends Cubit<ProductState> {
         break;
       default:
         emit(ProductState.failure(message: 'Problem searchProduct '));
-    }
+    }*/
   }
 }
 

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../../category/ui/category_page.dart';
-import '../../home/ui/home_page.dart';
-import '../../product/ui/product_page.dart';
+import '/category/ui/category_page.dart';
+import '/home/ui/home_page.dart';
+import '/product/ui/product_page.dart';
+import 'app_dependencies.dart';
 import 'generated/l10n.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    AppDependencies(app: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

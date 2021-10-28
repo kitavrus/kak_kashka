@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kak_kashka/generated/l10n.dart';
 
-import '../../common/widgets/show_error_message_widget.dart';
-import '../../common/widgets/show_loading_indicator_widget.dart';
-import '../../product/cubit/product_cubit.dart';
-import '../../product/cubit/product_state.dart';
-import '../../product/entity/product_entity.dart';
-import '../../product/repository/product_repository.dart';
-import '../../product/ui/add_product_page.dart';
-import '../../product/ui/widgets/product_list.dart';
+import '/common/widgets/show_error_message_widget.dart';
+import '/common/widgets/show_loading_indicator_widget.dart';
+import '/generated/l10n.dart';
+import '/product/cubit/product_cubit.dart';
+import '/product/cubit/product_state.dart';
+import '/product/entity/product_entity.dart';
+import '/product/ui/add_product_page.dart';
+import '/product/ui/widgets/product_list.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final HttpClient httpClient;
+    // final HttpClient httpClient;
+
     print('build Product');
     return MultiBlocProvider(providers: [
       BlocProvider<ProductCubit>(
-        create: (context) =>
-            ProductCubit(ProductRepository())..getProductList(),
+        create: (context) => ProductCubit()..getProductList(),
       ),
     ], child: const ProductPageView());
   }
@@ -89,7 +90,7 @@ class ProductPageView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Поиск ...',
           // filled: true,
         ),

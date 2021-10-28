@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../../../product/cubit/product_cubit.dart';
-import '../../../product/entity/product_entity.dart';
-import '../../../product/ui/widgets/product_card.dart';
+import '/product/cubit/product_cubit.dart';
+import '/product/entity/product_entity.dart';
+import '/product/ui/widgets/product_card.dart';
 
 class ProductList extends StatelessWidget {
   final List<ProductEntity> productList;

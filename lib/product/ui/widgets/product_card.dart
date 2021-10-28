@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
-import '../../../product/entity/product_entity.dart';
-import '../../../product/ui/product_detail_page.dart';
+import '/product/entity/product_entity.dart';
+import '/product/ui/product_detail_page.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductEntity productModel;

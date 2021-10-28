@@ -1,25 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../product/entity/product_entity.dart';
+import '/product/entity/product_entity.dart';
 
 part 'product_model.g.dart';
 
 @JsonSerializable()
 class ProductModel extends ProductEntity {
-  final int id;
-  final int status;
-  final String name;
-  final String description;
-  final String barcode;
-  final String pathToImage;
+  // final int id;
+  // final int status;
+  // final String name;
+  // final String description;
+  // final String barcode;
+  // final String pathToImage;
 
   const ProductModel({
-    required this.id,
-    required this.status,
-    required this.name,
-    required this.description,
-    required this.barcode,
-    required this.pathToImage,
+    required id,
+    required status,
+    required name,
+    required description,
+    required barcode,
+    required pathToImage,
   }) : super(
           id: id,
           status: status,
