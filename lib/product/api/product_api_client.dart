@@ -18,6 +18,7 @@ class ProductApiClient {
         _productMapper = productMapper;
 
   Future<List<dynamic>> getProducts() async {
+    // return ProductLocalDataLayer().getData();
     final response = await _httpApiClient.get(_apiConfig.getProductsUrl());
     if (response.statusCode == 200 && response.body.isNotEmpty) {
       return json.decode(response.body) as List;
