@@ -1,6 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/common/api/http_api_client.dart';
+import 'package:kak_kashka/product/api/product_api_client.dart';
+import 'package:kak_kashka/product/api/product_api_config.dart';
+import 'package:kak_kashka/product/mapper/product_mapper.dart';
+import 'package:kak_kashka/product/repository/product_repository.dart';
 import 'package:kak_kashka/product/usecase/get_products.dart';
 
 import '../../product/cubit/product_state.dart';
@@ -71,7 +76,17 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> searchProduct(String query) async {
-/*    final List<ProductEntity> updatedProduct;
+    // late ProductRepository repository;
+
+    final apiClient = ProductApiClient(
+      httpApiClient: HttpApiClient(),
+      apiConfig: ProductApiConfig(),
+      productMapper: ProductMapper(),
+    );
+
+    final _productRepository = ProductRepository(apiClient: apiClient);
+
+    final List<ProductEntity> updatedProduct;
     query = query.toLowerCase();
 
     print('searchProduct init');
@@ -104,7 +119,7 @@ class ProductCubit extends Cubit<ProductState> {
         break;
       default:
         emit(ProductState.failure(message: 'Problem searchProduct '));
-    }*/
+    }
   }
 }
 

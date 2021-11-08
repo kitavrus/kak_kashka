@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kak_kashka/common/utils/image_manager.dart';
 
 import '/product/entity/product_entity.dart';
 
@@ -35,10 +36,11 @@ class ProductDetail extends StatelessWidget {
                             print('GestureDetector onTap');
                             _displayDialog(context, productModel);
                           },
-                          child: Image.asset(
-                            productModel.pathToImage,
-                            fit: BoxFit.cover,
-                          ),
+                          child: ImageManager.getImage(productModel),
+                          // child: Image.asset(
+                          //   productModel.pathToImage,
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                       ),
                       // child:

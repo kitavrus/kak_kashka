@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kak_kashka/common/utils/image_manager.dart';
 import 'package:path/path.dart' as path;
 
 import '../../category/entity/category_entity.dart';
@@ -203,10 +204,11 @@ class ProductCard extends StatelessWidget {
         colors: [Colors.white, _colorByStatus(productModel)],
       )),
       child: ListTile(
-        leading: _getImage(productModel),
+        leading: ImageManager.getImage(productModel),
+        // leading: _getImage(productModel),
         title: Text(productModel.name),
         subtitle: Text(productModel.description),
-        trailing: Icon(Icons.chevron_right),
+        trailing: const Icon(Icons.chevron_right),
         onTap: () {
           print('onTap: ' + productModel.name);
           Navigator.push(
