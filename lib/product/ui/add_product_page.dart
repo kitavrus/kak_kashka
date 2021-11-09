@@ -52,20 +52,21 @@ class _AddProductPageState extends State<AddProductPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: const Text('Edit Product'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 _selectPhoto(context),
                 _textFields(context),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width: double.infinity),
+                  constraints:
+                      const BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       'Добавить',
                     ),
                     onPressed: () async {
@@ -105,150 +106,139 @@ class _AddProductPageState extends State<AddProductPage> {
     );
   }
 
-  Container _textFields(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
+  Widget _textFields(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: _nameEditingController,
+          textAlign: TextAlign.start,
+          decoration: const InputDecoration(
+            labelText: 'Название ',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            counterText: '',
           ),
-          Container(
-            // width:250,
-            child: TextField(
-              controller: _nameEditingController,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                labelText: 'Название ',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                counterText: '',
-              ),
-              onChanged: (value) {},
-            ),
+          onChanged: (value) {},
+        ),
+        const SizedBox(height: 5),
+        TextField(
+          controller: _descriptionEditingController,
+          maxLines: 5,
+          textAlign: TextAlign.start,
+          decoration: const InputDecoration(
+            labelText: 'Описание',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            // counterText: '',
           ),
-          SizedBox(height: 5),
-          Container(
-            child: TextField(
-              controller: _descriptionEditingController,
-              maxLines: 5,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                labelText: 'Описание',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                // counterText: '',
-              ),
-              onChanged: (value) {},
-            ),
+          onChanged: (value) {},
+        ),
+        const SizedBox(height: 5),
+        TextField(
+          onTap: () {
+            _showScanBarcode();
+            print(' Штрих-код товара ');
+          },
+          readOnly: true,
+          controller: _barcodeEditingController,
+          // maxLength: 14,
+          textAlign: TextAlign.start,
+          keyboardType: TextInputType.phone,
+          decoration: const InputDecoration(
+            labelText: 'Штрих-код товара',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            counterText: '',
           ),
-          SizedBox(height: 5),
-          Container(
-            child: TextField(
-              onTap: () {
-                _showScanBarcode();
-                print(' Штрих-код товара ');
-              },
-              readOnly: true,
-              controller: _barcodeEditingController,
-              // maxLength: 14,
-              textAlign: TextAlign.start,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                labelText: 'Штрих-код товара',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                counterText: '',
-              ),
-              onChanged: (value) {},
-            ),
-          ),
-          // Container(
-          //   child: TextField(
-          //     controller: _barcodeEditingController,
-          //     maxLength: 14,
-          //     textAlign: TextAlign.start,
-          //     keyboardType: TextInputType.phone,
-          //     decoration: InputDecoration(
-          //       labelText: "Штрих-код товара",
-          //       border: OutlineInputBorder(),
-          //       contentPadding: const EdgeInsets.all(5),
-          //       counterText: '',
-          //     ),
-          //     onChanged: (value) {},
-          //   ),
-          // ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Radio(
-                  value: 3,
-                  groupValue: _radioValue,
-                  onChanged: _handleRadioValueChange,
-                ),
-                Text('покупать'),
-              ],
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          onChanged: (value) {},
+        ),
+        // Container(
+        //   child: TextField(
+        //     controller: _barcodeEditingController,
+        //     maxLength: 14,
+        //     textAlign: TextAlign.start,
+        //     keyboardType: TextInputType.phone,
+        //     decoration: InputDecoration(
+        //       labelText: "Штрих-код товара",
+        //       border: OutlineInputBorder(),
+        //       contentPadding: const EdgeInsets.all(5),
+        //       counterText: '',
+        //     ),
+        //     onChanged: (value) {},
+        //   ),
+        // ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Radio(
-                value: 2,
+                value: 3,
                 groupValue: _radioValue,
                 onChanged: _handleRadioValueChange,
               ),
-              Text('иногда'),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Radio(
-                value: 1,
-                groupValue: _radioValue,
-                onChanged: _handleRadioValueChange,
-              ),
-              Text('не покупать'),
-            ]),
+              const Text('покупать'),
+            ],
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Radio(
+              value: 2,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange,
+            ),
+            const Text('иногда'),
           ]),
-          Container(
-            child: TextField(
-              onTap: () {
-                _showSelectCategory(context);
-                print(' Выбрать категории ');
-              },
-              readOnly: true,
-              controller: _selectCategoryEditingController,
-              // maxLength: 14,
-              textAlign: TextAlign.start,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                labelText: 'Выбрать категории',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                counterText: '',
-              ),
-              onChanged: (value) {},
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Radio(
+              value: 1,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange,
             ),
+            const Text('не покупать'),
+          ]),
+        ]),
+        TextField(
+          onTap: () {
+            _showSelectCategory(context);
+            print(' Выбрать категории ');
+          },
+          readOnly: true,
+          controller: _selectCategoryEditingController,
+          // maxLength: 14,
+          textAlign: TextAlign.start,
+          keyboardType: TextInputType.phone,
+          decoration: const InputDecoration(
+            labelText: 'Выбрать категории',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            counterText: '',
           ),
-          // GestureDetector(
-          //   onTap: () {
-          //       _showSelectCategory(context);
-          //       print(" Выбрать категории ");
-          //     },
-          //   child: Container(
-          //     padding: EdgeInsets.only(left: 5),
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 50,
-          //     decoration: ShapeDecoration(
-          //       color: Colors.grey[200],
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.all(Radius.circular(10)),
-          //       ),
-          //     ),
-          //     child: Align(
-          //         alignment:Alignment.centerLeft,
-          //         child: Text("Выбрать категории"),
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
+          onChanged: (value) {},
+        ),
+        // GestureDetector(
+        //   onTap: () {
+        //       _showSelectCategory(context);
+        //       print(" Выбрать категории ");
+        //     },
+        //   child: Container(
+        //     padding: EdgeInsets.only(left: 5),
+        //     width: MediaQuery.of(context).size.width,
+        //     height: 50,
+        //     decoration: ShapeDecoration(
+        //       color: Colors.grey[200],
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+        //       ),
+        //     ),
+        //     child: Align(
+        //         alignment:Alignment.centerLeft,
+        //         child: Text("Выбрать категории"),
+        //     ),
+        //   ),
+        // ),
+      ],
     );
   }
 
@@ -274,11 +264,11 @@ class _AddProductPageState extends State<AddProductPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.camera_alt),
+                const Icon(Icons.camera_alt),
                 const SizedBox(
                   width: 5,
                 ),
-                Text('Добавить фото товара')
+                const Text('Добавить фото товара')
               ],
             ),
             _image == null
@@ -350,16 +340,16 @@ class _AddProductPageState extends State<AddProductPage> {
           child: Wrap(
             children: [
               ListTile(
-                leading: Icon(Icons.folder),
-                title: Text('Gallery '),
+                leading: const Icon(Icons.folder),
+                title: const Text('Gallery '),
                 onTap: () {
                   _imageFromGallery();
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text('Camera '),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera '),
                 onTap: () {
                   _imageFromCamera();
                   Navigator.of(context).pop();
@@ -389,7 +379,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
     if (!mounted) return;
 
-    _barcodeEditingController.text = scanResult;
+    _barcodeEditingController.text = scanResult == '-1' ? '' : scanResult;
   }
 
   void _showSelectCategory(context) {
@@ -400,7 +390,7 @@ class _AddProductPageState extends State<AddProductPage> {
       ),
       backgroundColor: Colors.white,
       builder: (BuildContext context) {
-        return SafeArea(
+        return const SafeArea(
           child: CategoryPage(),
         );
       },
@@ -474,7 +464,7 @@ class CategoryPageView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Поиск ...',
           // filled: true,
         ),

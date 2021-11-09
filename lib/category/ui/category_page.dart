@@ -2,15 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kak_kashka/common/widgets/show_error_message_widget.dart';
 import 'package:kak_kashka/generated/l10n.dart';
 
-import '../../category/cubit/category_cubit.dart';
-import '../../category/cubit/category_state.dart';
-import '../../category/entity/category_entity.dart';
-import '../../category/repository/category_repository.dart';
-import '../../category/ui/add_category_page.dart';
-import '../../category/ui/category_detail_page.dart';
+import '/category/cubit/category_cubit.dart';
+import '/category/cubit/category_state.dart';
+import '/category/entity/category_entity.dart';
+import '/category/repository/category_repository.dart';
+import '/category/ui/add_category_page.dart';
+import '/category/ui/category_detail_page.dart';
+import '/common/widgets/show_error_message_widget.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class CategoryPageView extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Category'),
+          title: const Text('Category'),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
@@ -91,7 +91,7 @@ class CategoryPageView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Поиск ...',
           // filled: true,
         ),
@@ -103,8 +103,8 @@ class CategoryPageView extends StatelessWidget {
   }
 
   Widget _loadingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Center(
         child: CircularProgressIndicator(),
       ),
@@ -117,7 +117,7 @@ class CategoryPageView extends StatelessWidget {
       child: Center(
         child: Text(
           message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: const TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );
@@ -129,7 +129,7 @@ class CategoryPageView extends StatelessWidget {
       child: Center(
         child: Text(
           message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: const TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );

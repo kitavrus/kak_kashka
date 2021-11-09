@@ -9,7 +9,7 @@ import '../../generated/l10n.dart';
 // import 'package:path/path.dart' as path;
 
 class AddCategoryPage extends StatefulWidget {
-  AddCategoryPage({Key? key}) : super(key: key);
+  const AddCategoryPage({Key? key}) : super(key: key);
 
   @override
   _AddCategoryPageState createState() => _AddCategoryPageState();
@@ -40,18 +40,19 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Category'),
+        title: const Text('Edit Category'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 // _selectPhoto(context),
                 _textFields(context),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width: double.infinity),
+                  constraints:
+                      const BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
                     child: Text(
                       S.of(context).button_add,
@@ -68,7 +69,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
 
                       // moveFile(_image,appDocPath+"/4491.jpg").then((newImage) {
 
-                      final CategoryModel categoryModel = CategoryModel(
+                      final categoryModel = CategoryModel(
                         id: 4,
                         status: 1,
                         name: _nameEditingController.text.toString(),
@@ -91,44 +92,37 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     );
   }
 
-  Container _textFields(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
+  Widget _textFields(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: _nameEditingController,
+          textAlign: TextAlign.start,
+          decoration: const InputDecoration(
+            labelText: 'Название ',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            counterText: '',
           ),
-          Container(
-            // width:250,
-            child: TextField(
-              controller: _nameEditingController,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                labelText: 'Название ',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                counterText: '',
-              ),
-              onChanged: (value) {},
-            ),
+          onChanged: (value) {},
+        ),
+        const SizedBox(height: 5),
+        TextField(
+          controller: _descriptionEditingController,
+          maxLines: 5,
+          textAlign: TextAlign.start,
+          decoration: const InputDecoration(
+            labelText: 'Описание',
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.all(5),
+            // counterText: '',
           ),
-          SizedBox(height: 5),
-          Container(
-            child: TextField(
-              controller: _descriptionEditingController,
-              maxLines: 5,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                labelText: 'Описание',
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.all(5),
-                // counterText: '',
-              ),
-              onChanged: (value) {},
-            ),
-          ),
-        ],
-      ),
+          onChanged: (value) {},
+        ),
+      ],
     );
   }
 

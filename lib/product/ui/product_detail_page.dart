@@ -68,8 +68,8 @@ class ProductDetail extends StatelessWidget {
                         Container(
                           height: 500,
                           width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 30),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.symmetric(vertical: 30),
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40),
@@ -125,7 +125,7 @@ class ProductDetail extends StatelessWidget {
     return showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      transitionDuration: Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 300),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,
@@ -144,13 +144,14 @@ class ProductDetail extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.all(5),
                 color: Colors.black45,
-                child: Image.asset(
-                  productModel.pathToImage,
-                  // fit: BoxFit.cover,
-                ),
+                child: ImageManager.getImage(productModel),
+                // child: Image.asset(
+                //   productModel.pathToImage,
+                //   // fit: BoxFit.cover,
+                // ),
               ),
               GestureDetector(
-                child: Icon(
+                child: const Icon(
                   Icons.close,
                   color: Colors.white,
                 ),

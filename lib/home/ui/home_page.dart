@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import '../../category/repository/category_repository.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -21,13 +23,13 @@ class _HomePageState extends State<HomePage>
     print('build Home');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Text(
               'Category',
               style: TextStyle(
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           ),
-          CategoryList(),
+          const CategoryList(),
         ],
       ),
     );
@@ -47,13 +49,15 @@ class _HomePageState extends State<HomePage>
 }
 
 class CategoryList extends StatefulWidget {
+  const CategoryList({Key? key}) : super(key: key);
+
   @override
   _CategoryListState createState() => _CategoryListState();
 }
 
 class _CategoryListState extends State<CategoryList> {
   Future _loadCategory() async {
-    return await CategoryRepository().getAll();
+    return CategoryRepository().getAll();
   }
 
   int selectedIndex = 0;
@@ -75,7 +79,7 @@ class _CategoryListState extends State<CategoryList> {
             );
           }
           // if (snapshot.hasError) {
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
           // }
         });
   }

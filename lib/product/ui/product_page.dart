@@ -36,14 +36,14 @@ class ProductPageView extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Product'),
+          title: const Text('Product'),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             print(' Floating action button press');
             final result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddProductPage()),
+              MaterialPageRoute(builder: (context) => const AddProductPage()),
             );
             print('FloatingActionButton: $result');
             if (result != null) {

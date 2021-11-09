@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../shoppingList/entity/shopping_list_entity.dart';
+import '/shoppingList/entity/shopping_list_entity.dart';
 
 part 'shopping_list_model.g.dart';
 

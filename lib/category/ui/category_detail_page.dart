@@ -21,7 +21,7 @@ class CategoryDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black54,
         ),
         backgroundColor: Colors.transparent,
@@ -54,8 +54,8 @@ class CategoryDetail extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 5),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 5),
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
@@ -72,6 +72,8 @@ class CategoryDetail extends StatelessWidget {
 }
 
 class ProductCategoryPage extends StatelessWidget {
+  const ProductCategoryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     print('build Product');
@@ -79,7 +81,7 @@ class ProductCategoryPage extends StatelessWidget {
       BlocProvider<ProductCubit>(
         create: (context) => ProductCubit()..getProductList(),
       ),
-    ], child: ProductPageView());
+    ], child: const ProductPageView());
   }
 }
 
@@ -90,7 +92,7 @@ class ProductPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (context, state) {
-        List<ProductEntity> productList = [];
+        var productList = <ProductEntity>[];
 
         print('BlocBuilder: ');
         print(state.status);
@@ -123,7 +125,7 @@ class ProductPageView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Поиск ...',
           // filled: true,
         ),
@@ -135,8 +137,8 @@ class ProductPageView extends StatelessWidget {
   }
 
   Widget _loadingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Center(
         child: CircularProgressIndicator(),
       ),
@@ -149,7 +151,7 @@ class ProductPageView extends StatelessWidget {
       child: Center(
         child: Text(
           message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: const TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );
@@ -161,7 +163,7 @@ class ProductPageView extends StatelessWidget {
       child: Center(
         child: Text(
           message,
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: const TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );
@@ -255,8 +257,8 @@ class ProductCard extends StatelessWidget {
   }
 
   String _imagePathType(String pathToImage) {
-    String pathToImage = productModel.pathToImage;
-    List<String> splitPath = path.split(pathToImage);
+    final pathToImage = productModel.pathToImage;
+    final splitPath = path.split(pathToImage);
     if (splitPath.first == 'assets') {
       return 'assets';
     }

@@ -9,11 +9,13 @@ import 'generated/l10n.dart';
 
 void main() {
   runApp(
-    AppDependencies(app: MyApp()),
+    const AppDependencies(app: MyApp()),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -51,9 +53,9 @@ class _TabBottomContainerState extends State<TabBottomContainer> {
   @override
   void initState() {
     listPages = [
-      HomePage(),
-      ProductPage(),
-      CategoryPage(),
+      const HomePage(),
+      const ProductPage(),
+      const CategoryPage(),
     ];
     super.initState();
   }
