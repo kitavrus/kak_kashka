@@ -1,0 +1,3 @@
+<templateSet group="Flutter">
+  <template name="tsbb" value="TextStyle(color: Colors.black,fontWeight: FontWeight.bold)" description="text style bold black" toReformat="false" toShortenFQNames="true" />
+</templateSet>
