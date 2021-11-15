@@ -1,3 +1,7 @@
 <templateSet group="Flutter">
-  <template name="tsbb" value="TextStyle(color: Colors.black,fontWeight: FontWeight.bold)" description="text style bold black" toReformat="false" toShortenFQNames="true" />
+  <template name="tsbb" value="TextStyle(color: Colors.black,fontWeight: FontWeight.bold)" description="text style bold black" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="DART_STATEMENT" value="true" />
+    </context>
+  </template>
 </templateSet>
